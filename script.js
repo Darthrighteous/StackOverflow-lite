@@ -1,9 +1,24 @@
-var dropdown = () => {
+const dropdown = () => {
   var dropdowns = document.getElementsByClassName('dropdown_content')
   for (var i = 0; i < dropdowns.length; i++) {
     var openDropdown = dropdowns[i]
     openDropdown.classList.toggle('show')
   }
+}
+
+const voteCells = document.getElementsByClassName('vote_cell');
+for (let i = 0; i < voteCells.length; i ++) {
+  upBtns = voteCells[i].getElementsByClassName('up_vote');
+  const currentUpButton = upBtns[0]; 
+  currentUpButton.addEventListener('click', () => {
+    currentUpButton.classList.toggle('activeup')
+  });
+
+  downBtns = voteCells[i].getElementsByClassName('down_vote');
+  const currentDownButton = downBtns[0];
+  currentDownButton.addEventListener('click', () => {
+    currentDownButton.classList.toggle('activedown')
+  })
 }
 
 window.addEventListener('click', (event) => {
