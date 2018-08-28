@@ -109,3 +109,26 @@ export const postAnswer = (req, res) => {
     });
   }
 };
+
+/**
+ * Middleware: PATCHES(accepts) a specific answer to a question
+ * Responds with the appropriate error/success status and message.
+ * @param {object} req - query request
+ * @param {object} res - query response
+ * @returns {void}
+*/
+export const acceptAnswer = (req, res) => {
+  const index = getIndexById(req.params.answerId, req.question.answers);
+  const answer = req.question.answers[index];
+
+  if (answer) {
+    answer.accept = true;
+    res.status(200).json({
+      status: 'success',
+      message: 'answer succesfully accepted',
+      answer,
+    });
+  } else {
+    res.status(404).send(`answer with id= ${req.params.answerId}, to question with id= ${req.params.questionId} not found`);
+  }
+};
