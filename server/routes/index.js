@@ -7,6 +7,7 @@ import {
   postAnswer,
   acceptAnswer,
   editQuestion,
+  deleteQuestion,
 } from '../controllers';
 
 const router = express.Router();
@@ -22,5 +23,6 @@ router.post('/v1/questions/:questionId/answers', postAnswer);
 
 router.patch('/v1/questions/:questionId/answers/:answerId', acceptAnswer);
 router.patch('/v1/questions/:questionId', editQuestion);
+router.delete('/v1/questions/:questionId', deleteQuestion);
 
 export default router;

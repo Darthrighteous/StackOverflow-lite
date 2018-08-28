@@ -160,3 +160,15 @@ export const editQuestion = (req, res) => {
     }
   }
 };
+
+/**
+ * Middleware: DELETES a specific question.
+ * Responds with the appropriate status.
+ * @param {object} req - query request
+ * @param {object} res - query response
+ * @returns {void}
+*/
+export const deleteQuestion = (req, res) => {
+  questionList.splice(req.index, 1);
+  res.status(204).send();
+};
