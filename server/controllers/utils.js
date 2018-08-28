@@ -1,3 +1,4 @@
+import Answer from '../models/answer';
 import Question from '../models/question';
 
 const q1 = {
@@ -22,6 +23,7 @@ const q3 = {
 };
 
 let questionIdCounter = 0;
+let answerIdCounter = 0;
 
 /**
   * Gets the index of a post from a post list by its id.
@@ -45,6 +47,22 @@ export const createQuestion = (requestBody) => {
     requestBody.user,
     questionIdCounter);
   return question;
+};
+
+/**
+  * Creates an Answer
+  * @param {number} questionId The id of the question the answer belongs to.
+  * @param {object} requestBody Object containing details about the answer.
+  * @returns {Answer} the created answer
+  */
+export const createAnswer = (questionId, requestBody) => {
+  answerIdCounter += 1;
+  return new Answer(requestBody.title,
+    requestBody.body,
+    requestBody.date,
+    requestBody.user,
+    questionId,
+    answerIdCounter);
 };
 
 /**

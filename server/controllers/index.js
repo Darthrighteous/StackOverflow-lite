@@ -4,6 +4,7 @@ import {
   sortPosts,
   getIndexById,
   createQuestion,
+  createAnswer,
 } from './utils';
 
 // validation functions
@@ -83,6 +84,28 @@ export const postQuestion = (req, res) => {
       status: 'success',
       message: 'question succesfully added',
       question,
+    });
+  }
+};
+
+/**
+ * Middleware: POSTS an answer to a question object.
+ * Responds with appropriate error/success status and message.
+ * @param {object} req - query request
+ * @param {object} res - query response
+ * @returns {void}
+*/
+export const postAnswer = (req, res) => {
+  const { error } = validatePost(req.body);
+  if (error) {
+    res.status(400).send(error.details[0].message);
+  } else {
+    const answer = createAnswer(req.params.questionId, req.body);
+    req.question.addAnswer(answer);
+    res.status(201).json({
+      status: 'success',
+      message: 'answer succesfully added',
+      answer,
     });
   }
 };
