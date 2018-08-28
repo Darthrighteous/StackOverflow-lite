@@ -3,7 +3,13 @@ import {
   seedPosts,
   sortPosts,
   getIndexById,
+  createQuestion,
 } from './utils';
+
+// validation functions
+import {
+  validatePost,
+} from './validateUtils';
 
 // the data
 const questionList = [];
@@ -57,4 +63,26 @@ export const getOneQuestion = (req, res) => {
     message: 'one question succesfully retrieved',
     question,
   });
+};
+
+/**
+ * Middleware: POSTS a question into question list.
+ * Responds with the appropriate error/success status and message.
+ * @param {object} req - query request
+ * @param {object} res - query response
+ * @returns {void}
+*/
+export const postQuestion = (req, res) => {
+  const { error } = validatePost(req.body);
+  if (error) {
+    res.status(400).send(error.details[0].message);
+  } else {
+    const question = createQuestion(req.body);
+    questionList.push(question);
+    res.status(201).json({
+      status: 'success',
+      message: 'question succesfully added',
+      question,
+    });
+  }
 };
