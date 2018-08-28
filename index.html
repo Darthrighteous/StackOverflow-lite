@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Vollkorn" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<title>Homepage</title>
+</head>
+<body>
+	<header class="topnav">
+		<div class="topnav_content">
+			<div>
+				<h1><a href="#">StackOverflow-Lite</a></h1>
+			</div>
+		
+			<div class="topnav_options_container">
+				<ol class="profile_options">
+					<li class="profile">
+						<a href="profile.html" id="profile_icon"></a>
+					</li>
+				</ol>
+				<ol class="auth_options">
+					<li class="auth">
+						<a class="button_secondary" href="signin.html">Log In</a>
+						<a class="button_primary" href="signup.html">Sign Up</a>
+					</li>
+				</ol>
+			</div>
+		</div>
+	</header>
+
+	<div class="body_container">
+		<div class="body_title">
+			<h2>Questions</h2>
+			<div class="question_button"><a href="newpost.html" id="ask_a_question_btn">Ask a Question</a></div>
+		</div>
+
+		<div class="options_container" id="homepageOptionsContainer">
+			<div class="dropdown" onclick="dropdown()">
+				<div class="dropdown_title">Sort</div>
+				<div class="dropdown_container">
+					<button class="dropbtn">Most Recent</button>
+					<svg class="drop_icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+						<g>
+							<path fill="inherit" d="M14.1711599,9.3535 L9.99925636,13.529 L5.82735283,9.3535 C5.51262415,9.0385 5.73543207,8.5 6.18054835,8.5 L13.8179644,8.5 C14.2630807,8.5 14.4858886,9.0385 14.1711599,9.3535"></path>
+						</g>
+					</svg>
+				</div>
+
+				<div id="sortDropdown" class="dropdown_content">
+					<a href="#">Most Recent</a>
+					<a href="#">Most Answered</a>
+					<a href="#">Most Rated</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="question_list">
+			<div class="question_summary" onclick="location.href = 'question.html';">
+				<div class="summary_stats">
+					<div class="stat_answers">
+						<div class="answer_count">23</div>
+						<h5>answers</h5> 
+					</div>
+					<div class="stat_score">
+						<div class="score">5</div>
+						<h5>score</h5>
+					</div>			
+				</div>
+
+				<div class="summary_body">
+					<h3>What is the best way to calculate ?</h3>
+					<div class="summary_details">
+						<a href="" id="details_date">23/03/2003</a>
+						by
+						<a href="" id="details_user"> darthrighteous</a>					
+					</div>
+				</div>
+
+				<div class="summary_options">
+					<a id="commentIcon" href="#"></a>
+					<a id="deleteIcon" href="#"></a>
+				</div>
+			</div>
+
+			<div class="question_summary" onclick="location.href = 'question.html';">
+				<div class="summary_stats">
+					<div class="stat_answers">
+						<div class="answer_count">23</div>
+						<h5>answers</h5> 
+					</div>
+					<div class="stat_score">
+						<div class="score">5</div>
+						<h5>score</h5>
+					</div>			
+				</div>
+
+				<div class="summary_body">
+					<h3>What is the best way to calculate the square root of prime numbers? and if i add a bunch of more words then what happens?</h3>
+					<div class="summary_details">
+						<a href="" id="details_date">23/03/2003</a>
+						by
+						<a href="" id="details_user"> darthrighteous</a>					
+					</div>
+				</div>
+
+				<div class="summary_options">
+					<a id="commentIcon" href="#"></a>
+					<a id="deleteIcon" href="#"></a>
+				</div>
+			</div>
+
+			<div class="question_summary" onclick="location.href = 'question.html';">
+				<div class="summary_stats">
+					<div class="stat_answers">
+						<div class="answer_count">23</div>
+						<h5>answers</h5> 
+					</div>
+					<div class="stat_score">
+						<div class="score">5</div>
+						<h5>score</h5>
+					</div>			
+				</div>
+
+				<div class="summary_body">
+					<h3>What is the best way to calculate the square root of prime numbers? and if i add a bunch of more words then what happens?</h3>
+					<div class="summary_details">
+						<a href="" id="details_date">23/03/2003</a>
+						by
+						<a href="" id="details_user"> darthrighteous</a>					
+					</div>
+				</div>
+
+				<div class="summary_options">
+					<a id="commentIcon" href="#"></a>
+					<a id="deleteIcon" href="#"></a>
+				</div>
+			</div>
+
+			<div class="question_summary" onclick="location.href = 'question.html';">
+				<div class="summary_stats">
+					<div class="stat_answers">
+						<div class="answer_count">23</div>
+						<h5>answers</h5> 
+					</div>
+					<div class="stat_score">
+						<div class="score">5</div>
+						<h5>score</h5>
+					</div>			
+				</div>
+
+				<div class="summary_body">
+					<h3>What is the best way to calculate the square root of prime numbers? and if i add a bunch of more words then what happens?</h3>
+					<div class="summary_details">
+						<a href="" id="details_date">23/03/2003</a>
+						by
+						<a href="" id="details_user"> darthrighteous</a>					
+					</div>
+				</div>
+
+				<div class="summary_options">
+					<a id="commentIcon" href="#"></a>
+					<a id="deleteIcon" href="#"></a>
+				</div>
+			</div>
+
+			<div class="question_summary" onclick="location.href = 'question.html';">
+				<div class="summary_stats">
+					<div class="stat_answers">
+						<div class="answer_count">23</div>
+						<h5>answers</h5> 
+					</div>
+					<div class="stat_score">
+						<div class="score">5</div>
+						<h5>score</h5>
+					</div>			
+				</div>
+
+				<div class="summary_body">
+					<h3>What is the best way to calculate the square root of prime numbers? and if i add a bunch of more words then what happens?</h3>
+					<div class="summary_details">
+						<a href="" id="details_date">23/03/2003</a>
+						by
+						<a href="" id="details_user"> darthrighteous</a>					
+					</div>
+				</div>
+
+				<div class="summary_options">
+					<a id="commentIcon" href="#"></a>
+					<a id="deleteIcon" href="#"></a>
+				</div>
+			</div>
+
+			<div class="question_summary" onclick="location.href = 'question.html';">
+				<div class="summary_stats">
+					<div class="stat_answers">
+						<div class="answer_count">23</div>
+						<h5>answers</h5> 
+					</div>
+					<div class="stat_score">
+						<div class="score">5</div>
+						<h5>score</h5>
+					</div>			
+				</div>
+
+				<div class="summary_body">
+					<h3>What is the best way to calculate the square root of prime numbers? and if i add a bunch of more words then what happens?</h3>
+					<div class="summary_details">
+						<a href="" id="details_date">23/03/2003</a>
+						by
+						<a href="" id="details_user"> darthrighteous</a>					
+					</div>
+				</div>
+
+				<div class="summary_options">
+					<a id="commentIcon" href="#"></a>
+					<a id="deleteIcon" href="#"></a>
+				</div>
+			</div>
+
+			<div class="question_summary" onclick="location.href = 'question.html';">
+				<div class="summary_stats">
+					<div class="stat_answers">
+						<div class="answer_count">23</div>
+						<h5>answers</h5> 
+					</div>
+					<div class="stat_score">
+						<div class="score">5</div>
+						<h5>score</h5>
+					</div>			
+				</div>
+
+				<div class="summary_body">
+					<h3>What is the best way to calculate the square root of prime numbers? and if i add a bunch of more words then what happens?</h3>
+					<div class="summary_details">
+						<a href="" id="details_date">23/03/2003</a>
+						by
+						<a href="" id="details_user"> darthrighteous</a>					
+					</div>
+				</div>
+
+				<div class="summary_options">
+					<a id="commentIcon" href="#"></a>
+					<a id="deleteIcon" href="#"></a>
+				</div>
+			</div>
+
+			<div class="question_summary" onclick="location.href = 'question.html';">
+				<div class="summary_stats">
+					<div class="stat_answers">
+						<div class="answer_count">23</div>
+						<h5>answers</h5> 
+					</div>
+					<div class="stat_score">
+						<div class="score">5</div>
+						<h5>score</h5>
+					</div>			
+				</div>
+
+				<div class="summary_body">
+					<h3>What is the best way to calculate the square root of prime numbers? and if i add a bunch of more words then what happens?</h3>
+					<div class="summary_details">
+						<a href="" id="details_date">23/03/2003</a>
+						by
+						<a href="" id="details_user"> darthrighteous</a>					
+					</div>
+				</div>
+
+				<div class="summary_options">
+					<a id="commentIcon" href="#"></a>
+					<a id="deleteIcon" href="#"></a>
+				</div>
+			</div>
+
+			<div class="question_summary" onclick="location.href = 'question.html';">
+				<div class="summary_stats">
+					<div class="stat_answers">
+						<div class="answer_count">23</div>
+						<h5>answers</h5> 
+					</div>
+					<div class="stat_score">
+						<div class="score">5</div>
+						<h5>score</h5>
+					</div>			
+				</div>
+
+				<div class="summary_body">
+					<h3>What is the best way to calculate the square root of prime numbers? and if i add a bunch of more words then what happens?</h3>
+					<div class="summary_details">
+						<a href="" id="details_date">23/03/2003</a>
+						by
+						<a href="" id="details_user"> darthrighteous</a>					
+					</div>
+				</div>
+
+				<div class="summary_options">
+					<a id="commentIcon" href="#"></a>
+					<a id="deleteIcon" href="#"></a>
+				</div>
+			</div>
+
+			
+		</div>
+		
+	</div>
+
+	
+	<script src="script.js"></script>
+</body>
+</html>
