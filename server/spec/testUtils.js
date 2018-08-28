@@ -21,3 +21,33 @@ export const answerInput = {
 
 export const invalidId = 'sk';
 export const validId = '1';
+
+export const updateScorePlus = {
+  attribute: 'score',
+  value: 'increment',
+};
+
+export const updateScoreMinus = {
+  attribute: 'score',
+  value: 'decrement',
+};
+
+export const invalidUpdateScore = {
+  attribute: 'score',
+  value: 'excrement',
+};
+
+export const updateTitle = {
+  attribute: 'title',
+  value: 'test update title string',
+};
+
+export const updateBody = {
+  attribute: 'body',
+  value: 'test update body string',
+};
+
+export const invalidUpdate = {
+  attribute: 'xD',
+  value: 'LOL',
+};

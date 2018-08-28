@@ -13,3 +13,17 @@ export const validatePost = (post) => {
   };
   return Joi.validate(post, schema);
 };
+
+/**
+ * validates the body of an input(PATCH).
+ * @param {object} update - The input body from a PATCH route.
+ * @returns {object} Joi.validate output
+*/
+export const validateUpdate = (update) => {
+  const schema = Joi.object().keys({
+    attribute: Joi.any().valid(['score', 'title', 'body']).required(),
+    value: Joi.string().required(),
+  }).and('attribute', 'value');
+
+  return Joi.validate(update, schema);
+};

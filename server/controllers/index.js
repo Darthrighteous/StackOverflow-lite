@@ -5,10 +5,12 @@ import {
   getIndexById,
   createQuestion,
   createAnswer,
+  updatePost,
 } from './utils';
 
 // validation functions
 import {
+  validateUpdate,
   validatePost,
 } from './validateUtils';
 
@@ -130,5 +132,31 @@ export const acceptAnswer = (req, res) => {
     });
   } else {
     res.status(404).send(`answer with id= ${req.params.answerId}, to question with id= ${req.params.questionId} not found`);
+  }
+};
+
+/**
+ * Middleware: PATCHES(edits) a specific question
+ * Validates request body.
+ * Responds with the appropriate error/success status and message.
+ * @param {object} req - query request
+ * @param {object} res - query response
+ * @returns {void}
+*/
+export const editQuestion = (req, res) => {
+  const { error } = validateUpdate(req.body);
+  if (error) {
+    res.status(400).send(error.details[0].message);
+  } else {
+    const update = updatePost(req.question, req.body);
+    if (update === 0) {
+      res.status(400).send('Invalid update request');
+    } else {
+      res.status(200).json({
+        status: 'success',
+        message: 'Question succesfully updated',
+        update,
+      });
+    }
   }
 };
