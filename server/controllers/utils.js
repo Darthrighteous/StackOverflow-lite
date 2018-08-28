@@ -24,6 +24,15 @@ const q3 = {
 let questionIdCounter = 0;
 
 /**
+  * Gets the index of a post from a post list by its id.
+  * @param {number} id Id of the post required
+  * @param {array} list Array of posts.
+  * @returns{number} the index of the post, or -1 if not found.
+  */
+export const getIndexById = (id, list) => list
+  .findIndex(item => item.id === Number(id));
+
+/**
   * Creats a question
   * @param {object} requestBody Object containing details about the question.
   * @returns {Question} the created question.

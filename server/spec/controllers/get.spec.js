@@ -1,5 +1,9 @@
 import Request from 'request';
 import '../../app';
+import {
+  invalidId,
+  validId,
+} from '../testUtils';
 
 describe('GET ROUTE', () => {
   // GET ALL
@@ -18,6 +22,49 @@ describe('GET ROUTE', () => {
     });
     it('has a title of', () => {
       expect(data.questions.length).toBeGreaterThanOrEqual(5);
+    });
+  });
+
+   // GET ONE VALID ID
+  describe(`Get Specific question with id ${validId}`, () => {
+    const data = {};
+    beforeAll((done) => {
+      Request.get(`http://localhost:4001/v1/questions/${validId}`, (error, response, body) => {
+        data.status = response.statusCode;
+        data.question = JSON.parse(body).question;
+        done();
+      });
+    });
+
+    it('has status 200', () => {
+      expect(data.status).toBe(200);
+    });
+
+    it('has a body of', () => {
+      expect(data.question.title).toBe('Dummy Question');
+      expect(data.question.body).toBe('How do you divide a prime number by itself?');
+      expect(data.question.date).toBe('20/03/2003');
+      expect(data.question.user).toBe('tyronne');
+    });
+  });
+
+  // GET ONE INVALID ID
+  describe('Get Specific question with invalid id', () => {
+    const data = {};
+    beforeAll((done) => {
+      Request.get(`http://localhost:4001/v1/questions/${invalidId}`, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+
+    it('has status 404', () => {
+      expect(data.status).toBe(404);
+    });
+
+    it('has a body of undefined', () => {
+      expect(data.body).toBe(`question with id=${invalidId} not found`);
     });
   });
 });
