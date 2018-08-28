@@ -4,3 +4,6 @@ export const questionInput = {
   date: 'test date',
   user: 'tester',
 };
+
+export const invalidId = 'sk';
+export const validId = '1';
