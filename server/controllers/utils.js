@@ -94,3 +94,34 @@ export const seedPosts = (postType, arr) => {
       console.log(`Invalid post type: ${postType}`);
   }
 };
+
+/**
+  * updates a post.
+  * @param {Post} post the post to be updated.
+  * @param {object} requestBody object containing update attribute
+  * @returns {Post} the updated post or 0 for failure
+  */
+export const updatePost = (post, requestBody) => {
+  switch (requestBody.attribute) {
+    case 'score':
+      if (requestBody.value === 'increment') {
+        post.plusScore();
+      } else if (requestBody.value === 'decrement') {
+        post.minusScore();
+      } else {
+        return 0;
+      }
+      break;
+      /* eslint-disable no-param-reassign */
+    case 'title':
+      post.title = requestBody.value;
+      break;
+    case 'body':
+      post.body = requestBody.value;
+      break;
+      /* eslint-disable no-param-reassign */
+    default:
+      return 0;
+  }
+  return post;
+};
