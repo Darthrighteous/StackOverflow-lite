@@ -12,5 +12,12 @@ export const invalidInput = {
   user: 77,
 };
 
+export const answerInput = {
+  title: 'test answer title',
+  body: 'test answer body',
+  date: 'test answer date',
+  user: 'test answer user',
+};
+
 export const invalidId = 'sk';
 export const validId = '1';

@@ -4,6 +4,7 @@ import {
   getOneQuestion,
   validQuestion,
   postQuestion,
+  postAnswer,
 } from '../controllers';
 
 const router = express.Router();
@@ -15,5 +16,6 @@ router.get('/v1/questions', getAllQuestions);
 router.get('/v1/questions/:questionId', getOneQuestion);
 
 router.post('/v1/questions', postQuestion);
+router.post('/v1/questions/:questionId/answers', postAnswer);
 
 export default router;
