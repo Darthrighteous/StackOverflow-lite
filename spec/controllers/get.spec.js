@@ -25,6 +25,26 @@ describe('GET ROUTE', () => {
     });
   });
 
+  // GET ALL SORT QUERY
+  describe('for all questions with sort query', () => {
+    const data = {};
+    beforeAll((done) => {
+      Request.get('http://localhost:4001/v1/questions?sortBy=score', (error, response, body) => {
+        data.status = response.statusCode;
+        data.questions = JSON.parse(body).questions;
+        done();
+      });
+    });
+
+    it('has status 200', () => {
+      expect(data.status).toBe(200);
+    });
+
+    it('has a title of', () => {
+      expect(data.questions[0].title).toBe('What is sort query?');
+    });
+  });
+
   // GET ONE VALID ID
   describe(`Get Specific question with id ${validId}`, () => {
     const data = {};
