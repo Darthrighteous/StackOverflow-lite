@@ -1,5 +1,5 @@
 import Request from 'request';
-import '../../app';
+import '../../../app';
 import {
   invalidId,
   validId,
