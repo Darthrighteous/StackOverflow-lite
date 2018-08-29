@@ -164,9 +164,13 @@ export const acceptAnswer = async (req, res, next) => {
   const { username } = res.locals.decoded.user;
   const aId = req.params.answerId;
   const qId = req.params.questionId;
-  const rowCount = await db.result('SELECT * FROM answers WHERE id=$1 AND "questionId"=$2 AND username=$3', [aId, qId, username], r => r.rowCount);
 
-  if (rowCount > 0) {
+  const question = await db.one('SELECT * FROM questions WHERE "id"=$1', [qId]);
+  const answer = await db.one('SELECT * FROM answers WHERE "id"=$1', [aId]);
+  // TODO: rewrite the logic in this if block
+  if (username === question.username) {
+    // route is called by question author
+    // accept answer
     try {
       const data = await db.result('UPDATE answers SET accept = $1 WHERE id = $2 AND "questionId"=$3',
         [true, aId, qId]);
@@ -180,6 +184,34 @@ export const acceptAnswer = async (req, res, next) => {
       // console.log(e);
       res.status(400);
       next(e);
+    }
+  } else if (username === answer.username) {
+    // route is called by answer author
+    if (req.body.body) {
+      const update = await db.result('UPDATE answers SET body = $1 WHERE id = $2 AND "questionId"=$3',
+        [req.body.body, aId, qId]);
+      if (update.rowCount > 0) {
+        res.status(200).json({
+          status: 'success',
+          message: `updated ${update.rowCount} answer succesfully`,
+          answerId: aId,
+          questionId: qId,
+        });
+      } else {
+        res.status(400).json({
+          status: 'failure',
+          message: 'update failed',
+          answerId: aId,
+          questionId: qId,
+        });
+      }
+    } else {
+      res.status(400).json({
+        status: 'failure',
+        message: 'require body to update answer',
+        answerId: aId,
+        questionId: qId,
+      });
     }
   } else {
     res.status(404).json({
