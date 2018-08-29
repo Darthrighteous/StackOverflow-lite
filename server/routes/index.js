@@ -21,6 +21,7 @@ import {
 import {
   signUp,
   logIn,
+  verifyJWT,
 } from '../controllers/auth';
 
 
@@ -45,7 +46,7 @@ router.delete('/v1/questions/:questionId', deleteQuestionx);
 router.get('/v2/questions', getAllQuestions); // get all questions
 router.get('/v2/questions/:questionId', getOneQuestion); // get a single question
 
-router.post('/v2/questions', postQuestion); // post question
+router.post('/v2/questions', verifyJWT, postQuestion); // post question
 
 
 // AUTH ROUTES

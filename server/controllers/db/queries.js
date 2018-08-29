@@ -63,7 +63,7 @@ export const postQuestion = async (req, res, next) => {
     // get current time
     const date = getTimeString();
     // get username
-    const { username } = res.locals.user;
+    const { username } = res.locals.decoded.user;
 
     try {
       const { title, body } = req.body;
