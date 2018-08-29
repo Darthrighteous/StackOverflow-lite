@@ -14,6 +14,7 @@ import {
 import {
   getAllQuestions,
   getOneQuestion,
+  postQuestion,
 
 } from '../controllers/db/queries';
 
@@ -37,5 +38,7 @@ router.delete('/v1/questions/:questionId', deleteQuestionx);
 // DATABASE ROUTES
 router.get('/v2/questions', getAllQuestions); // get all questions
 router.get('/v2/questions/:questionId', getOneQuestion); // get a single question
+
+router.post('/v2/questions', postQuestion); // post question
 
 export default router;
