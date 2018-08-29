@@ -6,7 +6,8 @@
   "scripts": {
     "nodemon": "nodemon app.js --exec babel-node",
     "test-init": "jasmine init",
-    "test": "babel-node spec/run.js"
+    "test": "babel-node spec/run.js",
+    "coverage": "nyc npm run test && nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [],
   "author": "",
