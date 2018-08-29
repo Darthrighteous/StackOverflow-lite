@@ -81,3 +81,31 @@ export const postQuestion = async (req, res, next) => {
     }
   }
 };
+
+/**
+* perform database query to create a single user
+* @param {string} user The email of the user
+* @returns {void}
+*/
+export const createUser = async (user) => {
+  try {
+    return await db.one('INSERT INTO users (firstname, lastname, username, email, password) VALUES($1, $2, $3, $4, $5) RETURNING id',
+      [user.firstname, user.lastname, user.username, user.email, user.hash]);
+  } catch (e) {
+    return e;
+  }
+};
+
+/**
+* perform database query to a get a single user
+* @param {string} email The email of the user
+* @returns {user} The user
+*/
+export const getSingleUser = async (email) => {
+  try {
+    const user = await db.one('SELECT * FROM users WHERE email= $1', [email]);
+    return user;
+  } catch (e) {
+    return e;
+  }
+};

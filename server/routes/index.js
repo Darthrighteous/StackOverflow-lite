@@ -18,6 +18,11 @@ import {
 
 } from '../controllers/db/queries';
 
+import {
+  signUp,
+} from '../controllers/auth';
+
+
 const router = express.Router();
 
 // validate question Id
@@ -40,5 +45,9 @@ router.get('/v2/questions', getAllQuestions); // get all questions
 router.get('/v2/questions/:questionId', getOneQuestion); // get a single question
 
 router.post('/v2/questions', postQuestion); // post question
+
+
+// AUTH ROUTES
+router.post('/v2/auth/signup', signUp);
 
 export default router;
