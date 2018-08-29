@@ -1,6 +1,7 @@
 import {
   db,
   validateQuestionBody,
+  validateAnswerBody,
 } from './queryUtils';
 import { getTimeString } from './dateUtils';
 
@@ -77,6 +78,41 @@ export const postQuestion = async (req, res, next) => {
     } catch (e) {
       res.status(400);
       // console.log(e);
+      next(e);
+    }
+  }
+};
+
+/**
+* perform database query to post an answer
+* @param {object} req The request containing question Id
+* @param {object} res The response
+* @param {object} next To pass onto next route
+* @returns {void}
+*/
+export const postAnswer = async (req, res, next) => {
+  const { error } = validateAnswerBody(req.body);
+  if (error) {
+    res.status(400).send(error.details[0].message);
+  } else {
+    // get username
+    const { username } = res.locals.decoded.user;
+    // get question Id and question body
+    const qId = req.params.questionId;
+    const { body } = req.body;
+    try {
+      const date = getTimeString();
+      const data = await db.one('INSERT INTO answers (body, date, username, "questionId") VALUES($1, $2, $3, $4) RETURNING id, "questionId"',
+        [body, date, username, qId]);
+      res.status(201).json({
+        status: 'success',
+        message: 'created one answer succesfully',
+        answerId: data.id,
+        questionId: data.questionId,
+      });
+    } catch (e) {
+      res.status(400);
+      console.log(e);
       next(e);
     }
   }
