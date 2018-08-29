@@ -13,6 +13,7 @@ import {
 
 import {
   getAllQuestions,
+  getOneQuestion,
 
 } from '../controllers/db/queries';
 
@@ -35,5 +36,6 @@ router.delete('/v1/questions/:questionId', deleteQuestionx);
 
 // DATABASE ROUTES
 router.get('/v2/questions', getAllQuestions); // get all questions
+router.get('/v2/questions/:questionId', getOneQuestion); // get a single question
 
 export default router;
