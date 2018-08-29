@@ -21,6 +21,21 @@ export const validateUserBody = (user) => {
 };
 
 /**
+ * validates the body of a log in request
+ * @param {object} body - The input body from a POST log in route.
+ * @returns {object} Joi.validate output
+*/
+export const validateLogInBody = (body) => {
+  const schema = {
+    email: Joi.string().email({ minDomainAtoms: 2 })
+      .required(),
+    password: Joi.string().min(6)
+      .required(),
+  };
+  return Joi.validate(body, schema);
+};
+
+/**
  * checks if an email is in use in the db
  * @param {object} email - The email being checked.
  * @returns {boolean} true if email is found.
