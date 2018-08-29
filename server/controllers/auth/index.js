@@ -82,3 +82,34 @@ export const logIn = async (req, res, next) => {
     next(new Error('user does not exist'));
   }
 };
+
+/**
+* verify the JWT provided
+* @param {object} req The request containing the JWT
+* @param {object} res The response
+* @param {object} next To pass onto next route
+* @returns {void}
+*/
+export const verifyJWT = (req, res, next) => {
+  if (req.headers.authorization !== undefined) {
+    const [, token] = req.headers.authorization.split(' ');
+    jwt.verify(token, secretKey, (err, decoded) => {
+      if (err) {
+        console.log(`ERROR VALIDATING TOKEN ${err}`);
+        res.status(403).json({
+          status: 'unauthorized',
+          message: 'invalid token',
+        });
+      } else {
+        res.locals.decoded = decoded;
+        res.locals.token = token;
+        next();
+      }
+    });
+  } else {
+    res.status(403).json({
+      status: 'unauthorized',
+      message: 'no token found',
+    });
+  }
+};
