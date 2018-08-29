@@ -16,6 +16,7 @@ import {
   getOneQuestion,
   postQuestion,
   postAnswer,
+  deleteQuestion,
 } from '../controllers/db/queries';
 
 import {
@@ -48,6 +49,8 @@ router.get('/v2/questions/:questionId', getOneQuestion); // get a single questio
 
 router.post('/v2/questions', verifyJWT, postQuestion); // post question
 router.post('/v2/questions/:questionId/answers', verifyJWT, postAnswer); // post answer
+
+router.delete('/v2/questions/:questionId', verifyJWT, deleteQuestion); // delete question
 
 
 // AUTH ROUTES
