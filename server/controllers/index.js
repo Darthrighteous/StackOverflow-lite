@@ -27,7 +27,7 @@ seedPosts('question', questionList);
  * @param {object} next - next route
  * @returns {object} error message or passes on to next route
 */
-export const validQuestion = (req, res, next) => {
+export const validQuestionx = (req, res, next) => {
   const index = getIndexById(req.params.questionId, questionList);
   if (!questionList[index]) {
     // question not found
@@ -45,7 +45,7 @@ export const validQuestion = (req, res, next) => {
  * @param {object} next - next route
  * @returns {void}
 */
-export const validQuery = (req, res, next) => {
+export const validQueryx = (req, res, next) => {
   const { error } = validateQuery(req.query);
   if (!error) {
     req.sort = req.query.sortBy;
@@ -60,7 +60,7 @@ export const validQuery = (req, res, next) => {
  * @param {object} res - query response
  * @returns {void}
 */
-export const getAllQuestions = (req, res) => {
+export const getAllQuestionsx = (req, res) => {
   let questions;
   if (req.sort) {
     questions = sortPosts(req.sort, questionList);
@@ -82,7 +82,7 @@ export const getAllQuestions = (req, res) => {
  * @param {object} res - query response
  * @returns {void}
 */
-export const getOneQuestion = (req, res) => {
+export const getOneQuestionx = (req, res) => {
   const { question } = req;
   res.json({
     status: 'success',
@@ -98,7 +98,7 @@ export const getOneQuestion = (req, res) => {
  * @param {object} res - query response
  * @returns {void}
 */
-export const postQuestion = (req, res) => {
+export const postQuestionx = (req, res) => {
   const { error } = validatePost(req.body);
   if (error) {
     res.status(400).send(error.details[0].message);
@@ -120,7 +120,7 @@ export const postQuestion = (req, res) => {
  * @param {object} res - query response
  * @returns {void}
 */
-export const postAnswer = (req, res) => {
+export const postAnswerx = (req, res) => {
   const { error } = validatePost(req.body);
   if (error) {
     res.status(400).send(error.details[0].message);
@@ -142,7 +142,7 @@ export const postAnswer = (req, res) => {
  * @param {object} res - query response
  * @returns {void}
 */
-export const acceptAnswer = (req, res) => {
+export const acceptAnswerx = (req, res) => {
   const index = getIndexById(req.params.answerId, req.question.answers);
   const answer = req.question.answers[index];
 
@@ -166,7 +166,7 @@ export const acceptAnswer = (req, res) => {
  * @param {object} res - query response
  * @returns {void}
 */
-export const editQuestion = (req, res) => {
+export const editQuestionx = (req, res) => {
   const { error } = validateUpdate(req.body);
   if (error) {
     res.status(400).send(error.details[0].message);
@@ -191,7 +191,7 @@ export const editQuestion = (req, res) => {
  * @param {object} res - query response
  * @returns {void}
 */
-export const deleteQuestion = (req, res) => {
+export const deleteQuestionx = (req, res) => {
   questionList.splice(req.index, 1);
   res.status(204).send();
 };

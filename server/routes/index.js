@@ -1,30 +1,39 @@
 import express from 'express';
 import {
-  getAllQuestions,
-  getOneQuestion,
-  validQuestion,
-  validQuery,
-  postQuestion,
-  postAnswer,
-  acceptAnswer,
-  editQuestion,
-  deleteQuestion,
+  getAllQuestionsx,
+  getOneQuestionx,
+  validQuestionx,
+  validQueryx,
+  postQuestionx,
+  postAnswerx,
+  acceptAnswerx,
+  editQuestionx,
+  deleteQuestionx,
 } from '../controllers';
+
+import {
+  getAllQuestions,
+
+} from '../controllers/db/queries';
 
 const router = express.Router();
 
 // validate question Id
-router.use('/v1/questions/:questionId', validQuestion);
-router.use('/v1/questions', validQuery);
+router.use('/v1/questions/:questionId', validQuestionx);
+router.use('/v1/questions', validQueryx);
 
-router.get('/v1/questions', getAllQuestions);
-router.get('/v1/questions/:questionId', getOneQuestion);
+// DUMMY DATA ROUTES
+router.get('/v1/questions', getAllQuestionsx);
+router.get('/v1/questions/:questionId', getOneQuestionx);
 
-router.post('/v1/questions', postQuestion);
-router.post('/v1/questions/:questionId/answers', postAnswer);
+router.post('/v1/questions', postQuestionx);
+router.post('/v1/questions/:questionId/answers', postAnswerx);
 
-router.patch('/v1/questions/:questionId/answers/:answerId', acceptAnswer);
-router.patch('/v1/questions/:questionId', editQuestion);
-router.delete('/v1/questions/:questionId', deleteQuestion);
+router.patch('/v1/questions/:questionId/answers/:answerId', acceptAnswerx);
+router.patch('/v1/questions/:questionId', editQuestionx);
+router.delete('/v1/questions/:questionId', deleteQuestionx);
+
+// DATABASE ROUTES
+router.get('/v2/questions', getAllQuestions); // get all questions
 
 export default router;
