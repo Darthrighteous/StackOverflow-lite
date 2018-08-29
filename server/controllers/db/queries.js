@@ -153,6 +153,45 @@ export const deleteQuestion = async (req, res, next) => {
 };
 
 /**
+* perform database query to accept an answer to a question
+* @param {object} req The request containing question Id
+* @param {object} res The response
+* @param {object} next To pass onto next route
+* @returns {void}
+*/
+export const acceptAnswer = async (req, res, next) => {
+  // TODO: check that question belongs to user
+  const { username } = res.locals.decoded.user;
+  const aId = req.params.answerId;
+  const qId = req.params.questionId;
+  const rowCount = await db.result('SELECT * FROM answers WHERE id=$1 AND "questionId"=$2 AND username=$3', [aId, qId, username], r => r.rowCount);
+
+  if (rowCount > 0) {
+    try {
+      const data = await db.result('UPDATE answers SET accept = $1 WHERE id = $2 AND "questionId"=$3',
+        [true, aId, qId]);
+      res.status(200).json({
+        status: 'success',
+        message: `accepted ${data.rowCount} answer succesfully`,
+        answerId: aId,
+        questionId: qId,
+      });
+    } catch (e) {
+      // console.log(e);
+      res.status(400);
+      next(e);
+    }
+  } else {
+    res.status(404).json({
+      status: 'failure',
+      message: 'answer not found, or user token does not match answer owner',
+      answerId: aId,
+      questionId: qId,
+    });
+  }
+};
+
+/**
 * perform database query to create a single user
 * @param {string} user The email of the user
 * @returns {void}
