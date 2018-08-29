@@ -24,3 +24,16 @@ export const validateQuestionBody = (post) => {
   };
   return Joi.validate(post, schema);
 };
+
+
+/**
+ * validates the body of an answer(POST).
+ * @param {object} post - The input body from a POST answer route.
+ * @returns {object} Joi.validate output
+*/
+export const validateAnswerBody = (post) => {
+  const schema = {
+    body: Joi.string().required(),
+  };
+  return Joi.validate(post, schema);
+};
