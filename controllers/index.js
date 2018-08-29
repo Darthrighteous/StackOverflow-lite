@@ -12,6 +12,7 @@ import {
 import {
   validateUpdate,
   validatePost,
+  validateQuery,
 } from './validateUtils';
 
 // the data
@@ -38,13 +39,35 @@ export const validQuestion = (req, res, next) => {
 };
 
 /**
+ * Middleware: checks if query exists and is valid and passes on to next route
+ * @param {object} req - query request
+ * @param {object} res - query response
+ * @param {object} next - next route
+ * @returns {void}
+*/
+export const validQuery = (req, res, next) => {
+  const { error } = validateQuery(req.query);
+  if (!error) {
+    req.sort = req.query.sortBy;
+  }
+  next();
+};
+
+
+/**
  * Middleware: GETS all question.
  * @param {object} req - query request
  * @param {object} res - query response
  * @returns {void}
 */
 export const getAllQuestions = (req, res) => {
-  const questions = questionList;
+  let questions;
+  if (req.sort) {
+    questions = sortPosts(req.sort, questionList);
+  } else {
+    req.sort = 'date';
+    questions = questionList;
+  }
   res.status(200).json({
     status: 'success',
     sortedBy: req.sort,

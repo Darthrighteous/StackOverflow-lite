@@ -3,6 +3,7 @@ import {
   getAllQuestions,
   getOneQuestion,
   validQuestion,
+  validQuery,
   postQuestion,
   postAnswer,
   acceptAnswer,
@@ -14,6 +15,7 @@ const router = express.Router();
 
 // validate question Id
 router.use('/v1/questions/:questionId', validQuestion);
+router.use('/v1/questions', validQuery);
 
 router.get('/v1/questions', getAllQuestions);
 router.get('/v1/questions/:questionId', getOneQuestion);

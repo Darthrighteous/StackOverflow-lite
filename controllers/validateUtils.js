@@ -27,3 +27,15 @@ export const validateUpdate = (update) => {
 
   return Joi.validate(update, schema);
 };
+
+/**
+ * validates a query
+ * @param {object} query - The request query
+ * @returns {object} Joi.validate output
+*/
+export const validateQuery = (query) => {
+  const schema = {
+    sortBy: Joi.any().valid(['score', 'answers', 'date']),
+  };
+  return Joi.validate(query, schema);
+};

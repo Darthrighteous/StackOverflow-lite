@@ -66,6 +66,27 @@ export const createAnswer = (questionId, requestBody) => {
 };
 
 /**
+  * Sorts an array of posts.
+  * @param {string} sortType query to be sorted by.
+  * @param {array} arr array to be sorted.
+  * @returns {array} the sorted array
+  */
+export const sortPosts = (sortType, arr) => {
+  const sorted = arr;
+  switch (sortType) {
+    case 'score':
+      sorted.sort((a, b) => b.score - a.score);
+      break;
+    case 'answers':
+      sorted.sort((a, b) => b.answerCount - a.answerCount);
+      break;
+    case 'date':
+    default:
+  }
+  return sorted;
+};
+
+/**
   * seed random posts into a postList.
   * @param {string} postType post type to be seeded.
   * @param {array} arr post list to be seeded into.
