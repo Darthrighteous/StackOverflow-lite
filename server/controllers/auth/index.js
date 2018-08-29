@@ -66,6 +66,7 @@ export const logIn = async (req, res, next) => {
     if (result) {
       jwt.sign({ user }, secretKey, (err, token) => {
         user.token = token;
+        console.log(token);
       });
       res.status(200).send({
         status: 'success',
