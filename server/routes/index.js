@@ -17,6 +17,7 @@ import {
   postQuestion,
   postAnswer,
   deleteQuestion,
+  acceptAnswer,
 } from '../controllers/db/queries';
 
 import {
@@ -51,6 +52,8 @@ router.post('/v2/questions', verifyJWT, postQuestion); // post question
 router.post('/v2/questions/:questionId/answers', verifyJWT, postAnswer); // post answer
 
 router.delete('/v2/questions/:questionId', verifyJWT, deleteQuestion); // delete question
+
+router.patch('/v2/questions/:questionId/answers/:answerId', verifyJWT, acceptAnswer); // accept answer
 
 
 // AUTH ROUTES

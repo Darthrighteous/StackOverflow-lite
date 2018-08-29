@@ -153,6 +153,77 @@ export const deleteQuestion = async (req, res, next) => {
 };
 
 /**
+* perform database query to accept an answer to a question
+* @param {object} req The request containing question Id
+* @param {object} res The response
+* @param {object} next To pass onto next route
+* @returns {void}
+*/
+export const acceptAnswer = async (req, res, next) => {
+  // TODO: check that question belongs to user
+  const { username } = res.locals.decoded.user;
+  const aId = req.params.answerId;
+  const qId = req.params.questionId;
+
+  const question = await db.one('SELECT * FROM questions WHERE "id"=$1', [qId]);
+  const answer = await db.one('SELECT * FROM answers WHERE "id"=$1', [aId]);
+  // TODO: rewrite the logic in this if block
+  if (username === question.username) {
+    // route is called by question author
+    // accept answer
+    try {
+      const data = await db.result('UPDATE answers SET accept = $1 WHERE id = $2 AND "questionId"=$3',
+        [true, aId, qId]);
+      res.status(200).json({
+        status: 'success',
+        message: `accepted ${data.rowCount} answer succesfully`,
+        answerId: aId,
+        questionId: qId,
+      });
+    } catch (e) {
+      // console.log(e);
+      res.status(400);
+      next(e);
+    }
+  } else if (username === answer.username) {
+    // route is called by answer author
+    if (req.body.body) {
+      const update = await db.result('UPDATE answers SET body = $1 WHERE id = $2 AND "questionId"=$3',
+        [req.body.body, aId, qId]);
+      if (update.rowCount > 0) {
+        res.status(200).json({
+          status: 'success',
+          message: `updated ${update.rowCount} answer succesfully`,
+          answerId: aId,
+          questionId: qId,
+        });
+      } else {
+        res.status(400).json({
+          status: 'failure',
+          message: 'update failed',
+          answerId: aId,
+          questionId: qId,
+        });
+      }
+    } else {
+      res.status(400).json({
+        status: 'failure',
+        message: 'require body to update answer',
+        answerId: aId,
+        questionId: qId,
+      });
+    }
+  } else {
+    res.status(404).json({
+      status: 'failure',
+      message: 'answer not found, or user token does not match answer owner',
+      answerId: aId,
+      questionId: qId,
+    });
+  }
+};
+
+/**
 * perform database query to create a single user
 * @param {string} user The email of the user
 * @returns {void}
