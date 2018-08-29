@@ -20,6 +20,7 @@ import {
 
 import {
   signUp,
+  logIn,
 } from '../controllers/auth';
 
 
@@ -49,5 +50,6 @@ router.post('/v2/questions', postQuestion); // post question
 
 // AUTH ROUTES
 router.post('/v2/auth/signup', signUp);
+router.post('/v2/auth/login', logIn);
 
 export default router;
