@@ -1,6 +1,8 @@
 import {
   db,
+  validateQuestionBody,
 } from './queryUtils';
+import { getTimeString } from './dateUtils';
 
 /**
 * perform database query to get all question
@@ -17,8 +19,8 @@ export const getAllQuestions = async (req, res) => {
       questions,
     });
   } catch (e) {
-    // next(e);
-    console.log(e);
+    next(e);
+    // console.log(e);
     res.status(404);
   }
 };
@@ -40,8 +42,42 @@ export const getOneQuestion = async (req, res, next) => {
       question,
     });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     res.status(404);
     next(new Error(`Question of that id= ${id} not found`));
+  }
+};
+
+/**
+* perform database query to post a question
+* @param {object} req The request
+* @param {object} res The response
+* @param {object} next To pass onto next route
+* @returns {void}
+*/
+export const postQuestion = async (req, res, next) => {
+  const { error } = validateQuestionBody(req.body);
+  if (error) {
+    res.status(400).send(error.details[0].message);
+  } else {
+    // get current time
+    const date = getTimeString();
+    // get username
+    const { username } = res.locals.user;
+
+    try {
+      const { title, body } = req.body;
+      const { id } = await db.one('INSERT INTO questions(title, body, username, date) VALUES($1, $2, $3, $4) RETURNING id',
+        [title, body, username, date]);
+      res.status(201).json({
+        status: 'success',
+        message: 'created one question succesfully',
+        id,
+      });
+    } catch (e) {
+      res.status(400);
+      // console.log(e);
+      next(e);
+    }
   }
 };
