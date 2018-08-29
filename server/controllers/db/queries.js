@@ -112,9 +112,43 @@ export const postAnswer = async (req, res, next) => {
       });
     } catch (e) {
       res.status(400);
-      console.log(e);
+      // console.log(e);
       next(e);
     }
+  }
+};
+
+/**
+* perform database query to delete a question by Id
+* @param {object} req The request
+* @param {object} res The response
+* @param {object} next To pass onto next route
+* @returns {void}
+*/
+export const deleteQuestion = async (req, res, next) => {
+  const qId = req.params.questionId;
+  // check that question belongs to user
+  const { username } = res.locals.decoded.user;
+  const rowCount = await db.result('SELECT * FROM questions WHERE id=$1 AND "username"=$2', [qId, username], r => r.rowCount);
+  // if rowCount is greater than 0, question belongs to user.
+  if (rowCount > 0) {
+    try {
+      const result = await db.result('DELETE FROM questions WHERE id = $1', qId);
+      res.status(200).json({
+        status: 'success',
+        message: `deleted ${result.rowCount} row(s) of succesfully`,
+        id: qId,
+      });
+    } catch (e) {
+      res.status(400);
+      // console.log(e);
+      next(e);
+    }
+  } else {
+    res.status(403).json({
+      status: 'failure',
+      message: 'question not found, or user token does not match question owner',
+    });
   }
 };
 
