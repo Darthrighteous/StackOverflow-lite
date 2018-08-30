@@ -21,10 +21,12 @@ const secretKey = 'public';
 * @returns {void}
 */
 export const signUp = async (req, res, next) => {
-  const { error } = validateUserBody(req.body);
-  if (error) {
-    res.status(400).send(error.details[0].message);
-    return;
+  const validate = validateUserBody(req.body);
+  if (validate != null) {
+    res.status(400).json({
+      status: 'failure',
+      message: validate,
+    });
   }
 
   if (await checkEmailInUse(req.body.email)) {
@@ -39,6 +41,7 @@ export const signUp = async (req, res, next) => {
         userId: result.id,
       });
     } else {
+      console.log('SIGNUP ERROR' + result);
       res.status(400);
       next(result);
     }
@@ -52,10 +55,13 @@ export const signUp = async (req, res, next) => {
 * @param {object} next To pass onto next route
 * @returns {void}
 */
-export const logIn = async (req, res, next) => {
-  const { error } = validateLogInBody(req.body);
-  if (error) {
-    res.status(400).send(error.details[0].message);
+export const logIn = async (req, res) => {
+  const validate = validateLogInBody(req.body);
+  if (validate != null) {
+    res.status(400).json({
+      status: 'failure',
+      message: validate,
+    });
   }
 
   if (await checkEmailInUse(req.body.email)) {

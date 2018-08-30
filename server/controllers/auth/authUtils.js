@@ -1,4 +1,3 @@
-import Joi from 'joi';
 import { getSingleUser } from '../db/queries';
 
 /**
@@ -7,17 +6,58 @@ import { getSingleUser } from '../db/queries';
  * @returns {object} Joi.validate output
 */
 export const validateUserBody = (user) => {
-  const schema = {
-    firstname: Joi.string().max(16),
-    lastname: Joi.string().max(16),
-    username: Joi.string().alphanum().min(4).max(16)
-      .required(),
-    email: Joi.string().email({ minDomainAtoms: 2 })
-      .required(),
-    password: Joi.string().min(6)
-      .required(),
-  };
-  return Joi.validate(user, schema);
+  if (typeof user.firstname !== 'undefined') {
+    const validFirstName = typeof user.firstname === 'string'
+    && user.firstname.trim() !== ''
+    && user.firstname.trim().length <= 16;
+    // && (/[^A-Za-z]+/g).test(user.firstname);
+    if (!validFirstName) {
+      return 'first name must be a non-empty string';
+    }
+  }
+
+  if (typeof user.lastname !== 'undefined') {
+    const validFirstName = typeof user.firstname === 'string'
+    && user.lastname.trim() !== ''
+    && user.lastname.trim().length <= 16;
+    // && (/[^A-Za-z]+/g).test(user.lastname);
+    if (!validFirstName) {
+      return 'last name must be a non-empty string';
+    }
+  }
+
+  if (typeof user.username === 'undefined') {
+    return 'must provide username';
+  }
+  const validUsername = typeof user.username === 'string'
+    && user.username.trim() !== ''
+    && user.username.trim().length <= 16;
+    // && (/[^A-Za-z]+/g).test(user.username);
+  if (!validUsername) {
+    return 'Username must be a non-empty string';
+  }
+
+  if (typeof user.email === 'undefined') {
+    return 'must provide email';
+  }
+  const validEmail = typeof user.email === 'string'
+    && user.email.trim() !== '';
+    // && (/[^A-Za-z]+/g).test(user.username);
+  if (!validEmail) {
+    return 'Email must be a non-empty string';
+  }
+
+  if (typeof user.password === 'undefined') {
+    return 'must provide password';
+  }
+  const validPassword = typeof user.password === 'string'
+    && user.password.trim() !== ''
+    && user.password.trim().length >= 6;
+    // && (/[^A-Za-z]+/g).test(user.password);
+  if (!validPassword) {
+    return 'Password must be a non-empty string, up to 6 characters';
+  }
+  return null;
 };
 
 /**
@@ -26,13 +66,29 @@ export const validateUserBody = (user) => {
  * @returns {object} Joi.validate output
 */
 export const validateLogInBody = (body) => {
-  const schema = {
-    email: Joi.string().email({ minDomainAtoms: 2 })
-      .required(),
-    password: Joi.string().min(6)
-      .required(),
-  };
-  return Joi.validate(body, schema);
+  // const valid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(body.email);
+  // console.log(valid);
+  if (typeof body.email === 'undefined') {
+    return 'must provide email';
+  }
+  const validEmail = typeof body.email === 'string'
+    && body.email.trim() !== '';
+    // && (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/).test(body.email);
+  if (!validEmail) {
+    return 'Invalid Email';
+  }
+
+  if (typeof body.password === 'undefined') {
+    return 'must provide password';
+  }
+  const validPassword = typeof body.password === 'string'
+    && body.password.trim() !== ''
+    && body.password.trim().length >= 6;
+    // && (/[^A-Za-z]+/g).test(user.password);
+  if (!validPassword) {
+    return 'Password must be a non-empty string, up to 6 characters';
+  }
+  return null;
 };
 
 /**

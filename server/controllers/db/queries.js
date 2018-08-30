@@ -58,10 +58,12 @@ export const getOneQuestion = async (req, res, next) => {
 * @returns {void}
 */
 export const postQuestion = async (req, res, next) => {
-  console.log('POSTING');
-  const { error } = validateQuestionBody(req.body);
-  if (error) {
-    res.status(400).send(error.details[0].message);
+  const validate = validateQuestionBody(req.body);
+  if (validate !== null) {
+    res.status(400).json({
+      status: 'failure',
+      message: validate,
+    });
   } else {
     // get current time
     const date = getTimeString();
@@ -79,8 +81,8 @@ export const postQuestion = async (req, res, next) => {
       });
     } catch (e) {
       res.status(400);
-      // console.log(e);
-      next(e);
+      const error = new Error(`${e.message}`);
+      next(error);
     }
   }
 };
@@ -93,9 +95,12 @@ export const postQuestion = async (req, res, next) => {
 * @returns {void}
 */
 export const postAnswer = async (req, res, next) => {
-  const { error } = validateAnswerBody(req.body);
-  if (error) {
-    res.status(400).send(error.details[0].message);
+  const validate = validateAnswerBody(req.body);
+  if (validate !== null) {
+    res.status(400).json({
+      status: 'failure',
+      message: validate,
+    });
   } else {
     // get username
     const { username } = res.locals.decoded.user;
@@ -114,8 +119,8 @@ export const postAnswer = async (req, res, next) => {
       });
     } catch (e) {
       res.status(400);
-      // console.log(e);
-      next(e);
+      const error = new Error(`${e.message}`);
+      next(error);
     }
   }
 };
@@ -143,8 +148,8 @@ export const deleteQuestion = async (req, res, next) => {
       });
     } catch (e) {
       res.status(400);
-      // console.log(e);
-      next(e);
+      const error = new Error(`${e.message}`);
+      next(error);
     }
   } else {
     res.status(403).json({
@@ -183,12 +188,19 @@ export const acceptAnswer = async (req, res, next) => {
         questionId: qId,
       });
     } catch (e) {
-      // console.log(e);
-      res.status(400);
-      next(e);
+      const error = new Error(`${e.message}`);
+      next(error);
     }
   } else if (username === answer.username) {
     // route is called by answer author
+    // validate answer edit body
+    const validate = validateAnswerBody(req.body);
+    if (validate !== null) {
+      res.status(400).json({
+        status: 'failure',
+        message: validate,
+      });
+    }
     if (req.body.body) {
       const update = await db.result('UPDATE answers SET body = $1 WHERE id = $2 AND "questionId"=$3',
         [req.body.body, aId, qId]);
