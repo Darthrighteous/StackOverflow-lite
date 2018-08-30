@@ -76,8 +76,8 @@ export const initTables = () => {
 
   CREATE TABLE users (
     id serial PRIMARY KEY,
-    first_name VARCHAR,
-    last_name VARCHAR,
+    firstname VARCHAR,
+    lastname VARCHAR,
     email VARCHAR,
     username VARCHAR (30) NOT NULL,
     password VARCHAR (60) NOT NULL)`;
