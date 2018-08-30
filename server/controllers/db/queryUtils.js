@@ -27,9 +27,9 @@ const pool = new Pool({
 export const initTables = () => {
   const queryText = `
   DROP TABLE 
-  IF EXISTS questionss;
+  IF EXISTS questions;
 
-  CREATE TABLE questionss (
+  CREATE TABLE questions (
     id serial PRIMARY KEY,
     title VARCHAR NOT NULL,
     body VARCHAR,
@@ -40,7 +40,7 @@ export const initTables = () => {
     accepted_answer INTEGER DEFAULT -1);
 
   INSERT INTO
-  questionss (title, body, username)
+  questions (title, body, username)
   VALUES
   ('question 1','body 1','user1'),
   ('question 2','body 2','user2'),
@@ -50,9 +50,9 @@ export const initTables = () => {
   ('question 6','body 6','user6');
 
   DROP TABLE 
-  IF EXISTS answerss;
+  IF EXISTS answers;
 
-  CREATE TABLE answerss (
+  CREATE TABLE answers (
     id serial PRIMARY KEY,
     body VARCHAR,
     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -62,7 +62,7 @@ export const initTables = () => {
     question_id INTEGER DEFAULT -1);
 
   INSERT INTO
-  answerss (body, username, question_id)
+  answers (body, username, question_id)
   VALUES
   ('body 1','user1', 1),
   ('body 2','user2', 2),
@@ -72,9 +72,9 @@ export const initTables = () => {
   ('body 6','user6', 6);
   
   DROP TABLE 
-  IF EXISTS userss;
+  IF EXISTS users;
 
-  CREATE TABLE userss (
+  CREATE TABLE users (
     id serial PRIMARY KEY,
     first_name VARCHAR,
     last_name VARCHAR,
