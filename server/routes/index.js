@@ -20,6 +20,17 @@ import {
 } from './routeUtils';
 
 const router = express.Router();
+router.use('/', (req, res) => {
+  res.json({
+    'LIST OF': 'AVAILABLE ROUTES',
+    'GET ALL': '/v2/questions',
+    'GET ONE': '/v2/questions/:questionId',
+    'POST ONE': '/v2/questions',
+    'POST ANSWER': '/v2/questions/:questionId/answers',
+    'DELETE QUESTION': '/v2/questions/:questionId',
+    'PATCH ANSWER': '/v2/questions/:questionId/answers/:answerId',
+  });
+});
 
 router.use('/v2/questions/:questionId', validateQId);
 router.use('/v2/questions/:questionId/answers/:answerId', validateAId);
