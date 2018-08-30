@@ -56,7 +56,6 @@ export const logIn = async (req, res, next) => {
   const { error } = validateLogInBody(req.body);
   if (error) {
     res.status(400).send(error.details[0].message);
-    return;
   }
 
   if (await checkEmailInUse(req.body.email)) {
@@ -80,7 +79,10 @@ export const logIn = async (req, res, next) => {
       });
     }
   } else {
-    next(new Error('user does not exist'));
+    res.status(401).json({
+      status: 'failure',
+      message: 'User does not exist',
+    });
   }
 };
 
