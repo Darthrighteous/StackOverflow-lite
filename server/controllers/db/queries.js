@@ -3,15 +3,17 @@ import {
   validateQuestionBody,
   validateAnswerBody,
 } from './queryUtils';
+
 import { getTimeString } from './dateUtils';
 
 /**
 * perform database query to get all question
 * @param {object} req The request
 * @param {object} res The response
+* @param {object} next Call to pass onto next middleware
 * @returns {void}
 */
-export const getAllQuestions = async (req, res) => {
+export const getAllQuestions = async (req, res, next) => {
   try {
     const questions = await db.any('SELECT * FROM questions');
     res.status(200).json({
@@ -20,9 +22,9 @@ export const getAllQuestions = async (req, res) => {
       questions,
     });
   } catch (e) {
-    next(e);
-    // console.log(e);
     res.status(404);
+    const error = new Error(`${e.message} Questions not found`);
+    next(error);
   }
 };
 
@@ -34,18 +36,17 @@ export const getAllQuestions = async (req, res) => {
 * @returns {void}
 */
 export const getOneQuestion = async (req, res, next) => {
-  const id = req.params.questionId;
   try {
-    const question = await db.one(`SELECT * FROM questions WHERE id=${id}`);
+    const question = await db.one(`SELECT * FROM questions WHERE id=${req.qId}`);
     res.status(200).json({
       status: 'success',
       message: 'one question retrieved successfully',
       question,
     });
   } catch (e) {
-    // console.log(e);
     res.status(404);
-    next(new Error(`Question of that id= ${id} not found`));
+    const error = new Error(`${e.message} Question of id= ${req.qId} not found`);
+    next(error);
   }
 };
 
