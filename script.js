@@ -37,3 +37,11 @@ window.addEventListener('click', (event) => {
 if (document.title === 'Profile Page') {
   document.getElementById('authOptions').style.display = 'none'
 }
+
+if (document.title === 'SignIn Page') {
+  document.getElementById('loginbutton').style.display = 'none'
+}
+
+if (document.title === 'Signup Page') {
+  document.getElementById('signupbutton').style.display = 'none'
+}
