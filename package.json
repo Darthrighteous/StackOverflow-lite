@@ -6,7 +6,7 @@
   "scripts": {
     "nodemon": "nodemon app.js --exec babel-node",
     "build": "babel server -d dist/server && babel app.js -d dist",
-    "start": "babel-node app.js",
+    "start": "babel-node app.js ",
     "test-init": "jasmine init",
     "test": "babel-node server/spec/run.js",
     "coverage": "nyc npm run test && nyc report --reporter=text-lcov | coveralls"
