@@ -2,9 +2,21 @@ import {
   db,
   validateQuestionBody,
   validateAnswerBody,
+  createQuestionTable,
+  seedQuestionTable,
+  dropQuestionTable,
 } from './queryUtils';
 
 import { getTimeString } from './dateUtils';
+
+/**
+*
+*/
+export const initializeDb = () => {
+  dropQuestionTable();
+  createQuestionTable();
+  seedQuestionTable();
+};
 
 /**
 * perform database query to get all question

@@ -1,5 +1,10 @@
 import promise from 'bluebird';
 import pgpmodule from 'pg-promise';
+import {
+  questions,
+  answers,
+  users,
+} from './sql';
 
 const options = {
   // Initialization Options
@@ -10,6 +15,37 @@ const pgp = pgpmodule(options);
 const connectionString = 'postgres://Admin:a@localhost:5432/Stackoverflow-lite';
 export const db = pgp(connectionString);
 
+/**
+* initialize all tables
+*/
+export const initAllTables = () => {
+  db.none(questions.drop);
+  db.none(questions.create);
+  db.none(questions.seed);
+
+  db.none(answers.drop);
+  db.none(answers.create);
+  db.none(answers.seed);
+
+  db.none(users.drop);
+  db.none(users.create);
+  db.none(users.seed);
+};
+
+/**
+* creates a question table
+*/
+export const createQuestionTable = () => db.none(questions.create);
+
+/**
+* seeds the question table
+*/
+export const seedQuestionTable = () => db.none(questions.seed);
+
+/**
+* drop the question table
+*/
+export const dropQuestionTable = () => db.none(questions.drop);
 
 /**
  * validates the body of a question(POST).
