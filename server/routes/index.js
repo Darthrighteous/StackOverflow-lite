@@ -1,7 +1,5 @@
 import express from 'express';
 import {
-  initializeDb,
-
   getAllQuestions,
   getOneQuestion,
   postQuestion,
@@ -25,9 +23,6 @@ const router = express.Router();
 
 router.use('/v2/questions/:questionId', validateQId);
 router.use('/v2/questions/:questionId/answers/:answerId', validateAId);
-
-// INIT
-router.get('/v2/initialize', initializeDb);
 
 // DATABASE ROUTES
 router.get('/v2/questions', getAllQuestions); // get all questions

@@ -65,15 +65,13 @@ export const postQuestion = async (req, res, next) => {
       message: validate,
     });
   } else {
-    // get current time
-    const date = getTimeString();
     // get username
     const { username } = res.locals.decoded.user;
 
     try {
       const { title, body } = req.body;
-      const { id } = await db.one('INSERT INTO questions(title, body, username, date) VALUES($1, $2, $3, $4) RETURNING id',
-        [title, body, username, date]);
+      const { id } = await db.one('INSERT INTO questions(title, body, username) VALUES($1, $2, $3) RETURNING id',
+        [title, body, username]);
       res.status(201).json({
         status: 'success',
         message: 'created one question succesfully',
@@ -108,14 +106,13 @@ export const postAnswer = async (req, res, next) => {
     const qId = req.params.questionId;
     const { body } = req.body;
     try {
-      const date = getTimeString();
-      const data = await db.one('INSERT INTO answers (body, date, username, "questionId") VALUES($1, $2, $3, $4) RETURNING id, "questionId"',
-        [body, date, username, qId]);
+      const data = await db.one('INSERT INTO answers (body, username, question_id) VALUES($1, $2, $3) RETURNING id, question_id',
+        [body, username, qId]);
       res.status(201).json({
         status: 'success',
-        message: 'created one answer succesfully',
+        message: 'created one answer successfully',
         answerId: data.id,
-        questionId: data.questionId,
+        questionId: data.question_id,
       });
     } catch (e) {
       res.status(400);
@@ -172,15 +169,16 @@ export const acceptAnswer = async (req, res, next) => {
   const aId = req.params.answerId;
   const qId = req.params.questionId;
 
-  const question = await db.one('SELECT * FROM questions WHERE "id"=$1', [qId]);
-  const answer = await db.one('SELECT * FROM answers WHERE "id"=$1', [aId]);
+  const question = await db.one('SELECT * FROM questions WHERE id=$1', [qId]);
+  const answer = await db.one('SELECT * FROM answers WHERE id=$1', [aId]);
+
   // TODO: rewrite the logic in this if block
   if (username === question.username) {
     // route is called by question author
     // accept answer
     try {
-      const data = await db.result('UPDATE answers SET accept = $1 WHERE id = $2 AND "questionId"=$3',
-        [true, aId, qId]);
+      const data = await db.result('UPDATE answers SET accept = $1 WHERE id= $2',
+        [true, aId]);
       res.status(200).json({
         status: 'success',
         message: `accepted ${data.rowCount} answer succesfully`,
@@ -202,8 +200,8 @@ export const acceptAnswer = async (req, res, next) => {
       });
     }
     if (req.body.body) {
-      const update = await db.result('UPDATE answers SET body = $1 WHERE id = $2 AND "questionId"=$3',
-        [req.body.body, aId, qId]);
+      const update = await db.result('UPDATE answers SET body = $1 WHERE id = $2',
+        [req.body.body, aId]);
       if (update.rowCount > 0) {
         res.status(200).json({
           status: 'success',
@@ -230,7 +228,7 @@ export const acceptAnswer = async (req, res, next) => {
   } else {
     res.status(404).json({
       status: 'failure',
-      message: 'answer not found, or user token does not match answer owner',
+      message: 'answer not found, or user token does not match question/answer owner',
       answerId: aId,
       questionId: qId,
     });
@@ -244,7 +242,7 @@ export const acceptAnswer = async (req, res, next) => {
 */
 export const createUser = async (user) => {
   try {
-    return await db.one('INSERT INTO users (firstname, lastname, username, email, password) VALUES($1, $2, $3, $4, $5) RETURNING id',
+    return await db.one('INSERT INTO users (firstname, lastname, username, email, password) VALUES($1, $2, $3, $4, $5) RETURNING email',
       [user.firstname, user.lastname, user.username, user.email, user.hash]);
   } catch (e) {
     return e;
@@ -258,8 +256,7 @@ export const createUser = async (user) => {
 */
 export const getSingleUser = async (email) => {
   try {
-    const user = await db.one('SELECT * FROM users WHERE email= $1', [email]);
-    return user;
+    return await db.one('SELECT * FROM users WHERE email= $1', [email]);
   } catch (e) {
     return e;
   }

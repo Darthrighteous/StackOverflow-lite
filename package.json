@@ -5,6 +5,8 @@
   "main": "lib/app.js",
   "scripts": {
     "nodemon": "nodemon app.js --exec babel-node",
+    "build": "babel server -d dist/server && babel app.js -d dist",
+    "start": "babel-node app.js ",
     "test-init": "jasmine init",
     "test": "babel-node server/spec/run.js",
     "coverage": "nyc npm run test && nyc report --reporter=text-lcov | coveralls"
@@ -13,6 +15,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-airbnb": "^2.5.3",
+    "babel-preset-env": "^1.7.0",
+    "@babel/polyfill": "^7.0.0",
     "bcrypt": "^3.0.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
@@ -26,10 +33,6 @@
     "request": "^2.88.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-preset-airbnb": "^2.5.3",
-    "babel-preset-env": "^1.7.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.3.0",
     "eslint-config-airbnb-base": "^13.1.0",
