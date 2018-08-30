@@ -57,6 +57,7 @@ export const getOneQuestion = async (req, res, next) => {
 * @returns {void}
 */
 export const postQuestion = async (req, res, next) => {
+  console.log('POSTING');
   const { error } = validateQuestionBody(req.body);
   if (error) {
     res.status(400).send(error.details[0].message);
