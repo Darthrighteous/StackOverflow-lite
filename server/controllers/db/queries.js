@@ -113,7 +113,7 @@ export const postAnswer = async (req, res, next) => {
         [body, date, username, qId]);
       res.status(201).json({
         status: 'success',
-        message: 'created one answer succesfully',
+        message: 'created one answer successfully',
         answerId: data.id,
         questionId: data.questionId,
       });
