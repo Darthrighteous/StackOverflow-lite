@@ -1,6 +1,5 @@
 import promise from 'bluebird';
 import pgpmodule from 'pg-promise';
-import Joi from 'joi';
 
 const options = {
   // Initialization Options
@@ -18,11 +17,21 @@ export const db = pgp(connectionString);
  * @returns {object} Joi.validate output
 */
 export const validateQuestionBody = (post) => {
-  const schema = {
-    title: Joi.string().required(),
-    body: Joi.string(),
-  };
-  return Joi.validate(post, schema);
+  if (typeof post.title === 'undefined') {
+    return 'must provide title';
+  }
+  const validTitle = typeof post.title === 'string' && post.title.trim() !== '';
+  if (!validTitle) {
+    return 'Title must be a non-empty string';
+  }
+  if (typeof post.body !== 'undefined') {
+    const validBody = typeof post.body === 'string';
+    if (!validBody) {
+      return 'Body must be a string';
+    }
+    return null;
+  }
+  return null;
 };
 
 
@@ -32,8 +41,12 @@ export const validateQuestionBody = (post) => {
  * @returns {object} Joi.validate output
 */
 export const validateAnswerBody = (post) => {
-  const schema = {
-    body: Joi.string().required(),
-  };
-  return Joi.validate(post, schema);
+  if (typeof post.body === 'undefined') {
+    return 'must provide body';
+  }
+  const validBody = typeof post.body === 'string' && post.body.trim() !== '';
+  if (!validBody) {
+    return 'Body must be a non-empty string';
+  }
+  return null;
 };

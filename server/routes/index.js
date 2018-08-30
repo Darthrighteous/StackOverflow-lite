@@ -14,8 +14,15 @@ import {
   verifyJWT,
 } from '../controllers/auth';
 
+import {
+  validateQId,
+  validateAId,
+} from './routeUtils';
 
 const router = express.Router();
+
+router.use('/v2/questions/:questionId', validateQId);
+router.use('/v2/questions/:questionId/answers/:answerId', validateAId);
 
 // DATABASE ROUTES
 router.get('/v2/questions', getAllQuestions); // get all questions
@@ -31,5 +38,12 @@ router.patch('/v2/questions/:questionId/answers/:answerId', verifyJWT, acceptAns
 // AUTH ROUTES
 router.post('/v2/auth/signup', signUp);
 router.post('/v2/auth/login', logIn);
+
+router.use((err, req, res, next) => {
+  res.json({
+    status: 'failure',
+    message: err.message,
+  });
+});
 
 export default router;
