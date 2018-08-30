@@ -10,7 +10,8 @@ const options = {
 const pgp = pgpmodule(options);
 
 // const connectionString = 'postgres://Admin:a@localhost:5432/Stackoverflow-lite';
-const connectionString = 'postgres://uvpmkfrmhhtjat:7e69cc7451b2fa93566bed21eee2428b8e8225ac3f43bcfbc4df445f7849ace9@ec2-54-83-51-78.compute-1.amazonaws.com:5432/deomppek79o3jn'
+// const connectionString = 'postgres://uvpmkfrmhhtjat:7e69cc7451b2fa93566bed21eee2428b8e8225ac3f43bcfbc4df445f7849ace9@ec2-54-83-51-78.compute-1.amazonaws.com:5432/deomppek79o3jn'
+const connectionString = 'postgres://mznpvudk:xrMV5SGVt4dwHQZ0OJbxKDAsfRLFyu8W@horton.elephantsql.com:5432/mznpvudk';
 export const db = pgp(connectionString);
 
 dotenv.config();
