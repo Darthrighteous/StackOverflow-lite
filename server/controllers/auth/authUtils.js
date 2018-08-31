@@ -9,20 +9,22 @@ export const validateUserBody = (user) => {
   if (typeof user.firstname !== 'undefined') {
     const validFirstName = typeof user.firstname === 'string'
     && user.firstname.trim() !== ''
-    && user.firstname.trim().length <= 16;
+    && user.firstname.trim().length <= 16
+    && /^[a-zA-Z]+$/.test(user.firstname);
     // && (/[^A-Za-z]+/g).test(user.firstname);
     if (!validFirstName) {
-      return 'first name must be a non-empty string';
+      return 'first name must be a non-empty string of only alphabets';
     }
   }
 
   if (typeof user.lastname !== 'undefined') {
     const validFirstName = typeof user.firstname === 'string'
     && user.lastname.trim() !== ''
-    && user.lastname.trim().length <= 16;
+    && user.lastname.trim().length <= 16
+    && /^[a-zA-Z]+$/.test(user.lastname);
     // && (/[^A-Za-z]+/g).test(user.lastname);
     if (!validFirstName) {
-      return 'last name must be a non-empty string';
+      return 'last name must be a non-empty string of only alphabets';
     }
   }
 
