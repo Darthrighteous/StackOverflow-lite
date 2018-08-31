@@ -23,6 +23,8 @@ const router = express.Router();
 router.use('/', (req, res) => {
   res.json({
     'LIST OF': 'AVAILABLE ROUTES',
+    'SIGN UP': '/v2/auth/signup',
+    'LOG IN': '/v2/auth/login',
     'GET ALL': '/v2/questions',
     'GET ONE': '/v2/questions/:questionId',
     'POST ONE': '/v2/questions',
