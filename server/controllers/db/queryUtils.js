@@ -159,7 +159,7 @@ initTables();
 */
 export const validateQuestionBody = (post) => {
   if (typeof post.title === 'undefined') {
-    return 'must provide title';
+    return 'Must provide title';
   }
   const validTitle = typeof post.title === 'string' && post.title.trim() !== '';
   if (!validTitle) {
@@ -182,7 +182,7 @@ export const validateQuestionBody = (post) => {
 */
 export const validateAnswerBody = (post) => {
   if (typeof post.body === 'undefined') {
-    return 'must provide body';
+    return 'Must provide body';
   }
   const validBody = typeof post.body === 'string' && post.body.trim() !== '';
   if (!validBody) {

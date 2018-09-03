@@ -85,7 +85,7 @@ export const postQuestion = async (req, res, next) => {
         [title, body, userId]);
       res.status(201).json({
         status: 'success',
-        message: 'created one question succesfully',
+        message: 'Created one question successfully',
         id,
       });
     } catch (e) {
@@ -123,7 +123,7 @@ export const postAnswer = async (req, res, next) => {
       await db.none('UPDATE questions SET answer_count = answer_count + 1 WHERE id = $1', [qId]);
       res.status(201).json({
         status: 'success',
-        message: 'created one answer successfully',
+        message: 'One answer successfully added',
         answerId: data.id,
         questionId: data.question_id,
       });
@@ -153,7 +153,7 @@ export const deleteQuestion = async (req, res, next) => {
       const result = await db.result('DELETE FROM questions WHERE id = $1', qId);
       res.status(200).json({
         status: 'success',
-        message: `deleted ${result.rowCount} row(s) of succesfully`,
+        message: `Deleted ${result.rowCount} row successfully`,
         id: qId,
       });
     } catch (e) {
@@ -164,7 +164,7 @@ export const deleteQuestion = async (req, res, next) => {
   } else {
     res.status(403).json({
       status: 'failure',
-      message: 'question not found, or user token does not match question owner',
+      message: 'Question not found, or user token does not match question owner',
     });
   }
 };
@@ -190,11 +190,11 @@ export const acceptAnswer = async (req, res, next) => {
     // route is called by question author
     // accept answer
     try {
-      const data = await db.result('UPDATE answers SET accept = $1 WHERE id= $2',
+      const data = await db.result('UPDATE answers SET accepted = $1 WHERE id= $2',
         [true, aId]);
       res.status(200).json({
         status: 'success',
-        message: `accepted ${data.rowCount} answer succesfully`,
+        message: `Accepted ${data.rowCount} answer successfully`,
         answerId: aId,
         questionId: qId,
       });
@@ -218,7 +218,7 @@ export const acceptAnswer = async (req, res, next) => {
       if (update.rowCount > 0) {
         res.status(200).json({
           status: 'success',
-          message: `updated ${update.rowCount} answer succesfully`,
+          message: `Updated ${update.rowCount} answer successfully`,
           answerId: aId,
           questionId: qId,
         });
