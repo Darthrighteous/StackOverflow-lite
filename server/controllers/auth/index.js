@@ -31,11 +31,11 @@ export const signUp = async (req, res, next) => {
   }
 
   if (await checkEmailInUse(req.body.email)) {
+    res.status(409);
     next(new Error('user with email already exists'));
   } else {
     req.body.hash = await bcrypt.hash(req.body.password, saltRounds);
     const result = await createUser(req.body);
-    console.log(result);
     const user = await getSingleUser(result.email);
     if (result.email) {
       jwt.sign({ user }, secretKey, (err, token) => {
@@ -106,7 +106,7 @@ export const logIn = async (req, res) => {
 */
 export const verifyJWT = (req, res, next) => {
   if (req.headers.authorization !== undefined) {
-    const [, token] = req.headers.authorization.split(' ');
+    const token = req.headers.authorization;
     jwt.verify(token, secretKey, (err, decoded) => {
       if (err) {
         console.log(`ERROR VALIDATING TOKEN ${err}`);
@@ -123,7 +123,7 @@ export const verifyJWT = (req, res, next) => {
   } else {
     res.status(403).json({
       status: 'unauthorized',
-      message: 'no token found',
+      message: 'No token found',
     });
   }
 };

@@ -9,11 +9,11 @@ const options = {
   promiseLib: promise,
 };
 const pgp = pgpmodule(options);
+
 const connectionString = process.env.DATABASE_URL;
-// const connectionString = 'postgres://mznpvudk:xrMV5SGVt4dwHQZ0OJbxKDAsfRLFyu8W@horton.elephantsql.com:5432/mznpvudk';
 export const db = pgp(connectionString);
+
 const pool = new Pool({
-  // connectionString: process.env.DATABASE_URL,
   connectionString,
 });
 
@@ -159,7 +159,7 @@ initTables();
 */
 export const validateQuestionBody = (post) => {
   if (typeof post.title === 'undefined') {
-    return 'must provide title';
+    return 'Must provide title';
   }
   const validTitle = typeof post.title === 'string' && post.title.trim() !== '';
   if (!validTitle) {
@@ -182,7 +182,7 @@ export const validateQuestionBody = (post) => {
 */
 export const validateAnswerBody = (post) => {
   if (typeof post.body === 'undefined') {
-    return 'must provide body';
+    return 'Must provide body';
   }
   const validBody = typeof post.body === 'string' && post.body.trim() !== '';
   if (!validBody) {
