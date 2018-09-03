@@ -9,11 +9,11 @@ const options = {
   promiseLib: promise,
 };
 const pgp = pgpmodule(options);
+
 const connectionString = process.env.DATABASE_URL;
-// const connectionString = 'postgres://mznpvudk:xrMV5SGVt4dwHQZ0OJbxKDAsfRLFyu8W@horton.elephantsql.com:5432/mznpvudk';
 export const db = pgp(connectionString);
+
 const pool = new Pool({
-  // connectionString: process.env.DATABASE_URL,
   connectionString,
 });
 
