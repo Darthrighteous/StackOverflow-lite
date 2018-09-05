@@ -1,0 +1,282 @@
+FORMAT: 1A
+HOST: https://vast-waters-81120.herokuapp.com/v2/
+
+# StackOverflow-lite
+
+StackOverflow-lite is a simple API that allows users to view, ask and answer questions.
+
+# Group Auth
+
+## Sign Up [/auth/signup]
+
+### Sign up [POST]
+
+You may create a new user account using this action. It takes a JSON object containing
+the user's firstname, lastname, username, email, and password.
+
++ Request (application/json)
+    
+    + Body 
+    
+            {
+                "firstname": "sarrah",
+                "lastname": "kerrigan",
+                "username": "skerrigan",
+                "email": "s.kerrigan3@yahoo.com",
+                "password": "immaculate"
+            } 
+            
++ Response 200 (application/json)
+    
+    + Body 
+    
+            {
+                "status": "success",
+                "message": "one user successfully created",
+                "user": {
+                    "id": 3,
+                    "firstname": "sarrah",
+                    "lastname": "kerrigan",
+                    "email": "s.kerrigan3@yahoo.com",
+                    "username": "skerrigan",
+                    "password": "$2b$10$yvpE93lJSkcJgyqVO6I.Te7EgipuJf5i6cwZ3KU1Oh9e3kwA0gtcq",
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJmaXJzdG5hbWUiOiJzYXJyYWgiLCJsYXN0bmFtZSI6ImtlcnJpZ2FuIiwiZW1haWwiOiJzLmtlcnJpZ2FuNEB5YWhvby5jb20iLCJ1c2VybmFtZSI6InNrZXJyaWdhbiIsInBhc3N3b3JkIjoiJDJiJDEwJHl2cEU5M2xKU2tjSmd5cVZPNkkuVGU3RWdpcHVKZjVpNmN3WjNLVTFPaDllM2t3QTBndGNxIn0sImlhdCI6MTUzNjEwMDg3Mn0.pSmAe4k2fAwOc3BuqZ8Yt3v3Vc0_Gl5GBj0OXvSMas4"
+                }
+            }
+
+
+## Log In [/auth/login]
+
+### Log in [POST]
+
+You may log in with an existing user account using this action. It takes a JSON object
+containing the user's email and password.
+
++ Request (application/json)
+
+    + Body 
+    
+            {
+                "email": "s.kerrigan3@yahoo.com",
+                "password": "immaculate"
+            }
+             
++ Response 200 (application/json)
+
+    + Body 
+    
+            {
+                "status": "success",
+                "message": "User logged in!",
+                "user": {
+                    "id": 3,
+                    "firstname": "sarrah",
+                    "lastname": "kerrigan",
+                    "email": "s.kerrigan3@yahoo.com",
+                    "username": "skerrigan",
+                    "password": "$2b$10$IfBcyZ3Cbf90NwKiPJdkiOBSHRi01LRBfWmxYNnPQpeTGueHuVlRq",
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdG5hbWUiOiJzYXJyYWgiLCJsYXN0bmFtZSI6ImtlcnJpZ2FuIiwiZW1haWwiOiJzLmtlcnJpZ2FuM0B5YWhvby5jb20iLCJ1c2VybmFtZSI6InNrZXJyaWdhbiIsInBhc3N3b3JkIjoiJDJiJDEwJElmQmN5WjNDYmY5ME53S2lQSmRraU9CU0hSaTAxTFJCZldteFlOblBRcGVUR3VlSHVWbFJxIn0sImlhdCI6MTUzNjEwMTM2MH0.OMpWGctWX0zhS3TWjQVVXid_DX1fqoerfBV31vpcRAE"
+                }
+            }
+
+
+
+#  Group Questions
+
+## Questions Collection [/questions]
+
+### List All Questions [GET]
+
+You may retrieve all questions in the database using this action.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "title": "Favourite programming language?",
+                "body": "What is your favourite programming language and why?",
+                "date": "2015-08-05T08:40:51.620Z",
+                "answers": [
+                    {
+                        "id": 1,
+                        "body": "python because its easy to use"
+                    }, {
+                        "id": 2,
+                        "body": "javascript because js is life"
+                    }, {
+                        "id": 3,
+                        "body": "java because I like building native android apps"
+                    }
+                ]
+            }
+        ]
+
+### Create a New Question [POST]
+
+You may create your own question using this action. It takes a JSON
+object containing a question title and body.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: token
+    
+    + Body
+
+            {
+                "title": "Favourite programming language?",
+                "body": "Whats is your favourite programming language and why?"
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "status": "success"
+                "message": "Created one question successfully",
+                "id": "2",
+            }
+            
+
+## Single Question [/questions/{questionId}]
+
++ Parameters
+    + questionId: `3` (number, required) - Id of the question.
+
+### View a Question [GET]
+
+You may view the details of a specific question by using this action.
+
++ Response 200 (application/json)
+    
+    + Body 
+    
+            {
+                "status": "success",
+                "message": "one question retrieved successfully",
+                "question": {
+                    "id": 1,
+                    "title": "question 1",
+                    "body": "body 1",
+                    "date": "2018-08-30T22:30:26.290Z",
+                    "username": "user1",
+                    "score": 0,
+                    "answer_count": 0,
+                    "accepted_answer": -1
+                }
+            }
+            
+            
+### Delete a Question [DELETE]
+
+You may delete a specific questions by using this action. The user in the
+payload of the token provided in the header must match the author of the question. 
+
++ Request
+
+    + Headers
+            
+            Authorization: token
+            
++ Response 200
+
+    + Body 
+    
+            {
+                "status": "success",
+                "message": "Deleted 1 question succesfully",
+                "id": "3"
+            }
+    
+
+# Group Answers
+
+## Answers Collection to a Question [/questions/{questionId}/answers]
+
++ Parameters
+    
+    + questionId: `3` (number, required) - Id of the question.
+
+### Answer a question [POST]
+
+You may post an answer to a question by using this action. It takes a JSON
+object containing the answer's body.
+
++ Request (application/json)
+
+    + Headers
+            
+            Authorization: token
+            
+    + Body
+    
+            {
+                "body": "Java, because I like to build native Android apps"
+            }
+            
++ Response 200
+
+    + Body
+    
+            {
+                "status": "success",
+                "message": "Created one answer successfully",
+                "answerId": 3,
+                "questionId": 2
+            }
+            
+            
+## Single Answer to a Question [/questions/{questionId}/answers/{answerId}]
+
++ Parameters
+    
+    + questionId: `3` (number, required) - Id of the question.
+    + answerId: `4` (number, required) - Id of the answer.
+    
+### Modify an Answer [PATCH]
+
+You may modify the body of an answer using this action. It takes a JSON object 
+containing the new answer body. The user in the payload of the token must match
+the author of the answer or the author of the answer.
+
++ Request (application/json)
+    
+    + Headers
+            
+            Authorization: "token"
+    
+    + Body
+            
+            {
+                "body": "Still Java, but cause I like coffee"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "status": "success",
+                "message": "Updated 1 answer successfully",
+                "answerId": "4",
+                "questionId": "3"
+            }
+
++ Request 
+
+    + Headers
+        
+             Authorization: "token"
+    
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "status": "success",
+                "message": "Accepted 1 answer successfully",
+                "answerId": "5",
+                "questionId": "4"
+            }
