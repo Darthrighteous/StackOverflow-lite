@@ -1,4 +1,4 @@
-const getAllUrl = 'http://vast-waters-81120.herokuapp.com/v2/questions';
+const getAllUrl = 'https://vast-waters-81120.herokuapp.com/v2/questions';
 const questionList = document.getElementById('question_list');
 
 /**
