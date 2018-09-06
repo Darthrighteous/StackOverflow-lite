@@ -4,6 +4,8 @@ import routes from './server/routes';
 const app = express();
 app.use(express.json());
 
+app.use(express.static('ui'));
+
 app.use('/', routes);
 
 // PORT declaration
