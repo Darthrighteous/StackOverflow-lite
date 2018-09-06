@@ -1,4 +1,4 @@
-const getAllUrl = 'http://localhost:4001/v2/questions';
+const getAllUrl = 'http://vast-waters-81120.herokuapp.com/v2/questions';
 const questionList = document.getElementById('question_list');
 
 /**
@@ -49,7 +49,7 @@ const createQuestionHtmlDiv = (question) => {
       <div class="summary_body">
         <h3>${question.body}</h3>
         <div class="summary_details">
-          <a href="" id="details_date">${question.date}</a>
+          <a href="" id="details_date">${question.created_at}</a>
           by
           <a href="" id="details_user"> darthrighteous</a>          
         </div>
