@@ -77,12 +77,12 @@ export const postQuestion = async (req, res, next) => {
     });
   } else {
     // get username
-    const userId = res.locals.decoded.user.id;
+    const { username } = res.locals.decoded.user;
 
     try {
       const { title, body } = req.body;
-      const { id } = await db.one('INSERT INTO questions(title, body, user_id) VALUES($1, $2, $3) RETURNING id',
-        [title, body, userId]);
+      const { id } = await db.one('INSERT INTO questions(title, body, username) VALUES($1, $2, $3) RETURNING id',
+        [title, body, username]);
       res.status(201).json({
         status: 'success',
         message: 'Created one question successfully',
@@ -112,15 +112,13 @@ export const postAnswer = async (req, res, next) => {
     });
   } else {
     // get username
-    const userId = res.locals.decoded.user.id;
+    const { username } = res.locals.decoded.user;
     // get question Id and question body
     const qId = req.params.questionId;
     const { body } = req.body;
     try {
-      const data = await db.one('INSERT INTO answers (body, user_id, question_id) VALUES($1, $2, $3) RETURNING id, question_id',
-        [body, userId, qId]);
-      // update answer count
-      await db.none('UPDATE questions SET answer_count = answer_count + 1 WHERE id = $1', [qId]);
+      const data = await db.one('INSERT INTO answers (body, username, question_id) VALUES($1, $2, $3) RETURNING id, question_id',
+        [body, username, qId]);
       res.status(201).json({
         status: 'success',
         message: 'One answer successfully added',
@@ -145,8 +143,8 @@ export const postAnswer = async (req, res, next) => {
 export const deleteQuestion = async (req, res, next) => {
   const qId = req.params.questionId;
   // check that question belongs to user
-  const userId = res.locals.decoded.user.id;
-  const rowCount = await db.result('SELECT * FROM questions WHERE id=$1 AND "user_id"=$2', [qId, userId], r => r.rowCount);
+  const { username } = res.locals.decoded.user;
+  const rowCount = await db.result('SELECT * FROM questions WHERE id=$1 AND "username"=$2', [qId, username], r => r.rowCount);
   // if rowCount is greater than 0, question belongs to user.
   if (rowCount > 0) {
     try {
@@ -178,7 +176,7 @@ export const deleteQuestion = async (req, res, next) => {
 */
 export const acceptAnswer = async (req, res, next) => {
   // TODO: check that question belongs to user
-  const userId = res.locals.decoded.user.id;
+  const { username } = res.locals.decoded.user;
   const aId = req.params.answerId;
   const qId = req.params.questionId;
 
@@ -186,7 +184,7 @@ export const acceptAnswer = async (req, res, next) => {
   const answer = await db.one('SELECT * FROM answers WHERE id=$1', [aId]);
 
   // TODO: rewrite the logic in this if block
-  if (userId === question.user_id) {
+  if (username === question.username) {
     // route is called by question author
     // accept answer
     try {
@@ -202,7 +200,7 @@ export const acceptAnswer = async (req, res, next) => {
       const error = new Error(`${e.message}`);
       next(error);
     }
-  } else if (userId === answer.user_id) {
+  } else if (username === answer.username) {
     // route is called by answer author
     // validate answer edit body
     const validate = validateAnswerBody(req.body);

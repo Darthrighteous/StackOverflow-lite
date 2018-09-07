@@ -56,11 +56,6 @@ export const initTables = () => {
       answer_count INTEGER DEFAULT 0,
       accepted_answer INTEGER DEFAULT NULL);
 
-    INSERT INTO questions (title, body, username)
-      VALUES
-      ('question 1','question body 1', 'skerrigan'),
-      ('question 2','question body 2', 'dddark'),
-      ('question 3','question body 3', 'coachee');
 
     CREATE TABLE IF NOT EXISTS answers (
       id serial PRIMARY KEY,
@@ -76,11 +71,41 @@ export const initTables = () => {
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
       accepted BOOLEAN DEFAULT FALSE,
       score INTEGER DEFAULT 0);
-    INSERT INTO answers (body, username, question_id)
-      VALUES
-      ('answer body 1', 'coachee', 1),
-      ('answer body 2', 'coachee', 2),
-      ('answer body 3', 'coachee', 1);`;
+    
+
+      CREATE OR REPLACE FUNCTION update_answer_count()
+        RETURNS trigger
+        LANGUAGE plpgsql
+      AS
+      $BODY$
+      BEGIN
+        IF TG_OP = 'INSERT' THEN
+          UPDATE questions SET answer_count = answer_count + 1 WHERE id = NEW.question_id;
+        ELSEIF TG_OP = 'DELETE' THEN
+          UPDATE questions SET answer_count = answer_count - 1 WHERE id = OLD.question_id;
+        END IF;
+        RETURN NEW;
+      END;
+      $BODY$;
+
+      CREATE TRIGGER answer_added
+        AFTER INSERT OR DELETE
+        ON answers
+        FOR EACH ROW
+        EXECUTE PROCEDURE update_answer_count();
+
+      INSERT INTO questions (title, body, username)
+        VALUES
+        ('question 1','question body 1', 'skerrigan'),
+        ('question 2','question body 2', 'dddark'),
+        ('question 3','question body 3', 'coachee');
+
+      INSERT INTO answers (body, username, question_id)
+        VALUES
+        ('answer body 1', 'coachee', 1),
+        ('answer body 2', 'coachee', 2),
+        ('answer body 3', 'coachee', 1);
+      `;
   // } else {
   //   queryText = `
   //     DROP TABLE 
