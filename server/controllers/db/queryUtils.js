@@ -31,7 +31,8 @@ export const initTables = () => {
     CREATE TABLE IF NOT EXISTS users (
       id serial PRIMARY KEY,
       firstname VARCHAR,
-      lastname VARCHAR,
+      lastname VARCHAR, 
+      joined_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
       email VARCHAR NOT NULL,
       username VARCHAR (30) NOT NULL,
       password VARCHAR (60) NOT NULL);
@@ -50,7 +51,7 @@ export const initTables = () => {
         REFERENCES users(id)
           ON UPDATE CASCADE
           ON DELETE CASCADE,
-      date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
       score INTEGER DEFAULT 0,
       answer_count INTEGER DEFAULT 0,
       accepted_answer INTEGER DEFAULT NULL);
@@ -72,7 +73,7 @@ export const initTables = () => {
         REFERENCES users(id)
           ON UPDATE CASCADE
           ON DELETE CASCADE,
-      date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
       accepted BOOLEAN DEFAULT FALSE,
       score INTEGER DEFAULT 0);
     INSERT INTO answers (body, user_id, question_id)

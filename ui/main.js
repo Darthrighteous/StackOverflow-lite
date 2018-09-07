@@ -1,4 +1,5 @@
-const getAllUrl = 'https://vast-waters-81120.herokuapp.com/v2/questions';
+// const getAllUrl = 'https://vast-waters-81120.herokuapp.com/v2/questions';
+const getAllUrl = 'http://localhost:4001/v2/questions';
 const questionList = document.getElementById('question_list');
 
 /**
@@ -28,11 +29,43 @@ const readResponseAsJSON = response => response.json();
 const getQuestionArrayfromJSON = data => data.questions;
 
 /**
+* Resolves a date string to a user friendly string
+* @param {string} dateString - Date to be resolved
+* @returns {string} user friendly string to display
+*/
+const resolveDate = (dateString) => {
+  const dateCreated = new Date(dateString);
+  const currentDate = new Date();
+  const diffSecs = (currentDate.getTime() - dateCreated.getTime()) / 1000;
+  const diffMins = Math.round(diffSecs / 60);
+  const diffHours = Math.round(diffSecs / 3600);
+  const diffDays = Math.round(diffSecs / 86400);
+
+  if (diffSecs < 60) {
+    return `${Math.round(diffSecs)} seconds ago`;
+  }
+  if (diffMins < 60) {
+    return `about ${diffMins} minutes ago`;
+  }
+  if (diffHours < 24) {
+    if (diffHours <= 6) {
+      return `about ${diffHours} hours ago`;
+    }
+    return `today at ${dateCreated.getHours()}:${dateCreated.getMinutes()}`;
+  }
+  if (diffDays < 3) {
+    return `yesterday at ${dateCreated.getHours()}:${dateCreated.getMinutes()}`;
+  }
+  return `${dateCreated.toDateString()} at ${dateCreated.getHours()}:${dateCreated.getMinutes()}`;
+};
+
+/**
 * Creates question HTML elements
 * @param {object} question - Question object
 * @returns {object} questionDiv - HTML element for a question
 */
 const createQuestionHtmlDiv = (question) => {
+  const displayDate = resolveDate(question.created_at);
   const questionDiv = `
     <div class="question_summary" onclick="location.href = 'question.html';">
       <div class="summary_stats">
@@ -49,7 +82,7 @@ const createQuestionHtmlDiv = (question) => {
       <div class="summary_body">
         <h3>${question.body}</h3>
         <div class="summary_details">
-          <a href="" id="details_date">${question.created_at}</a>
+          <a href="" id="details_date">${displayDate}</a>
           by
           <a href="" id="details_user"> darthrighteous</a>          
         </div>
