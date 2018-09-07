@@ -34,7 +34,7 @@ export const initTables = () => {
       lastname VARCHAR, 
       joined_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
       email VARCHAR NOT NULL,
-      username VARCHAR (30) NOT NULL,
+      username VARCHAR (30) UNIQUE NOT NULL,
       password VARCHAR (60) NOT NULL);
 
     INSERT INTO users (firstname, lastname, email, username, password)
@@ -47,8 +47,8 @@ export const initTables = () => {
       id serial PRIMARY KEY,
       title VARCHAR NOT NULL,
       body VARCHAR,
-      user_id INTEGER NOT NULL
-        REFERENCES users(id)
+      username VARCHAR NOT NULL
+        REFERENCES users(username)
           ON UPDATE CASCADE
           ON DELETE CASCADE,
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
@@ -56,11 +56,11 @@ export const initTables = () => {
       answer_count INTEGER DEFAULT 0,
       accepted_answer INTEGER DEFAULT NULL);
 
-    INSERT INTO questions (title, body, user_id)
+    INSERT INTO questions (title, body, username)
       VALUES
-      ('question 1','question body 1', 1),
-      ('question 2','question body 2', 2),
-      ('question 3','question body 3', 3);
+      ('question 1','question body 1', 'skerrigan'),
+      ('question 2','question body 2', 'dddark'),
+      ('question 3','question body 3', 'coachee');
 
     CREATE TABLE IF NOT EXISTS answers (
       id serial PRIMARY KEY,
@@ -69,18 +69,18 @@ export const initTables = () => {
           ON UPDATE CASCADE
           ON DELETE CASCADE,
       body VARCHAR NOT NULL,
-      user_id INTEGER NOT NULL
-        REFERENCES users(id)
+      username VARCHAR NOT NULL
+        REFERENCES users(username)
           ON UPDATE CASCADE
           ON DELETE CASCADE,
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
       accepted BOOLEAN DEFAULT FALSE,
       score INTEGER DEFAULT 0);
-    INSERT INTO answers (body, user_id, question_id)
+    INSERT INTO answers (body, username, question_id)
       VALUES
-      ('answer body 1', 3, 1),
-      ('answer body 2', 3, 2),
-      ('answer body 3', 3, 1);`;
+      ('answer body 1', 'coachee', 1),
+      ('answer body 2', 'coachee', 2),
+      ('answer body 3', 'coachee', 1);`;
   // } else {
   //   queryText = `
   //     DROP TABLE 

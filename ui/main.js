@@ -1,5 +1,5 @@
-// const getAllUrl = 'https://vast-waters-81120.herokuapp.com/v2/questions';
-const getAllUrl = 'http://localhost:4001/v2/questions';
+const getAllUrl = 'https://vast-waters-81120.herokuapp.com/v2/questions';
+// const getAllUrl = 'http://localhost:4001/v2/questions';
 const questionList = document.getElementById('question_list');
 
 /**
@@ -84,7 +84,7 @@ const createQuestionHtmlDiv = (question) => {
         <div class="summary_details">
           <a href="" id="details_date">${displayDate}</a>
           by
-          <a href="" id="details_user"> darthrighteous</a>          
+          <a href="" id="details_user">${question.username}</a>          
         </div>
       </div>
 
