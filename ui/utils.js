@@ -57,6 +57,7 @@ const saveToken = (user) => {
   if (window.localStorage) {
     localStorage.removeItem('jwt');
     localStorage.setItem('jwt', user.token);
+    localStorage.setItem('user', JSON.stringify(user));
   } else {
     console.log('no local storage');
   }
@@ -73,6 +74,8 @@ const validateAuthJsonResponse = (res) => {
   if (res.status !== 'success') {
     throw Error(res.message);
   }
+  console.log(res);
+  console.log(res.user);
   return res.user;
 };
 
