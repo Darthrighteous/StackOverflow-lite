@@ -53,11 +53,52 @@ export const resolveDate = (dateString) => {
 * @param {object} user - JSON user object containing the token
 * @returns {void}
 */
-export const saveToken = (user) => {
+const saveToken = (user) => {
   if (window.localStorage) {
     localStorage.removeItem('jwt');
     localStorage.setItem('jwt', user.token);
   } else {
     console.log('no local storage');
   }
+};
+
+
+/**
+* Validates the JSON response from sign up
+* @param {object} res - JSON response object
+* @returns {object} JSON user object
+*/
+const validateAuthJsonResponse = (res) => {
+  alert(res.message);
+  if (res.status !== 'success') {
+    throw Error(res.message);
+  }
+  return res.user;
+};
+
+/**
+* Signs Up or Logs In a user and redirects to profile page
+* @param {string} url - auth route url
+* @param {object} userData - object containing form data
+* @returns {void}
+*/
+export const authenticateUser = (url, userData) => {
+  const init = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  };
+
+  fetch(url, init)
+    .then(readResponseAsJSON)
+    .then(validateAuthJsonResponse)
+    .then(saveToken)
+    .then(() => {
+      redirect: window.location.replace('../profile.html');
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };

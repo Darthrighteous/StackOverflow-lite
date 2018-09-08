@@ -27,13 +27,13 @@
 	</header>
 
 	<div class="form_container">
-		<form >
+		<form id="login_form" method="post">
 			<div id="header">
 			</div>
 			<div id="body">
-				<input type="text" name="username" placeholder="Username"> <br>
+				<input type="text" name="email" placeholder="Email"> <br>
 				<input type="Password" name="pwd" placeholder="Password"> <br>
-				<input type="button" name="signInButton" value="Log In"> <br>
+				<input type="submit" name="signInButton" value="Log In"> <br>
 				<a href="#">Forgot password?</a>
 			</div>
 			<div id="footer">
@@ -42,7 +42,8 @@
 		</form>
 	</div>
 
-<script src="script.js"></script>
+	<script type="module" src="signin.js"></script>
+	<script src="script.js"></script>
 </body>
 
 </html>
