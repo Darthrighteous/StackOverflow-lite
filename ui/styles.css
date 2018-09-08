@@ -64,7 +64,7 @@ h1 {
 	list-style-type: none;
 }
 
-.auth {
+.auth_in {
 	display: flex;
 	align-items: center;
 }
