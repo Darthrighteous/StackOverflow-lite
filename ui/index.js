@@ -1,25 +1,12 @@
+import {
+  validateResponse,
+  readResponseAsJSON,
+  resolveDate,
+} from './utils.js';
+
 const getAllUrl = 'https://vast-waters-81120.herokuapp.com/v2/questions';
 // const getAllUrl = 'http://localhost:4001/v2/questions';
 const questionList = document.getElementById('question_list');
-
-/**
-* Checks if response status is between 200-299
-* @param {object} res - the response to be checked
-* @returns {object} res - the okay response
-*/
-const validateResponse = (res) => {
-  if (!res.ok) {
-    throw Error(res.statusText);
-  }
-  return res;
-};
-
-/**
-* Parses the response body as JSON
-* @param {promise} response - The response to be parsed
-* @returns {promise} The result of parsing the body as JSON
-*/
-const readResponseAsJSON = response => response.json();
 
 /**
 * Retrieves array of questions from JSON
@@ -27,37 +14,6 @@ const readResponseAsJSON = response => response.json();
 * @returns {array} The array of question objects
 */
 const getQuestionArrayfromJSON = data => data.questions;
-
-/**
-* Resolves a date string to a user friendly string
-* @param {string} dateString - Date to be resolved
-* @returns {string} user friendly string to display
-*/
-const resolveDate = (dateString) => {
-  const dateCreated = new Date(dateString);
-  const currentDate = new Date();
-  const diffSecs = (currentDate.getTime() - dateCreated.getTime()) / 1000;
-  const diffMins = Math.round(diffSecs / 60);
-  const diffHours = Math.round(diffSecs / 3600);
-  const diffDays = Math.round(diffSecs / 86400);
-
-  if (diffSecs < 60) {
-    return `${Math.round(diffSecs)} seconds ago`;
-  }
-  if (diffMins < 60) {
-    return `about ${diffMins} minutes ago`;
-  }
-  if (diffHours < 24) {
-    if (diffHours <= 6) {
-      return `about ${diffHours} hours ago`;
-    }
-    return `today at ${dateCreated.getHours()}:${dateCreated.getMinutes()}`;
-  }
-  if (diffDays < 3) {
-    return `yesterday at ${dateCreated.getHours()}:${dateCreated.getMinutes()}`;
-  }
-  return `${dateCreated.toDateString()} at ${dateCreated.getHours()}:${dateCreated.getMinutes()}`;
-};
 
 /**
 * Creates question HTML elements

@@ -191,7 +191,7 @@ input[type="text"],[type="Password"] {
 	border: 1px solid #C5CBD5;
 }
 
-input[type="button"] {
+input[type="submit"] {
 	margin-top: 4px;
 	margin-bottom: 16px;
 	width: Calc(80% + 1.6em);
