@@ -99,7 +99,7 @@ export const authenticateUser = (url, userData) => {
     .then(validateAuthJsonResponse)
     .then(saveToken)
     .then(() => {
-      redirect: window.location.replace('../profile.html');
+      window.location.replace('../profile.html');
     })
     .catch((error) => {
       console.log(error);

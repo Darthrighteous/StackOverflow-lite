@@ -2,6 +2,9 @@ import {
   authenticateUser,
 } from './utils.js';
 
+// hide login button
+// document.getElementById('loginbutton').style.display = 'none';
+
 const logInUrl = 'https://vast-waters-81120.herokuapp.com/v2/auth/login';
 // const logInUrl = 'http://localhost:4001/v2/auth/login';
 
