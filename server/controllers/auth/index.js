@@ -24,34 +24,33 @@ const secretKey = process.env.SECRET;
 export const signUp = async (req, res, next) => {
   const validate = validateUserBody(req.body);
   if (validate != null) {
-    res.status(400).json({
-      status: 'failure',
-      message: validate,
-    });
+    res.status(400);
+    return next(new Error(validate));
   }
 
   if (await checkEmailInUse(req.body.email)) {
     res.status(409);
-    next(new Error('user with email already exists'));
-  } else {
-    req.body.hash = await bcrypt.hash(req.body.password, saltRounds);
-    const result = await createUser(req.body);
-    const user = await getSingleUser(result.email);
-    if (result.email) {
-      jwt.sign({ user }, secretKey, (err, token) => {
-        user.token = token;
-        res.status(201).json({
-          status: 'success',
-          message: 'one user successfully created',
-          user,
-        });
-      });
-    } else {
-      console.log('SIGNUP ERROR' + result);
-      res.status(400);
-      next(result);
-    }
+    return next(new Error('user with email already exists'));
   }
+
+  req.body.hash = await bcrypt.hash(req.body.password, saltRounds);
+  const result = await createUser(req.body);
+  if (result.email) {
+    const user = await getSingleUser(result.email);
+    jwt.sign({ user }, secretKey, (err, token) => {
+      user.token = token;
+      res.status(201).json({
+        status: 'success',
+        message: 'one user successfully created',
+        user,
+      });
+    });
+    return res;
+  }
+
+  console.log('SIGNUP ERROR' + result);
+  res.status(400);
+  return next(result);
 };
 
 /**
@@ -61,18 +60,16 @@ export const signUp = async (req, res, next) => {
 * @param {object} next To pass onto next route
 * @returns {void}
 */
-export const logIn = async (req, res) => {
+export const logIn = async (req, res, next) => {
   const validate = validateLogInBody(req.body);
   if (validate != null) {
-    res.status(400).json({
-      status: 'failure',
-      message: validate,
-    });
+    res.status(400);
+    return next(new Error(validate));
   }
 
   if (await checkEmailInUse(req.body.email)) {
-    // Load hash from your password DB.
     const user = await getSingleUser(req.body.email);
+    // compare password to hash from DB.
     const result = await bcrypt.compare(req.body.password, user.password);
     if (result) {
       jwt.sign({ user }, secretKey, (err, token) => {
@@ -83,18 +80,19 @@ export const logIn = async (req, res) => {
           user,
         });
       });
-    } else {
-      res.status(401).json({
-        status: 'failure',
-        message: 'Invalid password',
-      });
+      return res;
     }
-  } else {
-    res.status(401).json({
+
+    return res.status(401).json({
       status: 'failure',
-      message: 'User does not exist',
+      message: 'Invalid password',
     });
   }
+
+  return res.status(401).json({
+    status: 'failure',
+    message: 'User does not exist',
+  });
 };
 
 /**
@@ -104,26 +102,28 @@ export const logIn = async (req, res) => {
 * @param {object} next To pass onto next route
 * @returns {void}
 */
-export const verifyJWT = (req, res, next) => {
+export const verifyJWT = (req, res) => {
   if (req.headers.authorization !== undefined) {
+    // retrieve jwt from header
     const token = req.headers.authorization;
+    // verify and decode token
     jwt.verify(token, secretKey, (err, decoded) => {
       if (err) {
         console.log(`ERROR VALIDATING TOKEN ${err}`);
-        res.status(403).json({
+        return res.status(403).json({
           status: 'unauthorized',
           message: 'invalid token',
         });
-      } else {
-        res.locals.decoded = decoded;
-        res.locals.token = token;
-        next();
       }
-    });
-  } else {
-    res.status(403).json({
-      status: 'unauthorized',
-      message: 'No token found',
+
+      res.locals.decoded = decoded;
+      res.locals.token = token;
+      return res;
     });
   }
+
+  return res.status(403).json({
+    status: 'unauthorized',
+    message: 'No token found',
+  });
 };
