@@ -102,7 +102,7 @@ export const logIn = async (req, res, next) => {
 * @param {object} next To pass onto next route
 * @returns {void}
 */
-export const verifyJWT = (req, res) => {
+export const verifyJWT = (req, res, next) => {
   if (req.headers.authorization !== undefined) {
     // retrieve jwt from header
     const token = req.headers.authorization;
@@ -110,16 +110,15 @@ export const verifyJWT = (req, res) => {
     jwt.verify(token, secretKey, (err, decoded) => {
       if (err) {
         console.log(`ERROR VALIDATING TOKEN ${err}`);
-        return res.status(403).json({
+        res.status(403).json({
           status: 'unauthorized',
           message: 'invalid token',
         });
       }
-
       res.locals.decoded = decoded;
       res.locals.token = token;
-      return res;
     });
+    return next();
   }
 
   return res.status(403).json({
