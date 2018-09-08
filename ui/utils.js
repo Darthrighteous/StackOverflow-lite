@@ -53,7 +53,7 @@ export const resolveDate = (dateString) => {
 * @param {object} user - JSON user object containing the token
 * @returns {void}
 */
-const saveToken = (user) => {
+export const saveToken = (user) => {
   if (window.localStorage) {
     localStorage.removeItem('jwt');
     localStorage.setItem('jwt', user.token);
