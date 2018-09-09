@@ -592,6 +592,22 @@ input[type="button"]:hover {
 /*QUESTION PAGE BODY*/
 .main_body {
 	padding: 16px;
+	padding-top: 6px;
+}
+
+#question_title_container {
+	line-height: 40px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 2px solid #eff0f1;
+
+}
+
+#question_title_container h2 {
+	font-size: 22px;
+	font-weight: 500;
+	margin: 0;
 }
 
 .question_main {
@@ -601,8 +617,7 @@ input[type="button"]:hover {
 
 /*POST LAYOUT*/
 .post_layout {
-	margin-top: 5px;
-	padding-bottom: 8px;
+	padding: 12px 0;
 	display: grid;
 	grid-template-columns: max-content 1fr;
 	border-bottom: 1px solid #E4E6E8;
@@ -658,6 +673,9 @@ input[type="button"]:hover {
 }
 
 .post_cell {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	grid-column: 2;
 }
 
@@ -668,6 +686,7 @@ input[type="button"]:hover {
 }
 
 .post_author {
+	align-self: flex-end;
 	display: flex;
 	float: right;
 	margin: 6px 0;
@@ -732,7 +751,7 @@ input[type="button"]:hover {
 
 /*ANSWER LAYOUT*/
 #answersTitle {
-	margin-top: 10px;
+	margin-top: 6px;
 	justify-content: space-between;
 }
 

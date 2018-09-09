@@ -96,15 +96,15 @@ export const initTables = () => {
 
       INSERT INTO questions (title, body, username)
         VALUES
-        ('question 1','question body 1', 'skerrigan'),
-        ('question 2','question body 2', 'dddark'),
-        ('question 3','question body 3', 'coachee');
+        ('Question 1','Question body one', 'skerrigan'),
+        ('Question 2','Question body two', 'dddark'),
+        ('Question 3','Question body three', 'coachee');
 
       INSERT INTO answers (body, username, question_id)
         VALUES
-        ('answer body 1', 'coachee', 1),
-        ('answer body 2', 'coachee', 2),
-        ('answer body 3', 'coachee', 1);
+        ('Answer body one', 'coachee', 1),
+        ('Answer body two', 'coachee', 2),
+        ('Answer body three', 'coachee', 1);
       `;
   // } else {
   //   queryText = `

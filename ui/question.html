@@ -32,8 +32,8 @@
 	</header>
 
 	<div class="main_body">
-		<div class="options_container">
-			<h2>What is the best way to find the square root of prime numbers?</h2>
+		<div class="options_container" id="question_title_container">
+			<h2 id="question_title"></h2>
 			<div class="question_new_button">
 				<a href="newpost.html" id="ask_a_question_btn">Ask a Question</a>
 			</div>
@@ -45,20 +45,20 @@
 					<div class="vote_cell">
 						<div class="vote">
 							<a class="up_vote"></a>
-							<span class="score_count" >5</span>
+							<span class="score_count" id="question_score"></span>
 							<a class="down_vote" href="#"></a>
 						</div>					
 					</div>
 
 					<div class="post_cell">
-						<div class="post_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</div>
-						<div class="post_author">
-							<div class="post_date">
-								<span>asked 23/03/2003</span>
+						<div class="post_text" id="question_body"></div>
+          				<div class="post_author">
+				            <div class="post_date">
+								<span id="question_date">asked </span>
 							</div>
 							by
 							<div class="author_details">
-								<a href="profile.html">darthrighteous</a>
+								<a href="profile.html" id="question_author"></a>
 							</div>
 						</div>
 					</div>
@@ -66,10 +66,8 @@
 					<div class="comment_cell">
 						<div class="comment_list">
 							<ul>
-								<li>This is an English only site. Op should please translate<span> - by morpheus 24/03/2003</span></li>
 								<li>You cant find the square root of a prime number<span> - by Sarah Kerrigan 24/03/2003</span></li>
 								<li>yes you can, use a calculator!<span> - by Neo 24/03/2003</span></li>
-								<li>the balance of power will be restored!<span> - by Kassadin 24/03/2003</span></li>
 							</ul>
 							
 						</div>
@@ -84,9 +82,9 @@
 				</div>
 			</div>
 
-			<div class="answers">
+			<div class="answers" id="answer_list">
 				<div id="answersTitle" class="options_container">
-					<h3>5 Answers</h3>
+					<h3 id="answer_count"></h3>
 					<div class="dropdown" onclick="dropdownOpen()">
 						<div class="dropdown_title">Sort</div>
 						<div class="dropdown_container">
@@ -104,47 +102,7 @@
 					</div>
 				</div>
 
-				<div id="answerPost1" class="post_layout">
-					<div class="vote_cell">
-						<div class="vote">
-							<a class="up_vote"></a>
-							<span class="score_count" >5</span>
-							<a class="down_vote" href="#"></a>
-						</div>
-					</div>
-
-					<div class="post_cell">
-						<div class="post_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</div>
-						<div class="post_author">
-							<div class="post_date">
-								<span>answered 25/03/2003</span>
-							</div>
-							by
-							<div class="author_details">
-								<a href="#">darthrighteous</a>
-							</div>
-						</div>
-					</div>
-
-					<div class="comment_cell">
-						<div class="comment_list">
-							<ul>
-								<li>This is an English only site. Op should please translate<span> - by morpheus 24/03/2003</span></li>
-								<li>You cant find the square root of a prime number<span> - by Sarah Kerrigan 24/03/2003</span></li>
-								<li>yes you can, use a calculator!<span> - by Neo 24/03/2003</span></li>
-								<li>the balance of power will be restored!<span> - by Kassadin 24/03/2003</span></li>
-							</ul>
-							
-						</div>
-						<div class="add_comment">
-							<div class="new_comment">
-								<textarea maxlength="150" rows="5" placeholder="type comment here"></textarea>
-								<button>Add Comment</button>
-							</div>
-							
-						</div>
-					</div>
-				</div>	
+					
 			</div>	
 
 			<div class="new_answer">
@@ -158,7 +116,7 @@
 		</div>		
 	</div>
 
-	<script type="text/javascript" src="question.js"></script>
+	<script type="module" src="question.js"></script>
 	<script src="script.js"></script>
 </body>
 

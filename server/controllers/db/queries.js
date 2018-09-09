@@ -43,7 +43,11 @@ export const getOneQuestion = async (req, res, next) => {
   try {
     const question = await db.one(`SELECT q.*,
                                       json_agg(json_build_object('id',a.id,
-                                                  'body',a.body)) answers
+                                                  'body',a.body,
+                                                  'username',a.username,
+                                                  'created_at',a.created_at,
+                                                  'accepted',a.accepted,
+                                                  'score',a.score)) answers
                                   FROM questions q
                                   LEFT JOIN answers a 
                                       ON a.question_id = q.id
