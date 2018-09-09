@@ -6,14 +6,13 @@ import {
 
 const getAllUrl = 'https://vast-waters-81120.herokuapp.com/v2/questions';
 // const getAllUrl = 'http://localhost:4001/v2/questions';
-const questionList = document.getElementById('question_list');
 
 /**
 * Retrieves array of questions from JSON
 * @param {JSON} data - JSON containing the array of questions
 * @returns {array} The array of question objects
 */
-const getQuestionArrayfromJSON = data => data.questions;
+const getQuestionArray = data => data.questions;
 
 /**
 * Creates question HTML elements
@@ -23,7 +22,7 @@ const getQuestionArrayfromJSON = data => data.questions;
 const createQuestionHtmlDiv = (question) => {
   const displayDate = resolveDate(question.created_at);
   const questionDiv = `
-    <div class="question_summary" onclick="location.href = 'question.html';">
+    <div class="question_summary" onclick="location.href = 'question.html?id=${question.id}';">
       <div class="summary_stats">
         <div class="stat_answers">
           <div class="answer_count">${question.answer_count}</div>
@@ -36,7 +35,7 @@ const createQuestionHtmlDiv = (question) => {
       </div>
 
       <div class="summary_body">
-        <h3>${question.body}</h3>
+        <h3>${question.title}</h3>
         <div class="summary_details">
           <a href="" id="details_date">${displayDate}</a>
           by
@@ -59,11 +58,12 @@ const createQuestionHtmlDiv = (question) => {
 * @returns {void}
 */
 const addQuestionToQuestionList = (questionsArray) => {
+  const questionList = document.getElementById('question_list');
   questionsArray.map((question) => {
     console.log(question);
     const questionDiv = createQuestionHtmlDiv(question);
     questionList.innerHTML += questionDiv;
-    return null;
+    return 7;
   });
 };
 
@@ -77,7 +77,7 @@ const fetchAllQuestions = (url) => {
   fetch(url)
     .then(validateResponse)
     .then(readResponseAsJSON)
-    .then(getQuestionArrayfromJSON)
+    .then(getQuestionArray)
     .then(addQuestionToQuestionList)
     .catch((error) => {
       console.log(error);
