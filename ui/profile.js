@@ -1,6 +1,3 @@
-// hide auth options
-// document.getElementById('authOptions').style.display = 'none';
-
 const userData = JSON.parse(localStorage.getItem('user'));
 
 if (!userData) {
