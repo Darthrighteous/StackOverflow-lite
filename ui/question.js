@@ -95,16 +95,25 @@ const populateElements = (question) => {
   addStringToElement(question.title, 'question_title');
   addStringToElement(displayDate, 'question_date');
   addStringToElement(question.username, 'question_author');
-  addStringToElement(`${question.answer_count} answers`, 'answer_count');
+  if (question.answer_count === 1) {
+    addStringToElement(`${question.answer_count} answer`, 'answer_count');
+  } else {
+    addStringToElement(`${question.answer_count} answer(s)`, 'answer_count');
+  }
 
   // Answer Elements
   const answerList = document.getElementById('answer_list');
-  question.answers.map((answer) => {
-    console.log(answer);
-    const answerDiv = createAnswerHtmlDiv(answer);
-    answerList.innerHTML += answerDiv;
-    return 7;
-  });
+
+  if (question.answers[0].id !== null) {
+    question.answers.map((answer) => {
+      console.log(answer);
+      const answerDiv = createAnswerHtmlDiv(answer);
+      answerList.innerHTML += answerDiv;
+      return 7;
+    });
+  } else {
+    document.getElementById('answer_sort_dropdown').style.display = 'none';
+  }
 };
 
 /**
