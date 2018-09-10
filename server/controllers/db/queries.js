@@ -155,7 +155,7 @@ export const deleteQuestion = async (req, res, next) => {
       const result = await db.result('DELETE FROM questions WHERE id = $1', qId);
       res.status(200).json({
         status: 'success',
-        message: `Deleted ${result.rowCount} row successfully`,
+        message: `Deleted ${result.rowCount} question successfully`,
         id: qId,
       });
     } catch (e) {
