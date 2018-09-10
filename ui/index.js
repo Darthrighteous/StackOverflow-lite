@@ -21,8 +21,8 @@ const getQuestionArray = data => data.questions;
 */
 const createQuestionHtmlDiv = (question) => {
   const displayDate = resolveDate(question.created_at);
-  const questionDiv = `
-    <div class="question_summary" onclick="location.href = 'question.html?id=${question.id}';">
+  let questionDiv = `
+    <div class="question_summary" onclick="location.href = 'question.html?id=${question.id}'">
       <div class="summary_stats">
         <div class="stat_answers">
           <div class="answer_count">${question.answer_count}</div>
@@ -43,11 +43,24 @@ const createQuestionHtmlDiv = (question) => {
         </div>
       </div>
 
+      `;
+
+  // TODO: make icons clickable. parent div click trumps atm
+  // check if question belongs to logged in user
+  if (question.username !== localStorage.user.username) {
+    questionDiv += `
       <div class="summary_options">
-        <a id="commentIcon" href="#"></a>
-        <a id="deleteIcon" href="#"></a>
-      </div>
-  </div>`;
+          <a id="commentIcon" onclick="location.href = 'question.html?id=${question.id}&focus=answer'"></a>
+        </div>
+    </div>`;
+  } else {
+    questionDiv += `
+      <div class="summary_options">
+          <a id="commentIcon" onclick="location.href = 'question.html?id=${question.id}&focus=answer'"></a>
+          <a id="deleteIcon" href="#" id="question_delete_btn"></a>
+        </div>
+    </div>`;
+  }
 
   return questionDiv;
 };

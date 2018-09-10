@@ -31,7 +31,7 @@
 		</div>
 	</header>
 
-	<div class="main_body">
+	<div class="main_body" id="main_body">
 		<div class="options_container" id="question_title_container">
 			<h2 id="question_title"></h2>
 			<div class="question_new_button">
@@ -52,15 +52,22 @@
 
 					<div class="post_cell">
 						<div class="post_text" id="question_body"></div>
-          				<div class="post_author">
-				            <div class="post_date">
-								<span id="question_date">asked </span>
+						<div class="post_details">
+							<div class="post_options" id="question_user_options">
+								<a href="#" id="question_edit_btn">edit</a>
+								<a href="#" id="question_delete_btn">delete</a>
 							</div>
-							by
-							<div class="author_details">
-								<a href="profile.html" id="question_author"></a>
+	          				<div class="post_author">
+					            <div class="post_date">
+									<span id="question_date">asked </span>
+								</div>
+								by
+								<div class="author_details">
+									<a href="profile.html" id="question_author"></a>
+								</div>
 							</div>
 						</div>
+						
 					</div>
 
 					<div class="comment_cell">
@@ -73,7 +80,7 @@
 						</div>
 						<div class="add_comment">
 							<div class="new_comment">
-								<textarea maxlength="150" rows="5" placeholder="type comment here"></textarea>
+								<textarea maxlength="150" rows="1" placeholder="type comment here"></textarea>
 								<button>Add Comment</button>
 							</div>
 							

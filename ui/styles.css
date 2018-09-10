@@ -320,7 +320,7 @@ input[type="button"]:hover {
 }
 
 .dropdown_content {
-	z-index: 1;
+	z-index: 2;
 	position: absolute;
 	display: none;
 
@@ -685,10 +685,22 @@ input[type="button"]:hover {
 	margin-bottom: 6px;
 }
 
-.post_author {
-	align-self: flex-end;
+.post_details {
 	display: flex;
-	float: right;
+	justify-content: space-between;
+}
+
+.post_options {
+	display: flex;
+	margin: 6px 0;
+}
+
+.post_options a {
+	margin-right: 12px;
+}
+
+.post_author {
+	display: flex;
 	margin: 6px 0;
 }
 

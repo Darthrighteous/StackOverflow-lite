@@ -48,15 +48,21 @@ const createAnswerHtmlDiv = (answer) => {
 
       <div class="post_cell">
         <div class="post_text">${answer.body}</div>
-        <div class="post_author">
-          <div class="post_date">
-            <span>${displayDate}</span>
+        <div class="post_details">
+          <div class="post_options">
+            <a href="#">edit</a>
+            <a href="#">delete</a>
           </div>
-          by
-          <div class="author_details">
-            <a href="#">${answer.username}</a>
+          <div class="post_author">
+            <div class="post_date">
+              <span>${displayDate}</span>
+            </div>
+            by
+            <div class="author_details">
+              <a href="#">${answer.username}</a>
+            </div>
           </div>
-        </div>
+        </div> 
       </div>
 
       <div class="comment_cell">
@@ -80,6 +86,7 @@ const createAnswerHtmlDiv = (answer) => {
   return answerDiv;
 };
 
+/* FETCH THE QUESTION AND ANSWERS POPULATE ELEMENTS */
 /**
 * populates HTML elements with question details
 * @param {object} question - the question object
@@ -87,8 +94,13 @@ const createAnswerHtmlDiv = (answer) => {
 */
 const populateElements = (question) => {
   console.log(question);
-  const displayDate = resolveDate(question.created_at);
 
+  // check if question belongs to user
+  if (question.username !== localStorage.user.username) {
+    document.getElementById('question_user_options').style.visibility = 'hidden';
+  }
+
+  const displayDate = resolveDate(question.created_at);
   // Question Elements
   addStringToElement(question.score, 'question_score');
   addStringToElement(question.body, 'question_body');
@@ -135,6 +147,7 @@ const fetchQuestion = (url) => {
 // fetch the question
 fetchQuestion(getUrl);
 
+
 /* POST AN ANSWER */
 const postAUrl = `${baseUrl}/questions/${questionId}/answers`;
 
@@ -164,9 +177,38 @@ const postAnswer = () => {
     });
 };
 
-
 document.getElementById('post_answer_btn').addEventListener('click', postAnswer);
 
+
+/* DELETE A QUESTION */
+/**
+* Deletes a question
+* @returns {void}
+*/
+const deleteQuestion = () => {
+  const deleteUrl = `${baseUrl}/questions/${questionId}`;
+  if (confirm('Are you sure you want to delete this question?')) {
+    const init = {
+      method: 'DELETE',
+      headers: {
+        Authorization: localStorage.jwt,
+      },
+    };
+
+    fetch(deleteUrl, init)
+      .then(readResponseAsJSON)
+      .then(validateJsonResponse)
+      .then(window.location.replace('../index.html'))
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+};
+
+document.getElementById('question_delete_btn').addEventListener('click', deleteQuestion);
+
+
+/* TODO: VOTE BUTTONS CONFIG */
 const voteCells = document.getElementsByClassName('vote_cell');
 for (let i = 0; i < voteCells.length; i += 1) {
   const upBtns = voteCells[i].getElementsByClassName('up_vote');
@@ -180,4 +222,10 @@ for (let i = 0; i < voteCells.length; i += 1) {
   currentDownButton.addEventListener('click', () => {
     currentDownButton.classList.toggle('activedown');
   });
+}
+
+/* SET FOCUS TO ANSWER */
+if (pageUrl.searchParams.get('focus') === 'answer') {
+  // TODO: get page to scroll
+  document.getElementById('answer_body').focus();
 }
