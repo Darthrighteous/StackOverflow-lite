@@ -65,6 +65,10 @@ const createAnswerHtmlDiv = (answer) => {
         </div> 
       </div>
 
+      <div class="accept_cell">
+        <a class="accept_button"></a>
+      </div>
+
       <div class="comment_cell">
         <div class="comment_list">
           <ul>
@@ -207,6 +211,7 @@ const deleteQuestion = () => {
 
 document.getElementById('question_delete_btn').addEventListener('click', deleteQuestion);
 
+/* TODO: ACCEPT BUTTON CONFIG */
 
 /* TODO: VOTE BUTTONS CONFIG */
 const voteCells = document.getElementsByClassName('vote_cell');
