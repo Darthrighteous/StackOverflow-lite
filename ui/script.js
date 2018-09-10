@@ -33,7 +33,7 @@ if ((document.getElementsByClassName('dropdown')).length > 0) {
 // Check if user is signed in and display appropriate nav options
 if (!localStorage.user) {
   console.log('not signedin');
-  // uder is not signed in
+  // user is not signed in
   // hide profile options
   document.getElementById('profileOptions').style.display = 'none';
 } else {

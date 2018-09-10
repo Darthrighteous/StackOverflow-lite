@@ -50,14 +50,14 @@ export const resolveDate = (dateString) => {
 
 /**
 * Saves the token returned in the response to local storage
-* @param {object} user - JSON user object containing the token
+* @param {object} res - object containing the user object with the token
 * @returns {void}
 */
-const saveToken = (user) => {
+const saveToken = (res) => {
   if (window.localStorage) {
     localStorage.removeItem('jwt');
-    localStorage.setItem('jwt', user.token);
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('jwt', res.user.token);
+    localStorage.setItem('user', JSON.stringify(res.user));
   } else {
     console.log('no local storage');
   }
@@ -65,18 +65,17 @@ const saveToken = (user) => {
 
 
 /**
-* Validates the JSON response from sign up
+* Validates a JSON response, throws if errored
 * @param {object} res - JSON response object
 * @returns {object} JSON user object
 */
-const validateAuthJsonResponse = (res) => {
-  alert(res.message);
+export const validateJsonResponse = (res) => {
+  alert(`${res.status}: ${res.message}`);
   if (res.status !== 'success') {
     throw Error(res.message);
   }
   console.log(res);
-  console.log(res.user);
-  return res.user;
+  return res;
 };
 
 /**
@@ -96,7 +95,7 @@ export const authenticateUser = (url, userData) => {
 
   fetch(url, init)
     .then(readResponseAsJSON)
-    .then(validateAuthJsonResponse)
+    .then(validateJsonResponse)
     .then(saveToken)
     .then(() => {
       window.location.replace('../profile.html');
