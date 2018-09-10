@@ -38,27 +38,27 @@
 
 		<div class="new_post_container">
 			<div class="new_post_title_container">
-				<textarea class="postTextArea" rows="1" maxlength="150" placeholder="Title"></textarea>
+				<textarea class="postTextArea" id="question_title" rows="1" maxlength="150" placeholder="Title"></textarea>
 				
 			</div>
 
 			<div class="new_post_body_container">
-				<textarea class="postTextArea" rows= "10" placeholder="Question body"></textarea>
+				<textarea class="postTextArea" id="question_body" rows= "10" placeholder="Question body"></textarea>
 				
 			</div>
 
 			<div class="submit_options_container">
 				<div class="submit_options">
-					<button class="button_secondary">Cancel</button>
-					<button class="button_primary">Save</button>
+					<button class="button_secondary" id="cancel_post_btn">Cancel</button>
+					<button class="button_primary" id="post_question_btn">Save</button>
 				</div>
 			</div>
 			
 		</div>
 
-		
 	</div>
 
+	<script type="module" src="newpost.js"></script>
 	<script src="script.js"></script>
 </body>
 
