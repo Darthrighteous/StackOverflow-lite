@@ -1,4 +1,5 @@
 import {
+  baseUrl,
   readResponseAsJSON,
   validateJsonResponse,
 } from './utils.js';
@@ -10,8 +11,7 @@ if (!userData) {
 }
 
 
-const postQUrl = 'https://vast-waters-81120.herokuapp.com/v2/questions';
-// const postQUrl = 'http://localhost:4001/v2/questions';
+const postQUrl = `${baseUrl}/questions`;
 
 /**
 * Redirects to question page

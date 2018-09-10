@@ -1,9 +1,12 @@
+export const baseUrl = 'https://vast-waters-81120.herokuapp.com/v2';
+// export const baseUrl = 'http://localhost:4001/v2';
+
 /**
 * Checks if response status is between 200-299
 * @param {object} res - the response to be checked
 * @returns {object} res - the okay response
 */
-export const validateResponse = (res) => {
+export const validateResponseStatus = (res) => {
   if (!res.ok) {
     throw Error(res.statusText);
   }

@@ -1,11 +1,11 @@
 import {
-  validateResponse,
+  baseUrl,
+  validateResponseStatus,
   readResponseAsJSON,
   resolveDate,
 } from './utils.js';
 
-const getAllUrl = 'https://vast-waters-81120.herokuapp.com/v2/questions';
-// const getAllUrl = 'http://localhost:4001/v2/questions';
+const getAllUrl = `${baseUrl}/questions`;
 
 /**
 * Retrieves array of questions from JSON
@@ -75,7 +75,7 @@ const addQuestionToQuestionList = (questionsArray) => {
 */
 const fetchAllQuestions = (url) => {
   fetch(url)
-    .then(validateResponse)
+    .then(validateResponseStatus)
     .then(readResponseAsJSON)
     .then(getQuestionArray)
     .then(addQuestionToQuestionList)

@@ -1,12 +1,9 @@
 import {
+  baseUrl,
   authenticateUser,
 } from './utils.js';
 
-// hide signup button
-// document.getElementById('signupbutton').style.display = 'none';
-
-const signUpUrl = 'https://vast-waters-81120.herokuapp.com/v2/auth/signup';
-// const signUpUrl = 'http://localhost:4001/v2/auth/signup';
+const signUpUrl = `${baseUrl}/auth/signup`;
 
 const form = document.getElementById('signup_form');
 

@@ -1,5 +1,7 @@
 import {
-  validateResponse,
+  baseUrl,
+  validateResponseStatus,
+  validateJsonResponse,
   readResponseAsJSON,
   resolveDate,
 } from './utils.js';
@@ -7,8 +9,7 @@ import {
 const pageUrl = new URL(window.location.href);
 const questionId = pageUrl.searchParams.get('id');
 
-const getUrl = `https://vast-waters-81120.herokuapp.com/v2/questions/${questionId}`;
-// const getUrl = `http://localhost:4001/v2/questions/${questionId}`;
+const getUrl = `${baseUrl}/questions/${questionId}`;
 
 /**
 * Retrieves a single from reponse
@@ -111,9 +112,9 @@ const populateElements = (question) => {
 * @param {string} url - The url to GET all questions
 * @returns {void}
 */
-const fetchAllQuestions = (url) => {
+const fetchQuestion = (url) => {
   fetch(url)
-    .then(validateResponse)
+    .then(validateResponseStatus)
     .then(readResponseAsJSON)
     .then(getQuestion)
     .then(populateElements)
@@ -122,7 +123,40 @@ const fetchAllQuestions = (url) => {
     });
 };
 
-fetchAllQuestions(getUrl);
+// fetch the question
+fetchQuestion(getUrl);
+
+/* POST AN ANSWER */
+const postAUrl = `${baseUrl}/questions/${questionId}/answers`;
+
+/**
+* Posts an answer to the question
+* @returns {void}
+*/
+const postAnswer = () => {
+  const answer = {};
+  answer.body = document.getElementById('answer_body').value;
+
+  const init = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localStorage.jwt,
+    },
+    body: JSON.stringify(answer),
+  };
+
+  fetch(postAUrl, init)
+    .then(readResponseAsJSON)
+    .then(validateJsonResponse)
+    .then(window.location.reload())
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+
+document.getElementById('post_answer_btn').addEventListener('click', postAnswer);
 
 const voteCells = document.getElementsByClassName('vote_cell');
 for (let i = 0; i < voteCells.length; i += 1) {
