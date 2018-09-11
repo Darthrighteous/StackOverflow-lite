@@ -73,7 +73,7 @@ describe('DELETE ROUTE', () => {
 
     it('has expected response body', () => {
       expect(data.body.status).toBe('success');
-      expect(data.body.message).toBe('Deleted 1 row successfully');
+      expect(data.body.message).toBe('Deleted 1 question successfully');
     });
   });
 });
