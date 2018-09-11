@@ -143,11 +143,12 @@ const populateElements = (question) => {
 * @returns {void}
 */
 const hideAuthorElements = (question) => {
-  const { username } = JSON.parse(localStorage.user);
-  // check if question belongs to user
+  let username;
+  if (localStorage.user) {
+    ({ username } = JSON.parse(localStorage.user));
+  }
+  // check if question doesnt belongs to user
   if (question.username !== username) {
-    console.log(question.username);
-    console.log(username);
     console.log('not my question');
     document.getElementById('question_user_options').style.visibility = 'hidden';
     Array.from(document.getElementsByClassName('accept_button')).forEach((button) => {

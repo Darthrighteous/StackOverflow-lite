@@ -41,25 +41,30 @@ const createQuestionHtmlDiv = (question) => {
           by
           <a href="" id="details_user">${question.username}</a>          
         </div>
-      </div>
-
-      `;
+      </div>`;
 
   // TODO: make icons clickable. parent div click trumps atm
   // check if question belongs to logged in user
-  if (question.username !== localStorage.user.username) {
-    questionDiv += `
+  const author = `
       <div class="summary_options">
-          <a id="commentIcon" onclick="location.href = 'question.html?id=${question.id}&focus=answer'"></a>
-        </div>
+        <a id="commentIcon" onclick="location.href = 'question.html?id=${question.id}&focus=answer'"></a>
+        <a id="deleteIcon" href="#" id="question_delete_btn"></a>
+      </div>
     </div>`;
+  const nonAuthor = `
+      <div class="summary_options">
+        <a id="commentIcon" onclick="location.href = 'question.html?id=${question.id}&focus=answer'"></a>
+      </div>
+    </div>`;
+
+  let username;
+  if (localStorage.user) {
+    ({ username } = JSON.parse(localStorage.user));
+  }
+  if (question.username === username) {
+    questionDiv += author;
   } else {
-    questionDiv += `
-      <div class="summary_options">
-          <a id="commentIcon" onclick="location.href = 'question.html?id=${question.id}&focus=answer'"></a>
-          <a id="deleteIcon" href="#" id="question_delete_btn"></a>
-        </div>
-    </div>`;
+    questionDiv += nonAuthor;
   }
 
   return questionDiv;
