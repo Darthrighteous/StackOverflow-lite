@@ -36,6 +36,13 @@ const addStringToElement = (string, elementId) => {
 */
 const createAnswerHtmlDiv = (answer) => {
   const displayDate = resolveDate(answer.created_at);
+  let acceptButtonClass;
+  if (answer.accepted === true) {
+    acceptButtonClass = 'accept_button_checked';
+  } else {
+    acceptButtonClass = 'accept_button';
+  }
+
   const answerDiv = `
     <div id="answerPost1" class="post_layout">
       <div class="vote_cell">
@@ -49,9 +56,9 @@ const createAnswerHtmlDiv = (answer) => {
       <div class="post_cell">
         <div class="post_text">${answer.body}</div>
         <div class="post_details">
-          <div class="post_options">
-            <a href="#">edit</a>
-            <a href="#">delete</a>
+          <div class="post_options" id="post_options${answer.id}">
+            <a href="#" class="edit_button" id="edit_button${answer.id}">edit</a>
+            <a href="#" class="delete_button" id="delete_button${answer.id}">delete</a>
           </div>
           <div class="post_author">
             <div class="post_date">
@@ -66,7 +73,7 @@ const createAnswerHtmlDiv = (answer) => {
       </div>
 
       <div class="accept_cell">
-        <a class="accept_button"></a>
+        <a class="${acceptButtonClass}" id="accept_button${answer.id}"></a>
       </div>
 
       <div class="comment_cell">
@@ -90,6 +97,7 @@ const createAnswerHtmlDiv = (answer) => {
   return answerDiv;
 };
 
+const answerBodyArray = [];
 /* FETCH THE QUESTION AND ANSWERS POPULATE ELEMENTS */
 /**
 * populates HTML elements with question details
@@ -98,11 +106,6 @@ const createAnswerHtmlDiv = (answer) => {
 */
 const populateElements = (question) => {
   console.log(question);
-
-  // check if question belongs to user
-  if (question.username !== localStorage.user.username) {
-    document.getElementById('question_user_options').style.visibility = 'hidden';
-  }
 
   const displayDate = resolveDate(question.created_at);
   // Question Elements
@@ -122,6 +125,7 @@ const populateElements = (question) => {
 
   if (question.answers[0].id !== null) {
     question.answers.map((answer) => {
+      answerBodyArray[answer.id] = answer.body;
       console.log(answer);
       const answerDiv = createAnswerHtmlDiv(answer);
       answerList.innerHTML += answerDiv;
@@ -130,6 +134,33 @@ const populateElements = (question) => {
   } else {
     document.getElementById('answer_sort_dropdown').style.display = 'none';
   }
+  return question;
+};
+
+/**
+* Hide elements of options meant for author
+* @param {object} question - The question object
+* @returns {void}
+*/
+const hideAuthorElements = (question) => {
+  const { username } = JSON.parse(localStorage.user);
+  // check if question belongs to user
+  if (question.username !== username) {
+    console.log(question.username);
+    console.log(username);
+    console.log('not my question');
+    document.getElementById('question_user_options').style.visibility = 'hidden';
+    Array.from(document.getElementsByClassName('accept_button')).forEach((button) => {
+      button.style.visibility = 'hidden';
+    });
+  }
+  // answer author options
+  const answerArray = question.answers;
+  answerArray.forEach((answer) => {
+    if (answer.username !== username) {
+      document.getElementById(`post_options${answer.id}`).style.visibility = 'hidden';
+    }
+  });
 };
 
 /**
@@ -143,6 +174,7 @@ const fetchQuestion = (url) => {
     .then(readResponseAsJSON)
     .then(getQuestion)
     .then(populateElements)
+    .then(hideAuthorElements)
     .catch((error) => {
       console.log(error);
     });
@@ -212,6 +244,77 @@ const deleteQuestion = () => {
 document.getElementById('question_delete_btn').addEventListener('click', deleteQuestion);
 
 /* TODO: ACCEPT BUTTON CONFIG */
+/**
+* Call back from click event to accept answer
+* @param {object} event - object that propagated click
+* @returns {void}
+*/
+const acceptAnswer = (event) => {
+  if (event.target.className === 'accept_button') {
+    const { id } = event.target;
+    const [, aId] = id.split('n');
+    const acceptUrl = `${baseUrl}/questions/${questionId}/answers/${aId}`;
+
+    const init = {
+      method: 'PATCH',
+      headers: {
+        Authorization: localStorage.jwt,
+      },
+    };
+
+    /**
+    * Toggles the accept icon
+    * @returns {void}
+    */
+    const toggleIcon = () => {
+      event.target.style.backgroundImage = "url('icons/accept_checked.png')";
+    };
+
+    fetch(acceptUrl, init)
+      .then(readResponseAsJSON)
+      .then(validateJsonResponse)
+      .then(toggleIcon)
+      .catch((error) => {
+        console.log(error);
+      });
+
+    console.log('accept click');
+  }
+};
+
+/**
+* Call back from click event to edit an answer
+* @param {object} event - object that propagated click
+* @returns {void}
+*/
+const editAnswer = (event) => {
+  if (event.target.className === 'edit_button') {
+    const { id } = event.target;
+    const [, aId] = id.split('n');
+    const editUrl = `${baseUrl}/questions/${questionId}/answers/${aId}`;
+    const editBody = {};
+    editBody.body = prompt("Edit your answer:", answerBodyArray[aId]);
+
+    const init = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.jwt,
+      },
+      body: JSON.stringify(editBody),
+    };
+
+    fetch(editUrl, init)
+      .then(readResponseAsJSON)
+      .then(validateJsonResponse)
+      .then(location.reload())
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+};
+document.addEventListener('click', acceptAnswer);
+document.addEventListener('click', editAnswer);
 
 /* TODO: VOTE BUTTONS CONFIG */
 const voteCells = document.getElementsByClassName('vote_cell');

@@ -188,7 +188,7 @@ export const acceptAnswer = async (req, res, next) => {
   const answer = await db.one('SELECT * FROM answers WHERE id=$1', [aId]);
 
   // TODO: rewrite the logic in this if block
-  if (username === question.username) {
+  if (username === question.username && !req.body.body) {
     // route is called by question author
     // accept answer
     try {
