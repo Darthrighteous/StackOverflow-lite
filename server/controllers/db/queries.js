@@ -12,6 +12,14 @@ import {
 * @returns {void}
 */
 export const getAllQuestions = async (req, res, next) => {
+  const { sort } = req.query;
+  const sortArray = ['date', 'answers', 'score'];
+  const queries = ['created_at', 'answer_count', 'score'];
+  let index = sortArray.indexOf(sort);
+  if (index === -1) {
+    index = 1;
+  }
+
   try {
     const questions = await db.any(`SELECT q.*,
                                       json_agg(json_build_object('id',a.id,
@@ -19,7 +27,9 @@ export const getAllQuestions = async (req, res, next) => {
                                     FROM questions q
                                     LEFT JOIN answers a 
                                         ON a.question_id = q.id
-                                        GROUP BY q.id`);
+                                        GROUP BY q.id
+                                    ORDER BY
+                                      ${queries[index]} DESC`);
     res.status(200).json({
       status: 'success',
       message: 'all questions retrieved successfully',

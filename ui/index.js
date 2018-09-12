@@ -5,7 +5,7 @@ import {
   resolveDate,
 } from './utils.js';
 
-const getAllUrl = `${baseUrl}/questions`;
+const getAllUrl = `${baseUrl}/questions?sort=date`;
 
 /**
 * Retrieves array of questions from JSON
@@ -47,13 +47,13 @@ const createQuestionHtmlDiv = (question) => {
   // check if question belongs to logged in user
   const author = `
       <div class="summary_options">
-        <a id="commentIcon" onclick="location.href = 'question.html?id=${question.id}&focus=answer'"></a>
+        <a id="commentIcon" onclick="event.stopPropagation(); location.href = 'question.html?id=${question.id}&focus=answer'"></a>
         <a id="deleteIcon" href="#" id="question_delete_btn"></a>
       </div>
     </div>`;
   const nonAuthor = `
       <div class="summary_options">
-        <a id="commentIcon" onclick="location.href = 'question.html?id=${question.id}&focus=answer'"></a>
+        <a id="commentIcon" onclick="event.stopPropagation(); location.href = 'question.html?id=${question.id}&focus=answer'"></a>
       </div>
     </div>`;
 
@@ -103,3 +103,22 @@ const fetchAllQuestions = (url) => {
 };
 
 fetchAllQuestions(getAllUrl);
+
+document.getElementById('sortDropdown').addEventListener('click', (e) => {
+  // build sort url
+  const sortIdArray = ['sort_most_recent', 'sort_most_answered', 'sort_most_rated'];
+  const queries = ['date', 'answers', 'score'];
+  const titles = ['Most Recent', 'Most Answered', 'Most Rated'];
+  const index = sortIdArray.indexOf(e.target.id);
+  const sortUrl = `${baseUrl}/questions?sort=${queries[index]}`;
+
+  // change active dropdown button
+  const current = document.getElementsByClassName('active');
+  current[0].className = current[0].className.replace(' active', '');
+  document.getElementById(e.target.id).className += ' active';
+  document.getElementById('index_dropbtn').innerHTML = titles[index];
+
+  // clear question list, fetch questions with sort url
+  document.getElementById('question_list').innerHTML = '';
+  fetchAllQuestions(sortUrl);
+});

@@ -156,12 +156,14 @@ const hideAuthorElements = (question) => {
     });
   }
   // answer author options
-  const answerArray = question.answers;
-  answerArray.forEach((answer) => {
-    if (answer.username !== username) {
-      document.getElementById(`post_options${answer.id}`).style.visibility = 'hidden';
-    }
-  });
+  if (question.answers[0].id !== null) {
+    const answerArray = question.answers;
+    answerArray.forEach((answer) => {
+      if (answer.username !== username) {
+        document.getElementById(`post_options${answer.id}`).style.visibility = 'hidden';
+      }
+    });
+  }
 };
 
 /**
@@ -335,6 +337,8 @@ for (let i = 0; i < voteCells.length; i += 1) {
 
 /* SET FOCUS TO ANSWER */
 if (pageUrl.searchParams.get('focus') === 'answer') {
-  // TODO: get page to scroll
+  setTimeout(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }, 500);
   document.getElementById('answer_body').focus();
 }
