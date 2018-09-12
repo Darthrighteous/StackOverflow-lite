@@ -322,7 +322,8 @@ input[type="button"]:hover {
 .dropdown_content {
 	z-index: 2;
 	position: absolute;
-	display: none;
+	display: block;
+	visibility: hidden;
 
 	background-color: #FFFFFF;
 	color: rgb(28, 28, 28);
@@ -337,13 +338,12 @@ input[type="button"]:hover {
 	margin-left: 25px;	
 }
 
-.dropdown_content a {
+.dropdown_item {
 	font-size: 14px;
 	font-weight: 500;
 	font-family: 'Roboto', sans-serif;
 	line-height: 1.5;
 	color: rgb(135, 138, 140);
-	fill: rgb(135, 138, 140);
 	display: block;
 
 
@@ -353,12 +353,17 @@ input[type="button"]:hover {
 	padding: 8px;  
 }
 
-.dropdown_content a:hover {
+.dropdown_item:hover {
+	background-color: #F5F5F5;
+}
+
+.active {
+	color: #4A90E2;
 	background-color: #F5F5F5;
 }
 
 .show {
-	display: block;
+	visibility: visible;
 }
 
 @media screen and (max-device-width : 600px) {
