@@ -5,7 +5,7 @@ import {
   resolveDate,
 } from './utils.js';
 
-const getAllUrl = `${baseUrl}/questions`;
+const getAllUrl = `${baseUrl}/questions?sort=date`;
 
 /**
 * Retrieves array of questions from JSON
