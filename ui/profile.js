@@ -1,5 +1,10 @@
-const userData = JSON.parse(localStorage.getItem('user'));
+import {
+  baseUrl,
+  fetchAllQuestions,
+  dropDownListenerInit,
+} from './utils.js';
 
+const userData = JSON.parse(localStorage.getItem('user'));
 if (!userData) {
   window.location.replace('../signin.html');
 }
@@ -10,6 +15,12 @@ container.innerHTML += `
   <a href="#">${userData.username}</a>
 `;
 
+const url = `${baseUrl}/questions?sort=date&user=${userData.username}`;
+fetchAllQuestions(url);
+
+// user's questions sort dropdown setup
+const profileSortUrl = `${baseUrl}/questions?user=${userData.username}&`;
+dropDownListenerInit('profileDropdown', profileSortUrl);
 
 /**
 * Clears user data and jwt and redirects to homepage
@@ -20,3 +31,5 @@ const logOut = () => {
   localStorage.removeItem('user');
   window.location.replace('../index.html');
 };
+
+document.getElementById('log_out_btn').addEventListener('click', logOut);

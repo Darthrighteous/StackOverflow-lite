@@ -333,7 +333,7 @@ input[type="button"]:hover {
 	box-shadow: rgba(28, 28, 28, 0.2) 0px 2px 4px 0px;
 }
 
-#sortDropdown {
+#indexDropdown {
 	margin-top: 71px;
 	margin-left: 25px;	
 }
@@ -420,6 +420,15 @@ input[type="button"]:hover {
 /*BODY HOMEPAGE*/
 .question_list {
 
+}
+
+.no_questions {
+	padding: 24px;
+	display: flex;
+	font-family: 'Vollkorn', serif;
+	font-size: 14px;
+	font-weight: 500;
+	justify-content: center;
 }
 
 .question_summary {

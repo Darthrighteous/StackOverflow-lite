@@ -23,6 +23,7 @@ const redirectToQuestionPage = (res) => {
 };
 
 const titleText = document.getElementById('question_title');
+titleText.focus();
 const bodyText = document.getElementById('question_body');
 
 /**
