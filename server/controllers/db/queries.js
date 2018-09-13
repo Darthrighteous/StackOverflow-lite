@@ -12,12 +12,26 @@ import {
 * @returns {void}
 */
 export const getAllQuestions = async (req, res, next) => {
+  // sort query setup
   const { sort } = req.query;
-  const sortArray = ['date', 'answers', 'score'];
-  const queries = ['created_at', 'answer_count', 'score'];
-  let index = sortArray.indexOf(sort);
-  if (index === -1) {
-    index = 1;
+  let sortQuery = '';
+  if (sort) {
+    const sortArray = ['date', 'answers', 'score'];
+    const sortQueries = ['created_at', 'answer_count', 'score'];
+    const index = sortArray.indexOf(sort);
+    if (index === -1) {
+      res.status(400);
+      return next(new Error(`${sort} is not a valid sort query`));
+    }
+    sortQuery = `ORDER BY
+                    ${sortQueries[index]} DESC`;
+  }
+
+  // username query setup
+  const { user } = req.query;
+  let userQuery = '';
+  if (user) {
+    userQuery = `WHERE q.username='${user}'`;
   }
 
   try {
@@ -27,10 +41,10 @@ export const getAllQuestions = async (req, res, next) => {
                                     FROM questions q
                                     LEFT JOIN answers a 
                                         ON a.question_id = q.id
+                                    ${userQuery}
                                         GROUP BY q.id
-                                    ORDER BY
-                                      ${queries[index]} DESC`);
-    res.status(200).json({
+                                    ${sortQuery}`);
+    return res.status(200).json({
       status: 'success',
       message: 'all questions retrieved successfully',
       questions,
@@ -38,7 +52,7 @@ export const getAllQuestions = async (req, res, next) => {
   } catch (e) {
     res.status(404);
     const error = new Error(`${e.message} Questions not found`);
-    next(error);
+    return next(error);
   }
 };
 
