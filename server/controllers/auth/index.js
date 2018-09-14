@@ -109,15 +109,15 @@ export const verifyJWT = (req, res, next) => {
     // verify and decode token
     jwt.verify(token, secretKey, (err, decoded) => {
       if (err) {
-        return res.status(403).json({
+        res.status(403).json({
           status: 'unauthorized',
           message: 'invalid token',
         });
       }
       res.locals.decoded = decoded;
       res.locals.token = token;
-      return next();
     });
+    return next();
   }
   return res.status(403).json({
     status: 'unauthorized',
