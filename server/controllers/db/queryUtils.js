@@ -35,7 +35,10 @@ export const initTables = () => {
       joined_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
       email VARCHAR NOT NULL,
       username VARCHAR (30) UNIQUE NOT NULL,
-      password VARCHAR (60) NOT NULL);
+      password VARCHAR (60) NOT NULL,
+      question_count INTEGER DEFAULT 0,
+      answer_count INTEGER DEFAULT 0,
+      comment_count INTEGER DEFAULT 0);
 
     INSERT INTO users (firstname, lastname, email, username, password)
       VALUES
@@ -81,12 +84,35 @@ export const initTables = () => {
       BEGIN
         IF TG_OP = 'INSERT' THEN
           UPDATE questions SET answer_count = answer_count + 1 WHERE id = NEW.question_id;
+          UPDATE users SET answer_count = answer_count + 1 WHERE username = NEW.username;
         ELSEIF TG_OP = 'DELETE' THEN
           UPDATE questions SET answer_count = answer_count - 1 WHERE id = OLD.question_id;
+          UPDATE users SET answer_count = answer_count - 1 WHERE username = OLD.username;
         END IF;
         RETURN NEW;
       END;
       $BODY$;
+
+      CREATE OR REPLACE FUNCTION update_question_count()
+        RETURNS trigger
+        LANGUAGE plpgsql
+      AS
+      $BODY$
+      BEGIN
+        IF TG_OP = 'INSERT' THEN
+          UPDATE users SET question_count = question_count + 1 WHERE username = NEW.username;
+        ELSEIF TG_OP = 'DELETE' THEN
+          UPDATE users SET question_count = question_count - 1 WHERE username = OLD.username;
+        END IF;
+        RETURN NEW;
+      END;
+      $BODY$;
+
+      CREATE TRIGGER question_added
+        AFTER INSERT OR DELETE
+        ON questions
+        FOR EACH ROW
+        EXECUTE PROCEDURE update_question_count();
 
       CREATE TRIGGER answer_added
         AFTER INSERT OR DELETE
@@ -107,62 +133,7 @@ export const initTables = () => {
         ('Answer body three', 'coachee', 1);
       `;
   // } else {
-  //   queryText = `
-  //     DROP TABLE 
-  //   IF EXISTS questions;
-
-  //   CREATE TABLE questions (
-  //     id serial PRIMARY KEY,
-  //     title VARCHAR NOT NULL,
-  //     body VARCHAR,
-  //     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  //     username VARCHAR (30) NOT NULL,
-  //     score INTEGER DEFAULT 0,
-  //     answer_count INTEGER DEFAULT 0,
-  //     accepted_answer INTEGER DEFAULT -1);
-
-  //   INSERT INTO
-  //   questions (title, body, username)
-  //   VALUES
-  //   ('question 1','body 1','user1'),
-  //   ('question 2','body 2','user2'),
-  //   ('question 3','body 3','user3'),
-  //   ('question 4','body 4','user4'),
-  //   ('question 5','body 5','user5'),
-  //   ('question 6','body 6','user6');
-
-  //   DROP TABLE 
-  //   IF EXISTS answers;
-
-  //   CREATE TABLE answers (
-  //     id serial PRIMARY KEY,
-  //     body VARCHAR,
-  //     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  //     username VARCHAR (30) NOT NULL,
-  //     accepted BOOLEAN DEFAULT FALSE,
-  //     score INTEGER DEFAULT 0,
-  //     question_id INTEGER DEFAULT -1);
-
-  //   INSERT INTO
-  //   answers (body, username, question_id)
-  //   VALUES
-  //   ('body 1','user1', 1),
-  //   ('body 2','user2', 2),
-  //   ('body 3','user3', 3),
-  //   ('body 4','user4', 4),
-  //   ('body 5','user5', 5),
-  //   ('body 6','user6', 6);
-    
-  //   DROP TABLE 
-  //   IF EXISTS users;
-
-  //   CREATE TABLE users (
-  //     id serial PRIMARY KEY,
-  //     firstname VARCHAR,
-  //     lastname VARCHAR,
-  //     email VARCHAR,
-  //     username VARCHAR (30) NOT NULL,
-  //     password VARCHAR (60) NOT NULL)`;
+  //   queryText = ``;
   // }
 
   pool.query(queryText)
