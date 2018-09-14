@@ -103,13 +103,12 @@ export const logIn = async (req, res, next) => {
 * @returns {void}
 */
 export const verifyJWT = (req, res, next) => {
-  if (req.headers.authorization !== undefined) {
+  if (req.headers.authorization !== undefined && req.headers.authorization !== 'undefined') {
     // retrieve jwt from header
     const token = req.headers.authorization;
     // verify and decode token
     jwt.verify(token, secretKey, (err, decoded) => {
       if (err) {
-        console.log(`ERROR VALIDATING TOKEN ${err}`);
         res.status(403).json({
           status: 'unauthorized',
           message: 'invalid token',
@@ -120,7 +119,6 @@ export const verifyJWT = (req, res, next) => {
     });
     return next();
   }
-
   return res.status(403).json({
     status: 'unauthorized',
     message: 'No token found',

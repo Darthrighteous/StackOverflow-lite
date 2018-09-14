@@ -2,6 +2,7 @@ import {
   db,
   validateQuestionBody,
   validateAnswerBody,
+  validatePatchAnswerReqBody,
 } from './queryUtils';
 
 /**
@@ -203,6 +204,12 @@ export const deleteQuestion = async (req, res, next) => {
 * @returns {void}
 */
 export const acceptAnswer = async (req, res, next) => {
+  const validPatch = validatePatchAnswerReqBody(req.body);
+  if (validPatch !== null) {
+    res.status(400);
+    return next(new Error(validPatch));
+  }
+
   // TODO: check that question belongs to user
   const { username } = res.locals.decoded.user;
   const aId = req.params.answerId;
@@ -211,67 +218,116 @@ export const acceptAnswer = async (req, res, next) => {
   const question = await db.one('SELECT * FROM questions WHERE id=$1', [qId]);
   const answer = await db.one('SELECT * FROM answers WHERE id=$1', [aId]);
 
-  // TODO: rewrite the logic in this if block
-  if (username === question.username && !req.body.body) {
-    // route is called by question author
-    // accept answer
-    try {
-      const data = await db.result('UPDATE answers SET accepted = $1 WHERE id= $2',
-        [true, aId]);
-      res.status(200).json({
-        status: 'success',
-        message: `Accepted ${data.rowCount} answer successfully`,
-        answerId: aId,
-        questionId: qId,
-      });
-    } catch (e) {
-      const error = new Error(`${e.message}`);
-      next(error);
-    }
-  } else if (username === answer.username) {
-    // route is called by answer author
-    // validate answer edit body
-    const validate = validateAnswerBody(req.body);
-    if (validate !== null) {
-      res.status(400).json({
-        status: 'failure',
-        message: validate,
-      });
-    }
-    if (req.body.body) {
-      const update = await db.result('UPDATE answers SET body = $1 WHERE id = $2',
-        [req.body.body, aId]);
-      if (update.rowCount > 0) {
-        res.status(200).json({
-          status: 'success',
-          message: `Updated ${update.rowCount} answer successfully`,
-          answerId: aId,
-          questionId: qId,
-        });
+  const { type } = req.body;
+  switch (type) {
+    case 'accept':
+      // accept answer
+      if (username === question.username) {
+        // route is called by question's author, try update
+        try {
+          const data = await db.result('UPDATE answers SET accepted = $1 WHERE id= $2 AND "question_id"=$3',
+            [true, aId, qId]);
+          return res.status(200).json({
+            status: 'success',
+            message: `Accepted ${data.rowCount} answer successfully`,
+            answerId: aId,
+            questionId: qId,
+          });
+        } catch (e) {
+          res.status(500);
+          return next(new Error(`${e.message}`));
+        }
       } else {
-        res.status(400).json({
+        res.status(401);
+        return next(new Error('Only the question author can accept an answer'));
+      }
+    case 'edit':
+      if (username === answer.username) {
+        // route is called by answer's author, try update
+        try {
+          const update = await db.result('UPDATE answers SET body = $1 WHERE id = $2 AND "question_id"=$3',
+            [req.body.body, aId, qId]);
+          if (update.rowCount > 0) {
+            return res.status(200).json({
+              status: 'success',
+              message: `Updated ${update.rowCount} answer successfully`,
+              answerId: aId,
+              questionId: qId,
+            });
+          }
+          return res.status(400).json({
+            status: 'failure',
+            message: 'update failed or answer not found',
+            answerId: aId,
+            questionId: qId,
+          });
+        } catch (e) {
+          res.status(500);
+          return next(new Error(`${e.message}`));
+        }
+      } else {
+        res.status(401);
+        return next(new Error('Only the answer\'s author can edit an answer'));
+      }
+    case 'upvote':
+      // TODO: DRY this and next case
+      if (username === answer.username) {
+        return res.status(403).json({
           status: 'failure',
-          message: 'update failed',
-          answerId: aId,
-          questionId: qId,
+          message: 'You can not upvote your own answer',
         });
       }
-    } else {
-      res.status(400).json({
-        status: 'failure',
-        message: 'require body to update answer',
-        answerId: aId,
-        questionId: qId,
-      });
-    }
-  } else {
-    res.status(404).json({
-      status: 'failure',
-      message: 'answer not found, or user token does not match question/answer owner',
-      answerId: aId,
-      questionId: qId,
-    });
+      try {
+        const update = await db.result('UPDATE answers SET score = score + 1 WHERE id =$1 AND "question_id"=$2', [aId, qId]);
+        if (update.rowCount > 0) {
+          return res.status(200).json({
+            status: 'success',
+            message: 'Upvoted successfully',
+            answerId: aId,
+            questionId: qId,
+          });
+        }
+        return res.status(400).json({
+          status: 'failure',
+          message: 'Upvote failed or answer not found',
+          answerId: aId,
+          questionId: qId,
+        });
+      } catch (e) {
+        res.status(500);
+        return next(new Error(`${e.message}`));
+      }
+    case 'downvote':
+      if (username === answer.username) {
+        return res.status(403).json({
+          status: 'failure',
+          message: 'You can not downvote your own answer',
+        });
+      }
+      try {
+        const update = await db.result('UPDATE answers SET score = score - 1 WHERE id =$1 AND "question_id"=$2', [aId, qId]);
+        if (update.rowCount > 0) {
+          return res.status(200).json({
+            status: 'success',
+            message: 'Downvoted successfully',
+            answerId: aId,
+            questionId: qId,
+          });
+        }
+        return res.status(400).json({
+          status: 'failure',
+          message: 'Downvote failed',
+          answerId: aId,
+          questionId: qId,
+        });
+      } catch (e) {
+        res.status(500);
+        return next(new Error(`${e.message}`));
+      }
+    default:
+      console.log('something really bad has happened');
   }
+  return 7;
 };
 
 /**

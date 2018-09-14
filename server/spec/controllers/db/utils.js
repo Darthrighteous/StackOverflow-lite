@@ -38,6 +38,7 @@ export const answerInput = {
 };
 
 export const answerModify = {
+  type: 'edit',
   body: 'the new and improved answer to the question is',
 };
 

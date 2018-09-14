@@ -10,11 +10,12 @@ import {
 describe('PATCH ROUTE', () => {
   describe('for an answer', () => {
     const data = {};
+    let options;
     let optionsQuestion;
     let optionsAnswer;
     let optionsAccept;
     let optionsModify;
-    let optionsModifyNoBody;
+    let optionsModifyNoToken;
     let aId;
     let qId;
 
@@ -64,28 +65,12 @@ describe('PATCH ROUTE', () => {
       Request.post(optionsAnswer, (error, response, body) => {
         // get the answer Id
         aId = body.answerId;
-        // console.log(body);
-        // accept options
-        optionsAccept = {
+        options = {
           url: `http://localhost:4001/v2/questions/${qId}/answers/${aId}`,
           method: 'PATCH',
           headers: {
             authorization: data.tokenQuestion,
           },
-        };
-        // modify options
-        optionsModify = {
-          url: `http://localhost:4001/v2/questions/${qId}/answers/${aId}`,
-          method: 'PATCH',
-          headers: {
-            authorization: data.tokenAnswer,
-          },
-          json: answerModify,
-        };
-        optionsModifyNoBody = {
-          url: `http://localhost:4001/v2/questions/${qId}/answers/${aId}`,
-          method: 'PATCH',
-          json: answerModify,
         };
         done();
       });
@@ -93,9 +78,10 @@ describe('PATCH ROUTE', () => {
 
     describe('to accept an answer', () => {
       beforeAll((done) => {
-        Request.patch(optionsAccept, (error, response, body) => {
+        options.json = { type: 'accept' };
+        Request.patch(options, (error, response, body) => {
           data.status = response.statusCode;
-          data.body = JSON.parse(body);
+          data.body = body;
           done();
         });
       });
@@ -112,7 +98,9 @@ describe('PATCH ROUTE', () => {
 
     describe('to modify an answer', () => {
       beforeAll((done) => {
-        Request.patch(optionsModify, (error, response, body) => {
+        options.headers = { authorization: data.tokenAnswer };
+        options.json = answerModify;
+        Request.patch(options, (error, response, body) => {
           data.status = response.statusCode;
           data.body = body;
           done();
@@ -131,7 +119,9 @@ describe('PATCH ROUTE', () => {
 
     describe('to modify an answer with no token', () => {
       beforeAll((done) => {
-        Request.patch(optionsModifyNoBody, (error, response, body) => {
+        options.headers = {};
+        options.json = answerModify;
+        Request.patch(options, (error, response, body) => {
           data.status = response.statusCode;
           data.body = body;
           done();
@@ -145,6 +135,68 @@ describe('PATCH ROUTE', () => {
       it('has expected response body', () => {
         expect(data.body.status).toBe('unauthorized');
         expect(data.body.message).toBe('No token found');
+      });
+    });
+
+    describe('to upvote an answer', () => {
+      beforeAll((done) => {
+        options.headers = { authorization: data.tokenQuestion };
+        options.json = { type: 'upvote' };
+        Request.patch(options, (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = body;
+          done();
+        });
+      });
+
+      it('has expected status 200', () => {
+        expect(data.status).toBe(200);
+      });
+
+      it('has expected response body', () => {
+        expect(data.body.status).toBe('success');
+        expect(data.body.message).toBe('Upvoted successfully');
+      });
+    });
+
+    describe('to downvote an answer', () => {
+      beforeAll((done) => {
+        options.headers = { authorization: data.tokenQuestion };
+        options.json = { type: 'downvote' };
+        Request.patch(options, (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = body;
+          done();
+        });
+      });
+
+      it('has expected status 200', () => {
+        expect(data.status).toBe(200);
+      });
+
+      it('has expected response body', () => {
+        expect(data.body.status).toBe('success');
+        expect(data.body.message).toBe('Downvoted successfully');
+      });
+    });
+
+    describe('with wrong type', () => {
+      beforeAll((done) => {
+        options.json = { type: 'tr3way' };
+        Request.patch(options, (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = body;
+          done();
+        });
+      });
+
+      it('has expected status 400', () => {
+        expect(data.status).toBe(400);
+      });
+
+      it('has expected response body', () => {
+        expect(data.body.status).toBe('failure');
+        expect(data.body.message).toBe('Update type must be accept, edit, upvote or downvote');
       });
     });
   });
