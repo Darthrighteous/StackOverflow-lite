@@ -659,7 +659,7 @@ input[type="button"]:hover {
 }
 
 .activeup {
-	background-image: url('icons/upvoteactive.png');
+	background-image: url('icons/upvote_active.png');
 }
 
 
@@ -683,7 +683,7 @@ input[type="button"]:hover {
 }
 
 .activedown {
-	background-image: url('icons/downvoteactive.png');
+	background-image: url('icons/downvote_active.png');
 }
 
 .post_cell {

@@ -181,7 +181,7 @@ initTables();
 /**
  * validates the body of a question(POST).
  * @param {object} post - The input body from a POST question route.
- * @returns {object} Joi.validate output
+ * @returns {string} error message
 */
 export const validateQuestionBody = (post) => {
   if (typeof post.title === 'undefined') {
@@ -213,6 +213,26 @@ export const validateAnswerBody = (post) => {
   const validBody = typeof post.body === 'string' && post.body.trim() !== '';
   if (!validBody) {
     return 'Body must be a non-empty string';
+  }
+  return null;
+};
+
+/**
+* Validates the answer PATCH request body
+* @param {object} reqBody - the request body
+* @returns {string} error message
+*/
+export const validatePatchAnswerReqBody = (reqBody) => {
+  if (typeof reqBody.type === 'undefined') {
+    return 'Must provide update type';
+  }
+  const validUpdateTypes = ['accept', 'edit', 'upvote', 'downvote'];
+  const index = validUpdateTypes.indexOf(reqBody.type);
+  if (index === -1) {
+    return 'Update type must be accept, edit, upvote or downvote';
+  }
+  if (index === 1) {
+    return validateAnswerBody(reqBody);
   }
   return null;
 };

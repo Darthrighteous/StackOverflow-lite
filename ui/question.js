@@ -47,18 +47,18 @@ const createAnswerHtmlDiv = (answer) => {
     <div id="answerPost1" class="post_layout">
       <div class="vote_cell">
         <div class="vote">
-          <a class="up_vote"></a>
-          <span class="score_count" >${answer.score}</span>
-          <a class="down_vote" href="#"></a>
+          <a class="up_vote" id="up_votex${answer.id}"></a>
+          <span class="score_count" id="score_countx${answer.id}" >${answer.score}</span>
+          <a class="down_vote" id="down_votex${answer.id}"></a>
         </div>
       </div>
 
       <div class="post_cell">
         <div class="post_text">${answer.body}</div>
         <div class="post_details">
-          <div class="post_options" id="post_options${answer.id}">
-            <a href="#" class="edit_button" id="edit_button${answer.id}">edit</a>
-            <a href="#" class="delete_button" id="delete_button${answer.id}">delete</a>
+          <div class="post_options" id="post_optionsx${answer.id}">
+            <a href="#" class="edit_button" id="edit_buttonx${answer.id}">edit</a>
+            <a href="#" class="delete_button" id="delete_buttonx${answer.id}">delete</a>
           </div>
           <div class="post_author">
             <div class="post_date">
@@ -73,7 +73,7 @@ const createAnswerHtmlDiv = (answer) => {
       </div>
 
       <div class="accept_cell">
-        <a class="${acceptButtonClass}" id="accept_button${answer.id}"></a>
+        <a class="${acceptButtonClass}" id="accept_buttonx${answer.id}"></a>
       </div>
 
       <div class="comment_cell">
@@ -160,7 +160,7 @@ const hideAuthorElements = (question) => {
     const answerArray = question.answers;
     answerArray.forEach((answer) => {
       if (answer.username !== username) {
-        document.getElementById(`post_options${answer.id}`).style.visibility = 'hidden';
+        document.getElementById(`post_optionsx${answer.id}`).style.visibility = 'hidden';
       }
     });
   }
@@ -246,94 +246,144 @@ const deleteQuestion = () => {
 
 document.getElementById('question_delete_btn').addEventListener('click', deleteQuestion);
 
-/* TODO: ACCEPT BUTTON CONFIG */
+
 /**
-* Call back from click event to accept answer
-* @param {object} event - object that propagated click
-* @returns {void}
+ * Call back from click event to patch an answer
+ * @param {object} event - object that propagated click
+ * @returns {void}
 */
-const acceptAnswer = (event) => {
-  if (event.target.className === 'accept_button') {
-    const { id } = event.target;
-    const [, aId] = id.split('n');
-    const acceptUrl = `${baseUrl}/questions/${questionId}/answers/${aId}`;
+const patchAnswer = (event) => {
+  const { id } = event.target;
+  const [, aId] = id.split('x');
+  const patchUrl = `${baseUrl}/questions/${questionId}/answers/${aId}`;
+  const patchBody = {};
 
-    const init = {
-      method: 'PATCH',
-      headers: {
-        Authorization: localStorage.jwt,
-      },
-    };
+  const init = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localStorage.jwt,
+    },
+  };
 
-    /**
-    * Toggles the accept icon
-    * @returns {void}
-    */
-    const toggleIcon = () => {
-      event.target.style.backgroundImage = "url('icons/accept_checked.png')";
-    };
+  switch (event.target.className) {
+    case 'accept_button': {
+      /**
+      * Toggles the accept icon
+      * @returns {void}
+      */
+      const toggleAcceptIcon = () => {
+        event.target.style.backgroundImage = "url('icons/accept_checked.png')";
+      };
 
-    fetch(acceptUrl, init)
-      .then(readResponseAsJSON)
-      .then(validateJsonResponse)
-      .then(toggleIcon)
-      .catch((error) => {
-        console.log(error);
-      });
+      console.log('accept click');
+      patchBody.type = 'accept';
+      init.body = JSON.stringify(patchBody);
 
-    console.log('accept click');
+      fetch(patchUrl, init)
+        .then(readResponseAsJSON)
+        .then(validateJsonResponse)
+        .then(toggleAcceptIcon)
+        .catch((error) => {
+          console.log(error);
+        });
+      break;
+    }
+
+    case 'edit_button':
+      console.log('edit click');
+      patchBody.type = 'edit';
+      patchBody.body = prompt("Edit your answer:", answerBodyArray[aId]);
+      init.body = JSON.stringify(patchBody);
+
+      fetch(patchUrl, init)
+        .then(readResponseAsJSON)
+        .then(validateJsonResponse)
+        .then(location.reload())
+        .catch((error) => {
+          console.log(error);
+        });
+      break;
+
+    case 'down_vote activedown':
+    case 'up_vote': {
+      /**
+      * Toggles an upvote icon to active or an active downvote icon to inactive
+      * @returns {void}
+      */
+      const toggleUpvoteIcon = () => {
+        if (event.target.className === 'up_vote') {
+          event.target.classList.add('activeup');
+        } else if (event.target.classList.contains('activedown')) {
+          console.log('active down clickk');
+          event.target.classList.remove('activedown');
+        }
+      };
+      /**
+       * Increments the score count
+       * @returns {void}
+       */
+      const incrementScore = () => {
+        const score = document.getElementById(`score_countx${aId}`);
+        score.innerHTML = parseInt(score.innerHTML, 10) + 1;
+      };
+
+      console.log('upvote click');
+      patchBody.type = 'upvote';
+      init.body = JSON.stringify(patchBody);
+
+      fetch(patchUrl, init)
+        .then(readResponseAsJSON)
+        .then(validateJsonResponse)
+        .then(toggleUpvoteIcon)
+        .then(incrementScore)
+        .catch((error) => {
+          console.log(error);
+        });
+      break;
+    }
+
+    case 'up_vote activeup':
+    case 'down_vote': {
+      /**
+      * Toggles a downvote icon to active or an active upvote icon to inactive
+      * @returns {void}
+      */
+      const toggleDownvoteIcon = () => {
+        if (event.target.className === 'down_vote') {
+          event.target.classList.add('activedown');
+        } else if (event.target.classList.contains('activeup')) {
+          event.target.classList.remove('activeup');
+        }
+      };
+      /**
+       * Decrements the score count
+       * @returns {void}
+       */
+      const decrementScore = () => {
+        const score = document.getElementById(`score_countx${aId}`);
+        score.innerHTML = parseInt(score.innerHTML, 10) - 1;
+      };
+
+      patchBody.type = 'downvote';
+      init.body = JSON.stringify(patchBody);
+
+      fetch(patchUrl, init)
+        .then(readResponseAsJSON)
+        .then(validateJsonResponse)
+        .then(toggleDownvoteIcon)
+        .then(decrementScore)
+        .catch((error) => {
+          console.log(error);
+        });
+      break;
+    }
+    default:
+      console.log('cheeeeeeee');
   }
 };
 
-/**
-* Call back from click event to edit an answer
-* @param {object} event - object that propagated click
-* @returns {void}
-*/
-const editAnswer = (event) => {
-  if (event.target.className === 'edit_button') {
-    const { id } = event.target;
-    const [, aId] = id.split('n');
-    const editUrl = `${baseUrl}/questions/${questionId}/answers/${aId}`;
-    const editBody = {};
-    editBody.body = prompt("Edit your answer:", answerBodyArray[aId]);
-
-    const init = {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.jwt,
-      },
-      body: JSON.stringify(editBody),
-    };
-
-    fetch(editUrl, init)
-      .then(readResponseAsJSON)
-      .then(validateJsonResponse)
-      .then(location.reload())
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-};
-document.addEventListener('click', acceptAnswer);
-document.addEventListener('click', editAnswer);
-
-/* TODO: VOTE BUTTONS CONFIG */
-const voteCells = document.getElementsByClassName('vote_cell');
-for (let i = 0; i < voteCells.length; i += 1) {
-  const upBtns = voteCells[i].getElementsByClassName('up_vote');
-  const currentUpButton = upBtns[0];
-  currentUpButton.addEventListener('click', () => {
-    currentUpButton.classList.toggle('activeup');
-  });
-
-  const downBtns = voteCells[i].getElementsByClassName('down_vote');
-  const currentDownButton = downBtns[0];
-  currentDownButton.addEventListener('click', () => {
-    currentDownButton.classList.toggle('activedown');
-  });
-}
+document.addEventListener('click', patchAnswer);
 
 /* SET FOCUS TO ANSWER */
 if (pageUrl.searchParams.get('focus') === 'answer') {

@@ -1,5 +1,5 @@
-export const baseUrl = 'https://vast-waters-81120.herokuapp.com/v2';
-// export const baseUrl = 'http://localhost:4001/v2';
+// export const baseUrl = 'https://vast-waters-81120.herokuapp.com/v2';
+export const baseUrl = 'http://localhost:4001/v2';
 
 /**
 * Initializes the dropdown click listener

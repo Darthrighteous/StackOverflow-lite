@@ -40,10 +40,12 @@ router.post('/v2/auth/signup', signUp);
 router.post('/v2/auth/login', logIn);
 
 router.use((err, req, res, next) => {
-  res.json({
-    status: 'failure',
-    message: err.message,
-  });
+  if (!res.headersSent) {
+    res.json({
+      status: 'failure',
+      message: err.message,
+    });
+  }
 });
 
 export default router;
