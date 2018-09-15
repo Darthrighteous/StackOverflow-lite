@@ -1,5 +1,6 @@
 import {
   baseUrl,
+  addStringToElement,
   validateResponseStatus,
   validateJsonResponse,
   readResponseAsJSON,
@@ -17,16 +18,6 @@ const getUrl = `${baseUrl}/questions/${questionId}`;
 * @returns {object} The question object
 */
 const getQuestion = data => data.question;
-
-/**
-* Adds a string to an element
-* @param {string} string - the string to be added
-* @param {string} elementId - the id of the element
-* @returns {void}
-*/
-const addStringToElement = (string, elementId) => {
-  document.getElementById(elementId).innerHTML += string;
-};
 
 /**
 *
@@ -117,7 +108,7 @@ const populateElements = (question) => {
   if (question.answer_count === 1) {
     addStringToElement(`${question.answer_count} answer`, 'answer_count');
   } else {
-    addStringToElement(`${question.answer_count} answer(s)`, 'answer_count');
+    addStringToElement(`${question.answer_count} answers`, 'answer_count');
   }
 
   // Answer Elements
@@ -210,7 +201,12 @@ const postAnswer = () => {
   fetch(postAUrl, init)
     .then(readResponseAsJSON)
     .then(validateJsonResponse)
-    .then(window.location.reload())
+    .then(() => {
+      const userData = JSON.parse(localStorage.getItem('user'));
+      userData.answer_count += 1;
+      localStorage.setItem('user', JSON.stringify(userData));
+      window.location.reload();
+    })
     .catch((error) => {
       console.log(error);
     });
@@ -237,7 +233,12 @@ const deleteQuestion = () => {
     fetch(deleteUrl, init)
       .then(readResponseAsJSON)
       .then(validateJsonResponse)
-      .then(window.location.replace('../index.html'))
+      .then(() => {
+        const userData = JSON.parse(localStorage.getItem('user'));
+        userData.question_count -= 1;
+        localStorage.setItem('user', JSON.stringify(userData));
+        window.location.replace('../index.html');
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -245,7 +246,6 @@ const deleteQuestion = () => {
 };
 
 document.getElementById('question_delete_btn').addEventListener('click', deleteQuestion);
-
 
 /**
  * Call back from click event to patch an answer

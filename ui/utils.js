@@ -2,6 +2,16 @@ export const baseUrl = 'https://vast-waters-81120.herokuapp.com/v2';
 // export const baseUrl = 'http://localhost:4001/v2';
 
 /**
+* Adds a string to an element
+* @param {string} string - the string to be added
+* @param {string} elementId - the id of the element
+* @returns {void}
+*/
+export const addStringToElement = (string, elementId) => {
+  document.getElementById(elementId).innerHTML += string;
+};
+
+/**
 * Initializes the dropdown click listener
 * @param {string} dropdownId - the id of the dropdown
 * @param {string} url -

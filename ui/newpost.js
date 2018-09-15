@@ -14,11 +14,13 @@ if (!userData) {
 const postQUrl = `${baseUrl}/questions`;
 
 /**
-* Redirects to question page
+* increments user question count and Redirects to question page
 * @param {object} res - response object containing question id
 * @returns {void}
 */
 const redirectToQuestionPage = (res) => {
+  userData.question_count += 1;
+  localStorage.setItem('user', JSON.stringify(userData));
   window.location.replace(`../question.html?id=${res.id}`);
 };
 

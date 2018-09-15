@@ -658,6 +658,17 @@ input[type="button"]:hover {
 
 }
 
+.question_up_vote {
+	height: 30px;
+	width: 30px;
+	margin: auto;
+	display: block;
+	cursor: pointer;
+	background-image: url('icons/upvote.png');
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+}
+
 .activeup {
 	background-image: url('icons/upvote_active.png');
 }
@@ -679,7 +690,16 @@ input[type="button"]:hover {
 	background-image: url('icons/downvote.png'); 
 	background-size: 30px 30px;
 	background-repeat: no-repeat;
+}
 
+.question_down_vote{
+	height: 30px;
+	width: 30px;
+	margin: auto;
+	display: block;
+	background-image: url('icons/downvote.png'); 
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
 }
 
 .activedown {

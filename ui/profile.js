@@ -1,5 +1,6 @@
 import {
   baseUrl,
+  addStringToElement,
   fetchAllQuestions,
   dropDownListenerInit,
 } from './utils.js';
@@ -14,6 +15,9 @@ container.innerHTML += `
   <span>${userData.firstname} ${userData.lastname}</span>
   <a href="#">${userData.username}</a>
 `;
+addStringToElement(userData.question_count, 'question_count');
+addStringToElement(userData.answer_count, 'answer_count');
+addStringToElement(userData.comment_count, 'comment_count');
 
 const url = `${baseUrl}/questions?sort=date&user=${userData.username}`;
 fetchAllQuestions(url);
