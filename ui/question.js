@@ -379,7 +379,6 @@ const patchAnswer = (event) => {
       break;
     }
     default:
-      console.log('cheeeeeeee');
   }
 };
 
