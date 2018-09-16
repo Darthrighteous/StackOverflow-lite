@@ -110,11 +110,14 @@ const saveToken = (res) => {
 */
 export const validateJsonResponse = (res) => {
   alert(`${res.status}: ${res.message}`);
-  if (res.status !== 'success') {
-    throw Error(res.message);
+  if (res.status === 'success') {
+    return res;
   }
-  console.log(res);
-  return res;
+  if (res.status === 'unauthorized') {
+    // redirect to login
+    window.location.replace('../signin.html');
+  }
+  throw Error(res.message);
 };
 
 /**

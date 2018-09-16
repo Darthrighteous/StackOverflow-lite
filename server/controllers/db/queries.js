@@ -105,10 +105,9 @@ export const postQuestion = async (req, res, next) => {
       message: validate,
     });
   } else {
-    // get username
-    const { username } = res.locals.decoded.user;
-
     try {
+      // get username
+      const { username } = res.locals.decoded.user;
       const { title, body } = req.body;
       const { id } = await db.one('INSERT INTO questions(title, body, username) VALUES($1, $2, $3) RETURNING id',
         [title, body, username]);
