@@ -1,197 +1,22 @@
 import {
   baseUrl,
-  addStringToElement,
-  validateResponseStatus,
+  dropDownListenerInit,
+  fetchQuestion,
   validateJsonResponse,
   readResponseAsJSON,
-  resolveDate,
 } from './utils.js';
 
 const pageUrl = new URL(window.location.href);
 const questionId = pageUrl.searchParams.get('id');
 
-const getUrl = `${baseUrl}/questions/${questionId}`;
-
-/**
-* Retrieves a single from reponse
-* @param {object} data - JSON object containing the question object
-* @returns {object} The question object
-*/
-const getQuestion = data => data.question;
-
-/**
-*
-* Creates answer HTML elements
-* @param {object} answer - Answer object
-* @returns {object} answerDiv - HTML element for an answer
-*/
-const createAnswerHtmlDiv = (answer) => {
-  const displayDate = resolveDate(answer.created_at);
-  let acceptButtonClass;
-  if (answer.accepted === true) {
-    acceptButtonClass = 'accept_button_checked';
-  } else {
-    acceptButtonClass = 'accept_button';
-  }
-
-  const userData = JSON.parse(localStorage.getItem('user'));
-  let upButtonClass;
-  if (userData.upvoted_answers.indexOf(answer.id.toString()) > -1) {
-    // upvoted
-    upButtonClass = 'up_vote activeup';
-  } else {
-    upButtonClass = 'up_vote';
-  }
-  let downButtonClass;
-  if (userData.downvoted_answers.indexOf(answer.id.toString()) > -1) {
-    // downvoted
-    downButtonClass = 'down_vote activedown';
-  } else {
-    downButtonClass = 'down_vote';
-  }
-
-  const answerDiv = `
-    <div id="answerPost1" class="post_layout">
-      <div class="vote_cell">
-        <div class="vote">
-          <a class="${upButtonClass}" id="up_votex${answer.id}"></a>
-          <span class="score_count" id="score_countx${answer.id}" >${answer.score}</span>
-          <a class="${downButtonClass}" id="down_votex${answer.id}"></a>
-        </div>
-      </div>
-
-      <div class="post_cell">
-        <div class="post_text">${answer.body}</div>
-        <div class="post_details">
-          <div class="post_options" id="post_optionsx${answer.id}">
-            <a href="#" class="edit_button" id="edit_buttonx${answer.id}">edit</a>
-            <a href="#" class="delete_button" id="delete_buttonx${answer.id}">delete</a>
-          </div>
-          <div class="post_author">
-            <div class="post_date">
-              <span>${displayDate}</span>
-            </div>
-            by
-            <div class="author_details">
-              <a href="#">${answer.username}</a>
-            </div>
-          </div>
-        </div> 
-      </div>
-
-      <div class="accept_cell">
-        <a class="${acceptButtonClass}" id="accept_buttonx${answer.id}"></a>
-      </div>
-
-      <div class="comment_cell">
-        <div class="comment_list">
-          <ul>
-            <li>This is an English only site. Op should please translate<span> - by morpheus 24/03/2003</span></li>
-            <li>the balance of power will be restored!<span> - by Kassadin 24/03/2003</span></li>
-          </ul>
-          
-        </div>
-        <div class="add_comment">
-          <div class="new_comment">
-            <textarea maxlength="150" rows="1" placeholder="type comment here"></textarea>
-            <button>Add Comment</button>
-          </div>
-          
-        </div>
-      </div>
-    </div>
-  `;
-  return answerDiv;
-};
-
-const answerBodyArray = [];
-/* FETCH THE QUESTION AND ANSWERS POPULATE ELEMENTS */
-/**
-* populates HTML elements with question details
-* @param {object} question - the question object
-* @returns {void}
-*/
-const populateElements = (question) => {
-  console.log(question);
-
-  const displayDate = resolveDate(question.created_at);
-  // Question Elements
-  addStringToElement(question.score, 'question_score');
-  addStringToElement(question.body, 'question_body');
-  addStringToElement(question.title, 'question_title');
-  addStringToElement(displayDate, 'question_date');
-  addStringToElement(question.username, 'question_author');
-  if (question.answer_count === 1) {
-    addStringToElement(`${question.answer_count} answer`, 'answer_count');
-  } else {
-    addStringToElement(`${question.answer_count} answers`, 'answer_count');
-  }
-
-  // Answer Elements
-  const answerList = document.getElementById('answer_list');
-
-  if (question.answers[0].id !== null) {
-    question.answers.map((answer) => {
-      answerBodyArray[answer.id] = answer.body;
-      console.log(answer);
-      const answerDiv = createAnswerHtmlDiv(answer);
-      answerList.innerHTML += answerDiv;
-      return 7;
-    });
-  } else {
-    document.getElementById('answer_sort_dropdown').style.display = 'none';
-  }
-  return question;
-};
-
-/**
-* Hide elements of options meant for author
-* @param {object} question - The question object
-* @returns {void}
-*/
-const hideAuthorElements = (question) => {
-  let username;
-  if (localStorage.user) {
-    ({ username } = JSON.parse(localStorage.user));
-  }
-  // check if question doesnt belongs to user
-  if (question.username !== username) {
-    console.log('not my question');
-    document.getElementById('question_user_options').style.visibility = 'hidden';
-    Array.from(document.getElementsByClassName('accept_button')).forEach((button) => {
-      button.style.visibility = 'hidden';
-    });
-  }
-  // answer author options
-  if (question.answers[0].id !== null) {
-    const answerArray = question.answers;
-    answerArray.forEach((answer) => {
-      if (answer.username !== username) {
-        document.getElementById(`post_optionsx${answer.id}`).style.visibility = 'hidden';
-      }
-    });
-  }
-};
-
-/**
-* Retrieves a single questions from API and populates in question list
-* @param {string} url - The url to GET all questions
-* @returns {void}
-*/
-const fetchQuestion = (url) => {
-  fetch(url)
-    .then(validateResponseStatus)
-    .then(readResponseAsJSON)
-    .then(getQuestion)
-    .then(populateElements)
-    .then(hideAuthorElements)
-    .catch((error) => {
-      console.log(error);
-    });
-};
-
 // fetch the question
+const getUrl = `${baseUrl}/questions/${questionId}?sortAnswers=date`;
 fetchQuestion(getUrl);
+
+// answer sort drop down setup
+const answerSortUrl = `${baseUrl}/questions/${questionId}?sortAnswers`;
+console.log(answerSortUrl);
+dropDownListenerInit('answerSortDropdown', answerSortUrl);
 
 
 /* POST AN ANSWER */

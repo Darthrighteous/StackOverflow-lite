@@ -23,7 +23,7 @@ const url = `${baseUrl}/questions?sort=date&user=${userData.username}`;
 fetchAllQuestions(url);
 
 // user's questions sort dropdown setup
-const profileSortUrl = `${baseUrl}/questions?user=${userData.username}&`;
+const profileSortUrl = `${baseUrl}/questions?user=${userData.username}&sort`;
 dropDownListenerInit('profileDropdown', profileSortUrl);
 
 /**

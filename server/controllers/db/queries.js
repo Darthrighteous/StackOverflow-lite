@@ -65,6 +65,21 @@ export const getAllQuestions = async (req, res, next) => {
 * @returns {void}
 */
 export const getOneQuestion = async (req, res, next) => {
+  // sort query setup
+  const { sortAnswers } = req.query;
+  let sortQuery = '';
+  if (sortAnswers) {
+    const sortArray = ['date', 'score'];
+    const sortQueries = ['created_at', 'score'];
+    const index = sortArray.indexOf(sortAnswers);
+    if (index === -1) {
+      res.status(400);
+      return next(new Error(`${sortAnswers} is not a valid answer sort query`));
+    }
+    sortQuery = `ORDER BY
+                    a.${sortQueries[index]} DESC`;
+  }
+
   try {
     const question = await db.one(`SELECT q.*,
                                       json_agg(json_build_object('id',a.id,
@@ -72,13 +87,13 @@ export const getOneQuestion = async (req, res, next) => {
                                                   'username',a.username,
                                                   'created_at',a.created_at,
                                                   'accepted',a.accepted,
-                                                  'score',a.score)) answers
+                                                  'score',a.score) ${sortQuery}) answers
                                   FROM questions q
                                   LEFT JOIN answers a 
                                       ON a.question_id = q.id
                                   WHERE q.id=${req.qId}
                                       GROUP BY q.id`);
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       message: 'one question retrieved successfully',
       question,
@@ -86,7 +101,7 @@ export const getOneQuestion = async (req, res, next) => {
   } catch (e) {
     res.status(404);
     const error = new Error(`${e.message} Question of id= ${req.qId} not found`);
-    next(error);
+    return next(error);
   }
 };
 
