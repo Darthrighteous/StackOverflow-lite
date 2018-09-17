@@ -34,13 +34,29 @@ const createAnswerHtmlDiv = (answer) => {
     acceptButtonClass = 'accept_button';
   }
 
+  const userData = JSON.parse(localStorage.getItem('user'));
+  let upButtonClass;
+  if (userData.upvoted_answers.indexOf(answer.id.toString()) > -1) {
+    // upvoted
+    upButtonClass = 'up_vote activeup';
+  } else {
+    upButtonClass = 'up_vote';
+  }
+  let downButtonClass;
+  if (userData.downvoted_answers.indexOf(answer.id.toString()) > -1) {
+    // downvoted
+    downButtonClass = 'down_vote activedown';
+  } else {
+    downButtonClass = 'down_vote';
+  }
+
   const answerDiv = `
     <div id="answerPost1" class="post_layout">
       <div class="vote_cell">
         <div class="vote">
-          <a class="up_vote" id="up_votex${answer.id}"></a>
+          <a class="${upButtonClass}" id="up_votex${answer.id}"></a>
           <span class="score_count" id="score_countx${answer.id}" >${answer.score}</span>
-          <a class="down_vote" id="down_votex${answer.id}"></a>
+          <a class="${downButtonClass}" id="down_votex${answer.id}"></a>
         </div>
       </div>
 
@@ -314,8 +330,18 @@ const patchAnswer = (event) => {
       const toggleUpvoteIcon = () => {
         if (event.target.className === 'up_vote') {
           event.target.classList.add('activeup');
+          // add to upvoted answers
+          const userData = JSON.parse(localStorage.getItem('user'));
+          userData.upvoted_answers.push(aId);
+          localStorage.setItem('user', JSON.stringify(userData));
         } else if (event.target.classList.contains('activedown')) {
-          console.log('active down clickk');
+          // remove from downvoted
+          const userData = JSON.parse(localStorage.getItem('user'));
+          const index = userData.downvoted_answers.indexOf(aId);
+          if (index > -1) {
+            userData.downvoted_answers.splice(index, 1);
+          }
+          localStorage.setItem('user', JSON.stringify(userData));
           event.target.classList.remove('activedown');
         }
       };
@@ -351,8 +377,19 @@ const patchAnswer = (event) => {
       */
       const toggleDownvoteIcon = () => {
         if (event.target.className === 'down_vote') {
+          // add to downvoted
+          const userData = JSON.parse(localStorage.getItem('user'));
+          userData.downvoted_answers.push(aId);
+          localStorage.setItem('user', JSON.stringify(userData));
           event.target.classList.add('activedown');
         } else if (event.target.classList.contains('activeup')) {
+          // remove from upvoted
+          const userData = JSON.parse(localStorage.getItem('user'));
+          const index = userData.upvoted_answers.indexOf(aId);
+          if (index > -1) {
+            userData.upvoted_answers.splice(index, 1);
+          }
+          localStorage.setItem('user', JSON.stringify(userData));
           event.target.classList.remove('activeup');
         }
       };
