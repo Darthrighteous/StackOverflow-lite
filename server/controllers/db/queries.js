@@ -279,6 +279,7 @@ export const acceptAnswer = async (req, res, next) => {
       try {
         const update = await db.result('UPDATE answers SET score = score + 1 WHERE id =$1 AND "question_id"=$2', [aId, qId]);
         if (update.rowCount > 0) {
+          await db.none('UPDATE users SET upvoted_answers =  array_append(upvoted_answers, $1) WHERE username = $2', [aId, username]);
           return res.status(200).json({
             status: 'success',
             message: 'Upvoted successfully',
@@ -306,6 +307,7 @@ export const acceptAnswer = async (req, res, next) => {
       try {
         const update = await db.result('UPDATE answers SET score = score - 1 WHERE id =$1 AND "question_id"=$2', [aId, qId]);
         if (update.rowCount > 0) {
+          await db.none('UPDATE users SET downvoted_answers =  array_append(downvoted_answers, $1) WHERE username = $2', [aId, username]);
           return res.status(200).json({
             status: 'success',
             message: 'Downvoted successfully',

@@ -38,7 +38,9 @@ export const initTables = () => {
       password VARCHAR (60) NOT NULL,
       question_count INTEGER DEFAULT 0,
       answer_count INTEGER DEFAULT 0,
-      comment_count INTEGER DEFAULT 0);
+      comment_count INTEGER DEFAULT 0,
+      upvoted_answers INTEGER[] DEFAULT array[]::INTEGER[],
+      downvoted_answers INTEGER[] DEFAULT array[]::INTEGER[]);
 
     INSERT INTO users (firstname, lastname, email, username, password)
       VALUES
