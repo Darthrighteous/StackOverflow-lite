@@ -763,15 +763,8 @@ input[type="button"]:hover {
 	background-repeat: no-repeat;
 }
 
-.accept_button_checked{
-	height: 30px;
-	width: 30px;
-	margin: auto;
-	display: block;
-	cursor: pointer;
-	background-image: url('icons/accept_checked.png'); 
-	background-size: 30px 30px;
-	background-repeat: no-repeat;
+.accepted{
+	background-image: url('icons/accept_checked.png');
 }
 
 .comment_cell {
