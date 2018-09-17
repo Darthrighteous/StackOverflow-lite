@@ -145,7 +145,7 @@ const createAnswerHtmlDiv = (answer) => {
   const displayDate = resolveDate(answer.created_at);
   let acceptButtonClass;
   if (answer.accepted === true) {
-    acceptButtonClass = 'accept_button_checked';
+    acceptButtonClass = 'accept_button accepted';
   } else {
     acceptButtonClass = 'accept_button';
   }
@@ -274,7 +274,11 @@ const hideAuthorElements = (question) => {
     console.log('not my question');
     document.getElementById('question_user_options').style.visibility = 'hidden';
     Array.from(document.getElementsByClassName('accept_button')).forEach((button) => {
-      button.style.visibility = 'hidden';
+      if (!button.classList.contains('accepted')) {
+        // not accepted answer
+        const buttonId = button.id;
+        document.getElementById(buttonId).style.visibility = 'hidden';
+      }
     });
   }
   // answer author options

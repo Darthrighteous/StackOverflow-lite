@@ -108,13 +108,18 @@ const patchAnswer = (event) => {
   };
 
   switch (event.target.className) {
+    case 'accept_button accepted':
     case 'accept_button': {
       /**
       * Toggles the accept icon
       * @returns {void}
       */
       const toggleAcceptIcon = () => {
-        event.target.style.backgroundImage = "url('icons/accept_checked.png')";
+        if (event.target.classList.contains('accepted')) {
+          event.target.classList.remove('accepted');
+        } else {
+          event.target.classList.add('accepted');
+        }
       };
 
       console.log('accept click');

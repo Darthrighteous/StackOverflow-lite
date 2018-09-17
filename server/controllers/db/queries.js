@@ -239,11 +239,34 @@ export const acceptAnswer = async (req, res, next) => {
       if (username === question.username) {
         // route is called by question's author, try update
         try {
-          const data = await db.result('UPDATE answers SET accepted = $1 WHERE id= $2 AND "question_id"=$3',
-            [true, aId, qId]);
-          return res.status(200).json({
-            status: 'success',
-            message: `Accepted ${data.rowCount} answer successfully`,
+          let acceptState;
+          let acceptId;
+          let messagePrefix;
+          if (question.accepted_answer === parseInt(aId, 10)) {
+            // undo accept
+            acceptState = false;
+            acceptId = null;
+            messagePrefix = 'Undo accept on';
+          } else {
+            // accept
+            acceptState = true;
+            acceptId = aId;
+            messagePrefix = 'Accepted';
+          }
+          const accept = await db.result('UPDATE answers SET accepted = $1 WHERE id= $2 AND "question_id"=$3',
+            [acceptState, aId, qId]);
+          if (accept.rowCount > 0) {
+            await db.none('UPDATE questions SET accepted_answer = $1 WHERE id = $2', [acceptId, qId]);
+            return res.status(200).json({
+              status: 'success',
+              message: `${messagePrefix} ${accept.rowCount} answer successfully`,
+              answerId: aId,
+              questionId: qId,
+            });
+          }
+          return res.status(400).json({
+            status: 'failure',
+            message: 'accept failed or answer not found',
             answerId: aId,
             questionId: qId,
           });
