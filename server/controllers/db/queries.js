@@ -82,22 +82,25 @@ export const getOneQuestion = async (req, res, next) => {
   }
 
   try {
-    const question = await db.one(`SELECT q.*,
-                                      json_agg(json_build_object('id',a.id,
-                                                  'body',a.body,
-                                                  'username',a.username,
-                                                  'created_at',a.created_at,
-                                                  'accepted',a.accepted,
-                                                  'score',a.score) ${sortQuery}) answers
-                                  FROM questions q
-                                  LEFT JOIN answers a 
-                                      ON a.question_id = q.id
-                                  WHERE q.id=${req.qId}
-                                      GROUP BY q.id`);
+    const question = await db.one(`SELECT * FROM questions WHERE id = ${req.qId}`);
+    const comments = await db.any(`SELECT * FROM comments WHERE question_id = ${req.qId} ORDER BY created_at`);
+    const answers = await db.any(`SELECT a.*,
+                                      json_agg(json_build_object('id',c.id,
+                                                  'body',c.body,
+                                                  'username',c.username,
+                                                  'created_at',c.created_at) ORDER BY c.created_at) commentList
+                                  FROM answers a
+                                  LEFT JOIN comments c
+                                      ON c.answer_id = a.id
+                                  WHERE a.question_id = ${req.qId}
+                                      GROUP by a.id
+                                  ${sortQuery}`);
     return res.status(200).json({
       status: 'success',
       message: 'one question retrieved successfully',
       question,
+      comments,
+      answers,
     });
   } catch (e) {
     res.status(404);

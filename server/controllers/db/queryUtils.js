@@ -172,11 +172,12 @@ export const initTables = () => {
         ('Question 2','Question body two', 'dddark'),
         ('Question 3','Question body three', 'coachee');
 
-      INSERT INTO answers (body, username, question_id)
+      INSERT INTO answers (body, username, question_id, accepted)
         VALUES
-        ('Answer body one', 'coachee', 1),
-        ('Answer body two', 'coachee', 2),
-        ('Answer body three', 'coachee', 1);
+        ('Answer body one', 'coachee', 1, true),
+        ('Answer body two', 'coachee', 2, false),
+        ('Answer body three', 'coachee', 1, false),
+        ('Answer body four', 'coachee', 1, false);
 
       INSERT INTO comments (body, question_id, answer_id, username)
         VALUES
