@@ -52,9 +52,40 @@ const postAnswer = () => {
       console.log(error);
     });
 };
-
 document.getElementById('post_answer_btn').addEventListener('click', postAnswer);
 
+const postCommentUrl = `${baseUrl}/questions/${questionId}/comments`;
+/**
+* Posts a comment to the question
+* @returns {void}
+*/
+const postComment = () => {
+  const comment = {};
+  comment.body = document.getElementById('comment_body').value;
+
+  const init = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localStorage.jwt,
+    },
+    body: JSON.stringify(comment),
+  };
+
+  fetch(postCommentUrl, init)
+    .then(readResponseAsJSON)
+    .then(validateJsonResponse)
+    .then(() => {
+      const userData = JSON.parse(localStorage.getItem('user'));
+      userData.comment_count += 1;
+      localStorage.setItem('user', JSON.stringify(userData));
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+document.getElementById('post_comment_button').addEventListener('click', postComment);
 
 /* DELETE A QUESTION */
 /**
