@@ -2,6 +2,7 @@ import {
   db,
   validateQuestionBody,
   validateAnswerBody,
+  validateCommentBody,
   validatePatchAnswerReqBody,
 } from './queryUtils';
 
@@ -160,13 +161,53 @@ export const postAnswer = async (req, res, next) => {
     const qId = req.params.questionId;
     const { body } = req.body;
     try {
-      const data = await db.one('INSERT INTO answers (body, username, question_id) VALUES($1, $2, $3) RETURNING id, question_id',
+      const answer = await db.one('INSERT INTO answers (body, username, question_id) VALUES($1, $2, $3) RETURNING id, question_id',
         [body, username, qId]);
       res.status(201).json({
         status: 'success',
         message: 'One answer successfully added',
-        answerId: data.id,
-        questionId: data.question_id,
+        answer,
+      });
+    } catch (e) {
+      res.status(400);
+      const error = new Error(`${e.message}`);
+      next(error);
+    }
+  }
+};
+
+/**
+* perform database query to post a comment
+* @param {object} req The request containing question Id
+* @param {object} res The response
+* @param {object} next To pass onto next route
+* @returns {void}
+*/
+export const postComment = async (req, res, next) => {
+  const validate = validateCommentBody(req.body);
+  if (validate !== null) {
+    res.status(400).json({
+      status: 'failure',
+      message: validate,
+    });
+  } else {
+    // get username
+    const { username } = res.locals.decoded.user;
+    // get parent Id and comment body
+    const qId = req.params.questionId;
+    const aId = req.params.answerId;
+    let type = 'answer';
+    if (qId) {
+      type = 'question';
+    }
+    const { body } = req.body;
+    try {
+      const comment = await db.one('INSERT INTO comments(body, question_id, answer_id, username) VALUES($1, $2, $3, $4) RETURNING id, question_id, answer_id',
+        [body, qId, aId, username]);
+      res.status(201).json({
+        status: 'success',
+        message: `One ${type} comment successfully added`,
+        comment,
       });
     } catch (e) {
       res.status(400);

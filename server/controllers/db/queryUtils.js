@@ -24,6 +24,7 @@ export const initTables = () => {
   let queryText;
   // if (process.env.NODE_ENV === 'production') {
   queryText = `
+    DROP TABLE IF EXISTS comments;
     DROP TABLE IF EXISTS answers;
     DROP TABLE IF EXISTS questions;
     DROP TABLE IF EXISTS users;
@@ -59,6 +60,7 @@ export const initTables = () => {
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
       score INTEGER DEFAULT 0,
       answer_count INTEGER DEFAULT 0,
+      comment_count INTEGER DEFAULT 0,
       accepted_answer INTEGER DEFAULT NULL);
 
 
@@ -74,9 +76,45 @@ export const initTables = () => {
           ON UPDATE CASCADE
           ON DELETE CASCADE,
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-      accepted BOOLEAN DEFAULT FALSE,
-      score INTEGER DEFAULT 0);
-    
+      score INTEGER DEFAULT 0,
+      comment_count INTEGER DEFAULT 0,
+      accepted BOOLEAN DEFAULT FALSE);
+
+    CREATE TABLE IF NOT EXISTS comments (
+      id serial PRIMARY KEY,
+      question_id INTEGER DEFAULT NULL
+        REFERENCES questions(id)
+          ON UPDATE CASCADE
+          ON DELETE CASCADE,
+      answer_id INTEGER DEFAULT NULL
+        REFERENCES answers(id)
+          ON UPDATE CASCADE
+          ON DELETE CASCADE,
+      body VARCHAR NOT NULL,
+      username VARCHAR NOT NULL
+        REFERENCES users(username)
+          ON UPDATE CASCADE
+          ON DELETE CASCADE,
+      created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP);
+
+      CREATE OR REPLACE FUNCTION update_comment_count()
+        RETURNS trigger
+        LANGUAGE plpgsql
+      AS
+      $BODY$
+      BEGIN
+        IF TG_OP = 'INSERT' THEN
+          UPDATE questions SET comment_count = comment_count + 1 WHERE id = NEW.question_id;
+          UPDATE answers SET comment_count = comment_count + 1 WHERE id = NEW.answer_id;
+          UPDATE users SET comment_count = comment_count + 1 WHERE username = NEW.username;
+        ELSEIF TG_OP = 'DELETE' THEN
+          UPDATE questions SET comment_count = comment_count - 1 WHERE id = OLD.question_id;
+          UPDATE answers SET comment_count = comment_count - 1 WHERE id = OLD.answer_id;
+          UPDATE users SET comment_count = comment_count - 1 WHERE username = OLD.username;
+        END IF;
+        RETURN NEW;
+      END;
+      $BODY$;
 
       CREATE OR REPLACE FUNCTION update_answer_count()
         RETURNS trigger
@@ -122,6 +160,12 @@ export const initTables = () => {
         FOR EACH ROW
         EXECUTE PROCEDURE update_answer_count();
 
+      CREATE TRIGGER answer_added
+        AFTER INSERT OR DELETE
+        ON comments
+        FOR EACH ROW
+        EXECUTE PROCEDURE update_comment_count();
+
       INSERT INTO questions (title, body, username)
         VALUES
         ('Question 1','Question body one', 'skerrigan'),
@@ -133,6 +177,11 @@ export const initTables = () => {
         ('Answer body one', 'coachee', 1),
         ('Answer body two', 'coachee', 2),
         ('Answer body three', 'coachee', 1);
+
+      INSERT INTO comments (body, question_id, answer_id, username)
+        VALUES
+        ('this is a question comment body to question 1', '1', NULL, 'coachee'),
+        ('this is an answer comment body to answer 1', NULL, '1', 'coachee');
       `;
   // } else {
   //   queryText = ``;
@@ -169,7 +218,6 @@ export const validateQuestionBody = (post) => {
     if (!validBody) {
       return 'Body must be a string';
     }
-    return null;
   }
   return null;
 };
@@ -189,6 +237,13 @@ export const validateAnswerBody = (post) => {
   }
   return null;
 };
+
+/**
+ * validates the body of a comment(POST).
+ * @param {object} post - The input body from a POST answer route.
+ * @returns {object} Joi.validate output
+*/
+export const validateCommentBody = post => validateAnswerBody(post);
 
 /**
 * Validates the answer PATCH request body

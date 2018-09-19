@@ -1,6 +1,42 @@
 import { getSingleUser } from '../db/queries';
 
 /**
+* Helper function to validate email.
+* @param {string} email - email to be validated.
+* @returns {string} error message.
+*/
+const validateEmail = (email) => {
+  if (typeof email === 'undefined') {
+    return 'must provide email';
+  }
+  const validEmail = typeof email === 'string'
+    && email.trim() !== ''
+    && (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/).test(email);
+  if (!validEmail) {
+    return 'Invalid Email';
+  }
+  return null;
+};
+
+/**
+* Helper function to validate password.
+* @param {string} pwd - password to be validated.
+* @returns {string} error message.
+*/
+const validatePassword = (pwd) => {
+  if (typeof pwd === 'undefined') {
+    return 'must provide password';
+  }
+  const validPassword = typeof pwd === 'string'
+    && pwd.trim() !== ''
+    && pwd.trim().length >= 6;
+  if (!validPassword) {
+    return 'Password must be a non-empty string, up to 6 characters';
+  }
+  return null;
+};
+
+/**
  * validates the body of a sign up request
  * @param {object} user - The input body from a POST sign up.
  * @returns {object} Joi.validate output
@@ -37,25 +73,12 @@ export const validateUserBody = (user) => {
     return 'Username must be a non-empty string';
   }
 
-  if (typeof user.email === 'undefined') {
-    return 'must provide email';
-  }
-  const validEmail = typeof user.email === 'string'
-    && user.email.trim() !== '';
-    // && (/[^A-Za-z]+/g).test(user.username);
-  if (!validEmail) {
-    return 'Email must be a non-empty string';
+  if (validateEmail(user.email) !== null) {
+    return validateEmail(user.email);
   }
 
-  if (typeof user.password === 'undefined') {
-    return 'must provide password';
-  }
-  const validPassword = typeof user.password === 'string'
-    && user.password.trim() !== ''
-    && user.password.trim().length >= 6;
-    // && (/[^A-Za-z]+/g).test(user.password);
-  if (!validPassword) {
-    return 'Password must be a non-empty string, up to 6 characters';
+  if (validatePassword(user.password) !== null) {
+    return validatePassword(user.password);
   }
   return null;
 };
@@ -66,27 +89,11 @@ export const validateUserBody = (user) => {
  * @returns {object} Joi.validate output
 */
 export const validateLogInBody = (body) => {
-  // const valid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(body.email);
-  // console.log(valid);
-  if (typeof body.email === 'undefined') {
-    return 'must provide email';
+  if (validateEmail(body.email) !== null) {
+    return validateEmail(body.email);
   }
-  const validEmail = typeof body.email === 'string'
-    && body.email.trim() !== '';
-    // && (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/).test(body.email);
-  if (!validEmail) {
-    return 'Invalid Email';
-  }
-
-  if (typeof body.password === 'undefined') {
-    return 'must provide password';
-  }
-  const validPassword = typeof body.password === 'string'
-    && body.password.trim() !== ''
-    && body.password.trim().length >= 6;
-    // && (/[^A-Za-z]+/g).test(user.password);
-  if (!validPassword) {
-    return 'Password must be a non-empty string, up to 6 characters';
+  if (validatePassword(body.password) !== null) {
+    return validatePassword(body.password);
   }
   return null;
 };
