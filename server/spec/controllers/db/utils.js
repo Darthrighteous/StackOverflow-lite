@@ -37,6 +37,10 @@ export const answerInput = {
   body: 'the answer to the question is',
 };
 
+export const commentInput = {
+  body: 'this is a test comment',
+};
+
 export const answerModify = {
   type: 'edit',
   body: 'the new and improved answer to the question is',

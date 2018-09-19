@@ -4,6 +4,7 @@ import {
   getOneQuestion,
   postQuestion,
   postAnswer,
+  postComment,
   deleteQuestion,
   acceptAnswer,
 } from '../controllers/db/queries';
@@ -30,6 +31,8 @@ router.get('/v2/questions/:questionId', getOneQuestion); // get a single questio
 
 router.post('/v2/questions', verifyJWT, postQuestion); // post question
 router.post('/v2/questions/:questionId/answers', verifyJWT, postAnswer); // post answer
+router.post('/v2/questions/:questionId/comments', verifyJWT, postComment); // post question comment
+router.post('/v2/answers/:answerId/comments', verifyJWT, postComment); // post answer comment
 
 router.delete('/v2/questions/:questionId', verifyJWT, deleteQuestion); // delete question
 

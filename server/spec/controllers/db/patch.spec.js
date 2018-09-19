@@ -64,7 +64,7 @@ describe('PATCH ROUTE', () => {
     // post an answer to question of QId
       Request.post(optionsAnswer, (error, response, body) => {
         // get the answer Id
-        aId = body.answerId;
+        aId = body.answer.id;
         options = {
           url: `http://localhost:4001/v2/questions/${qId}/answers/${aId}`,
           method: 'PATCH',
@@ -135,6 +135,27 @@ describe('PATCH ROUTE', () => {
       it('has expected response body', () => {
         expect(data.body.status).toBe('unauthorized');
         expect(data.body.message).toBe('No token found');
+      });
+    });
+
+    describe('to modify an answer with no type', () => {
+      beforeAll((done) => {
+        options.headers = { authorization: data.tokenQuestion };
+        options.json = {};
+        Request.patch(options, (error, response, body) => {
+          data.status = response.statusCode;
+          data.body = body;
+          done();
+        });
+      });
+
+      it('has expected status 200', () => {
+        expect(data.status).toBe(400);
+      });
+
+      it('has expected response body', () => {
+        expect(data.body.status).toBe('failure');
+        expect(data.body.message).toBe('Must provide update type');
       });
     });
 
