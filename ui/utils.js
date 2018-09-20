@@ -335,11 +335,16 @@ const populateElements = (data) => {
     const answerBodyArray = [];
     answerList.innerHTML = '';
     let answerListDiv = '';
+    // Answer List
     answers.forEach((answer) => {
       answerBodyArray[answer.id] = answer.body;
       console.log(answer);
       const answerDiv = createAnswerHtmlDiv(answer);
-      answerListDiv += answerDiv;
+      if (answer.accepted === true) {
+        answerListDiv = answerDiv + answerListDiv;
+      } else {
+        answerListDiv += answerDiv;
+      }
     });
     answerList.innerHTML = answerListDiv;
 
