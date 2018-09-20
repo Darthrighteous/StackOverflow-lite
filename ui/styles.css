@@ -7,12 +7,6 @@ body {
 }
 
 /*TOPNAV*/
-h1 {
-	font-size: 30px;
-	margin: 0 30px;
-	float: left;
-}
-
 .topnav {
 	line-height: 50px;
 	border-top: 3px solid #FF0000;
@@ -27,8 +21,35 @@ h1 {
 	max-width: 1264px;
 }
 
+.topnav h1 {
+	font-size: 30px;
+	margin: 0 30px;
+	float: left;
+}
+
 .topnav a {
 	text-decoration: none;
+}
+
+.topnav_title_search {
+	display: flex;
+}
+
+#search_bar {
+	font-size: 14px;
+	line-height: 1.5;
+	padding: .5em 3em;
+	background: #E9EEF0;
+	background-image: url("icons/search.png");
+	background-size: 27px 27px;
+    background-position: 5px 3px; 
+    background-repeat: no-repeat;
+	border: 1px solid #D5D9DB;
+	border-radius: 20px;
+}
+
+#search_bar:focus {
+
 }
 
 .topnav_options_container {
@@ -148,7 +169,7 @@ h1 {
 
 }
 
-form {
+.form_container form {
 	width: 50%;
 	text-align: center;
 	font-family: 'Vollkorn', serif;
