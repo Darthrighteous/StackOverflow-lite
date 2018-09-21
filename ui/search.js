@@ -6,6 +6,8 @@ import {
 // get search string
 const pageUrl = new URL(window.location.href);
 const searchString = pageUrl.searchParams.get('search');
+console.log(searchString);
+
 // fetch all questions
 const searchUrl = `${baseUrl}/questions?sort=date&search=${searchString}`;
 fetchAllQuestions(searchUrl);
