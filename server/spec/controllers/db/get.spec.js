@@ -115,4 +115,54 @@ describe('GET ROUTE', () => {
       expect(data.body.status).toBe('failure');
     });
   });
+
+  describe('for questions by a user', () => {
+    const data = {};
+    beforeAll((done) => {
+      Request.get('http://localhost:4001/v2/questions?user=jb0077', (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = JSON.parse(body);
+        data.questions = JSON.parse(body).questions;
+        done();
+      });
+    });
+
+    it('has status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('has expected response body', () => {
+      expect(data.body.status).toBe('success');
+      expect(data.body.message).toBe('all questions retrieved successfully');
+    });
+    it('has exoected question array', () => {
+      expect(data.questions.length).toBe(1);
+      expect(data.questions[0].title).toBe(questionInput.title);
+      expect(data.questions[0].body).toBe(questionInput.body);
+    });
+  });
+
+  describe('to search for question three', () => {
+    const data = {};
+    beforeAll((done) => {
+      Request.get('http://localhost:4001/v2/questions?search=test', (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = JSON.parse(body);
+        data.questions = JSON.parse(body).questions;
+        done();
+      });
+    });
+
+    it('has status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('has expected response body', () => {
+      expect(data.body.status).toBe('success');
+      expect(data.body.message).toBe('all questions retrieved successfully');
+    });
+    it('has exoected question array', () => {
+      expect(data.questions.length).toBe(1);
+      expect(data.questions[0].title).toBe(questionInput.title);
+      expect(data.questions[0].body).toBe(questionInput.body);
+    });
+  });
 });
