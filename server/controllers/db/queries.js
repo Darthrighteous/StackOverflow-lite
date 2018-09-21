@@ -31,9 +31,18 @@ export const getAllQuestions = async (req, res, next) => {
 
   // username query setup
   const { user } = req.query;
-  let userQuery = '';
+  const userQuery = `q.username='${user}'`;
+  // search query
+  const { search } = req.query;
+  const searchQuery = `to_tsvector(q.title || q.body) @@ to_tsquery('${search}')`;
+  let query = '';
   if (user) {
-    userQuery = `WHERE q.username='${user}'`;
+    query = `WHERE ${userQuery}`;
+    if (search) {
+      query += ` AND ${searchQuery}`;
+    }
+  } else if (search) {
+    query = `WHERE ${searchQuery}`;
   }
 
   try {
@@ -43,7 +52,7 @@ export const getAllQuestions = async (req, res, next) => {
                                     FROM questions q
                                     LEFT JOIN answers a 
                                         ON a.question_id = q.id
-                                    ${userQuery}
+                                    ${query}
                                         GROUP BY q.id
                                     ${sortQuery}`);
     return res.status(200).json({
