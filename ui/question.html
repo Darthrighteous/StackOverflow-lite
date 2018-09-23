@@ -81,8 +81,9 @@
 							
 						</div>
 						<div class="add_comment">
-							<div class="new_comment">
-								<textarea id="comment_body" maxlength="150" rows="1" placeholder="type comment here"></textarea>
+							<span class="new_comment_toggle" id="new_comment_toggle">add comment</span>
+							<div class="new_comment" id="new_comment_question">
+								<textarea class="comment_textarea" id="comment_body" maxlength="150" rows="1" placeholder="type comment here"></textarea>
 								<button id="post_comment_button">Add Comment</button>
 							</div>
 							
@@ -115,7 +116,7 @@
 			</div>	
 
 			<div class="new_answer">
-				<div class="options_container">
+				<div id="newAnswerTitle" class="options_container">
 					<h2>Your Answer</h2>		
 				</div>
 				<textarea class="postTextArea" id="answer_body" rows="10" placeholder="Your answer here"></textarea>
