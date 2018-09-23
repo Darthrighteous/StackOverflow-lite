@@ -1,5 +1,5 @@
-export const baseUrl = 'https://vast-waters-81120.herokuapp.com/v2';
-// export const baseUrl = 'http://localhost:4001/v2';
+// export const baseUrl = 'https://vast-waters-81120.herokuapp.com/v2';
+export const baseUrl = 'http://localhost:4001/v2';
 
 /**
 * Resolves a date string to a user friendly string
@@ -85,7 +85,7 @@ export const createQuestionHtmlDiv = (question) => {
       <div class="summary_body">
         <h3>${question.title}</h3>
         <div class="summary_details">
-          <a href="" id="details_date">${displayDate}</a>
+          <a href="question.html?id=${question.id}" id="details_date">${displayDate}</a>
           by
           <a href="" id="details_user">${question.username}</a>          
         </div>
@@ -252,7 +252,8 @@ const createAnswerHtmlDiv = (answer) => {
           
         </div>
         <div class="add_comment">
-          <div class="new_comment">
+          <span class="new_comment_toggle" id="new_comment_togglex${answer.id}">add comment</span>
+          <div class="new_comment" id="new_commentx${answer.id}">
             <textarea id="comment_bodyx${answer.id}" maxlength="150" rows="1" placeholder="type comment here"></textarea>
             <button id="post_comment_buttonx${answer.id}">Add Comment</button>
           </div>
@@ -317,7 +318,6 @@ const populateElements = (data) => {
   } else {
     addStringToElement(`${question.answer_count} answers`, 'answer_count');
   }
-
   // Question comments
   const commentList = document.getElementById('comment_list');
   if (comments[0]) {
@@ -328,6 +328,12 @@ const populateElements = (data) => {
       commentList.innerHTML += commentItem;
     });
   }
+  // question new comment button
+  const addQCommentBtn = document.getElementById('new_comment_toggle');
+  addQCommentBtn.addEventListener('click', () => {
+    addQCommentBtn.style.display = 'none';
+    document.getElementById('new_comment_question').style.display = 'flex';
+  });
 
   // Answer Elements
   const answerList = document.getElementById('answer_list');
@@ -350,9 +356,6 @@ const populateElements = (data) => {
 
     // Answer comments
     answers.forEach((answer) => {
-      // add comment click listener
-      const postCommentBtn = document.getElementById(`post_comment_buttonx${answer.id}`);
-      postCommentBtn.addEventListener('click', (postAnswerComment));
       // add comments
       const answerComments = document.getElementById(`comment_listx${answer.id}`);
       answerComments.innerHTML = '';
@@ -363,6 +366,15 @@ const populateElements = (data) => {
           answerComments.innerHTML += commentItem;
         });
       }
+      // add comment click listener
+      const postCommentBtn = document.getElementById(`post_comment_buttonx${answer.id}`);
+      postCommentBtn.addEventListener('click', (postAnswerComment));
+      // answer comment field toggle listener
+      const addCommentBtn = document.getElementById(`new_comment_togglex${answer.id}`);
+      addCommentBtn.addEventListener('click', () => {
+        addCommentBtn.style.display = 'none';
+        document.getElementById(`new_commentx${answer.id}`).style.display = 'flex';
+      });
     });
     localStorage.setItem('answers', JSON.stringify(answerBodyArray));
   } else {
