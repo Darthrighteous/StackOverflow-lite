@@ -6,7 +6,7 @@ import {
   postAnswer,
   postComment,
   deleteQuestion,
-  acceptAnswer,
+  modifyPost,
 } from '../controllers/db/queries';
 
 import {
@@ -36,7 +36,8 @@ router.post('/v2/answers/:answerId/comments', verifyJWT, postComment); // post a
 
 router.delete('/v2/questions/:questionId', verifyJWT, deleteQuestion); // delete question
 
-router.patch('/v2/questions/:questionId/answers/:answerId', verifyJWT, acceptAnswer); // accept answer
+router.patch('/v2/questions/:questionId/answers/:answerId', verifyJWT, modifyPost); // modify answer
+router.patch('/v2/questions/:questionId', verifyJWT, modifyPost); // modify question
 
 // AUTH ROUTES
 router.post('/v2/auth/signup', signUp);

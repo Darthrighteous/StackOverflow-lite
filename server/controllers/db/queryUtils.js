@@ -41,7 +41,9 @@ export const initTables = () => {
       answer_count INTEGER DEFAULT 0,
       comment_count INTEGER DEFAULT 0,
       upvoted_answers INTEGER[] DEFAULT array[]::INTEGER[],
-      downvoted_answers INTEGER[] DEFAULT array[]::INTEGER[]);
+      downvoted_answers INTEGER[] DEFAULT array[]::INTEGER[],
+      upvoted_questions INTEGER[] DEFAULT array[]::INTEGER[],
+      downvoted_questions INTEGER[] DEFAULT array[]::INTEGER[]);
 
     INSERT INTO users (firstname, lastname, email, username, password)
       VALUES
@@ -251,7 +253,7 @@ export const validateCommentBody = post => validateAnswerBody(post);
 * @param {object} reqBody - the request body
 * @returns {string} error message
 */
-export const validatePatchAnswerReqBody = (reqBody) => {
+export const validatePatchReqBody = (reqBody) => {
   if (typeof reqBody.type === 'undefined') {
     return 'Must provide update type';
   }
