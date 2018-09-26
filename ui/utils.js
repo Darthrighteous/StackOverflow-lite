@@ -1,5 +1,5 @@
-// export const baseUrl = 'https://vast-waters-81120.herokuapp.com/v2';
-export const baseUrl = 'http://localhost:4001/v2';
+export const baseUrl = 'https://vast-waters-81120.herokuapp.com/v2';
+// export const baseUrl = 'http://localhost:4001/v2';
 
 /**
 * Resolves a date string to a user friendly string
@@ -299,6 +299,7 @@ const postAnswerComment = (event) => {
     });
 };
 
+// TODO: refactor this method
 /**
 * populates HTML elements with question details
 * @param {object} data - the JSON response object
@@ -371,6 +372,35 @@ const populateElements = (data) => {
 
     // Answer comments
     answers.forEach((answer) => {
+      // add delete click listener
+      const deleteButton = document.getElementById(`delete_buttonx${answer.id}`);
+      deleteButton.addEventListener('click', (event) => {
+        const [, aId] = event.target.id.split('x');
+        const deleteUrl = `${baseUrl}/questions/${answer.question_id}/answers/${aId}`;
+        console.log(deleteUrl);
+        if (confirm('Are you sure you want to delete this answer?')) {
+          const init = {
+            method: 'DELETE',
+            headers: {
+              Authorization: localStorage.jwt,
+            },
+          };
+
+          fetch(deleteUrl, init)
+            .then(readResponseAsJSON)
+            .then(validateJsonResponse)
+            .then(() => {
+              const user = JSON.parse(localStorage.getItem('user'));
+              user.answer_count -= 1;
+              localStorage.setItem('user', JSON.stringify(userData));
+              window.location.reload();
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      });
+
       // add comments
       const answerComments = document.getElementById(`comment_listx${answer.id}`);
       answerComments.innerHTML = '';
