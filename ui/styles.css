@@ -688,7 +688,7 @@ input[type="button"]:hover {
 }
 
 .up_vote:hover {
-	bottom: 2px;
+	bottom: 1px;
 	background-image: url('icons/upvote_active.png');
 }
 
@@ -714,6 +714,11 @@ input[type="button"]:hover {
 	background-image: url('icons/downvote_active.png');
 }
 
+.activeup:hover {
+	bottom: 1px;
+	background-image: url('icons/downvote_active.png');
+}
+
 
 .score_count {
 	text-align: center;
@@ -736,7 +741,7 @@ input[type="button"]:hover {
 }
 
 .down_vote:hover{
-	bottom: 2px;
+	bottom: 1px;
 	background-image: url('icons/downvote_active.png');
 }
 
@@ -758,6 +763,11 @@ input[type="button"]:hover {
 }
 
 .activedown {
+	background-image: url('icons/upvote_active.png');
+}
+
+.activedown:hover {
+	bottom: 1px;
 	background-image: url('icons/upvote_active.png');
 }
 
