@@ -306,6 +306,7 @@ const postAnswerComment = (event) => {
 */
 const populateElements = (data) => {
   const { question, comments, answers } = data;
+  localStorage.setItem('question', JSON.stringify(question));
   const displayDate = resolveDate(question.created_at);
   // Question Elements
   const userData = JSON.parse(localStorage.getItem('user'));
@@ -331,6 +332,7 @@ const populateElements = (data) => {
   } else {
     addStringToElement(`${question.answer_count} answers`, 'answer_count');
   }
+
   // Question comments
   const commentList = document.getElementById('comment_list');
   if (comments[0]) {
