@@ -168,9 +168,8 @@ const patchAnswer = (event) => {
     }
 
     case 'edit_button':
-      console.log('edit click');
       patchBody.type = 'edit';
-      patchBody.body = prompt("Edit your answer:", answerBodyArray[aId]);
+      patchBody.body = prompt("Edit your answer:", JSON.parse(localStorage.getItem('answers'))[aId]);
       init.body = JSON.stringify(patchBody);
 
       fetch(patchUrl, init)
@@ -300,6 +299,19 @@ const patchQuestion = (event) => {
   };
 
   switch (event.target.className) {
+    case 'question_edit_button':
+      patchBody.type = 'edit';
+      patchBody.body = prompt("Edit your answer:", JSON.parse(localStorage.getItem('question')).body);
+      init.body = JSON.stringify(patchBody);
+
+      fetch(patchQUrl, init)
+        .then(readResponseAsJSON)
+        .then(validateJsonResponse)
+        .then(location.reload())
+        .catch((error) => {
+          console.log(error);
+        });
+      break;
     case 'question_down_vote activedown':
     case 'question_up_vote': {
       /**
