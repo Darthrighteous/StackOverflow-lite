@@ -170,15 +170,18 @@ const patchAnswer = (event) => {
     case 'edit_button':
       patchBody.type = 'edit';
       patchBody.body = prompt("Edit your answer:", JSON.parse(localStorage.getItem('answers'))[aId]);
-      init.body = JSON.stringify(patchBody);
 
-      fetch(patchUrl, init)
-        .then(readResponseAsJSON)
-        .then(validateJsonResponse)
-        .then(location.reload())
-        .catch((error) => {
-          console.log(error);
-        });
+      if (patchBody.body !== null) {
+        init.body = JSON.stringify(patchBody);
+
+        fetch(patchUrl, init)
+          .then(readResponseAsJSON)
+          .then(validateJsonResponse)
+          .then(location.reload())
+          .catch((error) => {
+            console.log(error);
+          });
+      }
       break;
 
     case 'down_vote activedown':
@@ -302,15 +305,17 @@ const patchQuestion = (event) => {
     case 'question_edit_button':
       patchBody.type = 'edit';
       patchBody.body = prompt("Edit your answer:", JSON.parse(localStorage.getItem('question')).body);
-      init.body = JSON.stringify(patchBody);
+      if (patchBody.body !== null) {
+        init.body = JSON.stringify(patchBody);
 
-      fetch(patchQUrl, init)
-        .then(readResponseAsJSON)
-        .then(validateJsonResponse)
-        .then(location.reload())
-        .catch((error) => {
-          console.log(error);
-        });
+        fetch(patchQUrl, init)
+          .then(readResponseAsJSON)
+          .then(validateJsonResponse)
+          .then(location.reload())
+          .catch((error) => {
+            console.log(error);
+          });
+      }
       break;
     case 'question_down_vote activedown':
     case 'question_up_vote': {

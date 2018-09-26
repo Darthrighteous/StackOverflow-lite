@@ -264,6 +264,42 @@ export const deleteQuestion = async (req, res, next) => {
 };
 
 /**
+* perform database query to delete an answer by Id
+* @param {object} req The request
+* @param {object} res The response
+* @param {object} next To pass onto next route
+* @returns {void}
+*/
+export const deleteAnswer = async (req, res, next) => {
+  const qId = req.params.questionId;
+  const aId = req.params.answerId;
+  // check that answer belongs to user
+  const { username } = res.locals.decoded.user;
+  const rowCount = await db.result('SELECT * FROM answers WHERE id=$1 AND question_id=$2 AND "username"=$3', [aId, qId, username], r => r.rowCount);
+  // if rowCount is greater than 0, answer belongs to user.
+  if (rowCount > 0) {
+    try {
+      const result = await db.result('DELETE FROM answers WHERE id = $1', aId);
+      res.status(200).json({
+        status: 'success',
+        message: `Deleted ${result.rowCount} answer successfully`,
+        id: aId,
+        questionId: qId,
+      });
+    } catch (e) {
+      res.status(400);
+      const error = new Error(`${e.message}`);
+      next(error);
+    }
+  } else {
+    res.status(403).json({
+      status: 'failure',
+      message: 'Answer not found, or user token does not match answer owner',
+    });
+  }
+};
+
+/**
 * Helper function to update question/answer
 * @param {string} table The type of table to update
 * @param {object} req The request containing question and answer Id
