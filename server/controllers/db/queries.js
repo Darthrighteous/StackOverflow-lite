@@ -3,7 +3,7 @@ import {
   validateQuestionBody,
   validateAnswerBody,
   validateCommentBody,
-  validatePatchAnswerReqBody,
+  validatePatchReqBody,
 } from './queryUtils';
 
 /**
@@ -264,14 +264,147 @@ export const deleteQuestion = async (req, res, next) => {
 };
 
 /**
-* perform database query to accept an answer to a question
+* Helper function to update question/answer
+* @param {string} table The type of table to update
+* @param {object} req The request containing question and answer Id
+* @param {object} res The response
+* @param {object} next To pass onto next route
+* @returns {object} response object
+*/
+const updatePost = async (table, req, res, next) => {
+  const aId = req.params.answerId;
+  const qId = req.params.questionId;
+  try {
+    let update;
+    let title;
+    if (table === 'answers') {
+      title = 'answer';
+      update = await db.result('UPDATE answers SET body = $1 WHERE id = $2 AND "question_id"=$3',
+        [req.body.body, aId, qId]);
+    } else if (table === 'questions') {
+      title = 'question';
+      update = await db.result('UPDATE questions SET body = $1 WHERE id = $2',
+        [req.body.body, qId]);
+    }
+    if (update.rowCount > 0) {
+      return res.status(200).json({
+        status: 'success',
+        message: `Updated ${update.rowCount} ${title} successfully`,
+        answerId: aId,
+        questionId: qId,
+      });
+    }
+    return res.status(400).json({
+      status: 'failure',
+      message: `update failed or ${title} not found`,
+      answerId: aId,
+      questionId: qId,
+    });
+  } catch (e) {
+    res.status(500);
+    return next(new Error(`${e.message}`));
+  }
+};
+
+/**
+* Helper function to upvote question/answer
+* @param {string} table The type of table to update
+* @param {object} req The request containing question and answer Id
+* @param {object} res The response
+* @param {object} next To pass onto next route
+* @returns {object} response object
+*/
+const upvotePost = async (table, req, res, next) => {
+  const { username } = res.locals.decoded.user;
+  const aId = req.params.answerId;
+  const qId = req.params.questionId;
+  try {
+    let update;
+    if (table === 'answers') {
+      update = await db.result('UPDATE answers SET score = score + 1 WHERE id =$1 AND "question_id"=$2', [aId, qId]);
+    } else {
+      update = await db.result('UPDATE questions SET score = score + 1 WHERE id =$1', [qId]);
+    }
+
+    if (update.rowCount > 0) {
+      if (table === 'answers') {
+        await db.none('UPDATE users SET upvoted_answers =  array_append(upvoted_answers, $1) WHERE username = $2', [aId, username]);
+      } else {
+        await db.none('UPDATE users SET upvoted_questions =  array_append(upvoted_questions, $1) WHERE username = $2', [qId, username]);
+      }
+
+      return res.status(200).json({
+        status: 'success',
+        message: 'Upvoted successfully',
+        answerId: aId,
+        questionId: qId,
+      });
+    }
+    return res.status(400).json({
+      status: 'failure',
+      message: 'Upvote failed or answer not found',
+      answerId: aId,
+      questionId: qId,
+    });
+  } catch (e) {
+    res.status(500);
+    return next(new Error(`${e.message}`));
+  }
+};
+
+/**
+  * Helper function to downvote question/answer
+  * @param {string} table The type of table to update
+  * @param {object} req The request containing question and answer Id
+  * @param {object} res The response
+  * @param {object} next To pass onto next route
+  * @returns {object} response object
+*/
+const downvotePost = async (table, req, res, next) => {
+  const { username } = res.locals.decoded.user;
+  const aId = req.params.answerId;
+  const qId = req.params.questionId;
+  try {
+    let update;
+    if (table === 'answers') {
+      update = await db.result('UPDATE answers SET score = score - 1 WHERE id =$1 AND "question_id"=$2', [aId, qId]);
+    } else {
+      update = await db.result('UPDATE questions SET score = score - 1 WHERE id =$1', [qId]);
+    }
+    if (update.rowCount > 0) {
+      if (table === 'answers') {
+        await db.none('UPDATE users SET downvoted_answers =  array_append(downvoted_answers, $1) WHERE username = $2', [aId, username]);
+      } else {
+        await db.none('UPDATE users SET downvoted_questions =  array_append(downvoted_answers, $1) WHERE username = $2', [qId, username]);
+      }
+      return res.status(200).json({
+        status: 'success',
+        message: 'Downvoted successfully',
+        answerId: aId,
+        questionId: qId,
+      });
+    }
+    return res.status(400).json({
+      status: 'failure',
+      message: 'Downvote failed',
+      answerId: aId,
+      questionId: qId,
+    });
+  } catch (e) {
+    res.status(500);
+    return next(new Error(`${e.message}`));
+  }
+};
+
+/**
+* perform database query to modify an answer to a question
 * @param {object} req The request containing question Id
 * @param {object} res The response
 * @param {object} next To pass onto next route
 * @returns {void}
 */
-export const acceptAnswer = async (req, res, next) => {
-  const validPatch = validatePatchAnswerReqBody(req.body);
+export const modifyPost = async (req, res, next) => {
+  const validPatch = validatePatchReqBody(req.body);
   if (validPatch !== null) {
     res.status(400);
     return next(new Error(validPatch));
@@ -283,7 +416,10 @@ export const acceptAnswer = async (req, res, next) => {
   const qId = req.params.questionId;
 
   const question = await db.one('SELECT * FROM questions WHERE id=$1', [qId]);
-  const answer = await db.one('SELECT * FROM answers WHERE id=$1', [aId]);
+  let answer;
+  if (aId) {
+    answer = await db.one('SELECT * FROM answers WHERE id=$1', [aId]);
+  }
 
   const { type } = req.body;
   switch (type) {
@@ -331,91 +467,67 @@ export const acceptAnswer = async (req, res, next) => {
         res.status(401);
         return next(new Error('Only the question author can accept an answer'));
       }
+
     case 'edit':
-      if (username === answer.username) {
-        // route is called by answer's author, try update
-        try {
-          const update = await db.result('UPDATE answers SET body = $1 WHERE id = $2 AND "question_id"=$3',
-            [req.body.body, aId, qId]);
-          if (update.rowCount > 0) {
-            return res.status(200).json({
-              status: 'success',
-              message: `Updated ${update.rowCount} answer successfully`,
-              answerId: aId,
-              questionId: qId,
-            });
-          }
-          return res.status(400).json({
-            status: 'failure',
-            message: 'update failed or answer not found',
-            answerId: aId,
-            questionId: qId,
-          });
-        } catch (e) {
-          res.status(500);
-          return next(new Error(`${e.message}`));
+      if (answer) {
+        // edit answer route
+        if (username === answer.username) {
+          // route is called by answer's author, try update
+          return updatePost('answers', req, res, next);
         }
-      } else {
         res.status(401);
         return next(new Error('Only the answer\'s author can edit an answer'));
       }
+      // edit question route
+      if (username === question.username) {
+        // route is called by question's author, try update
+        return updatePost('questions', req, res, next);
+      }
+      res.status(401);
+      return next(new Error('Only the question\'s author can edit a question'));
+
     case 'upvote':
       // TODO: DRY this and next case
-      if (username === answer.username) {
-        return res.status(403).json({
-          status: 'failure',
-          message: 'You can not upvote your own answer',
-        });
-      }
-      try {
-        const update = await db.result('UPDATE answers SET score = score + 1 WHERE id =$1 AND "question_id"=$2', [aId, qId]);
-        if (update.rowCount > 0) {
-          await db.none('UPDATE users SET upvoted_answers =  array_append(upvoted_answers, $1) WHERE username = $2', [aId, username]);
-          return res.status(200).json({
-            status: 'success',
-            message: 'Upvoted successfully',
-            answerId: aId,
-            questionId: qId,
+      if (answer) {
+        // answer upvote route
+        if (username === answer.username) {
+          return res.status(403).json({
+            status: 'failure',
+            message: 'You can not upvote your own answer',
           });
         }
-        return res.status(400).json({
-          status: 'failure',
-          message: 'Upvote failed or answer not found',
-          answerId: aId,
-          questionId: qId,
-        });
-      } catch (e) {
-        res.status(500);
-        return next(new Error(`${e.message}`));
+
+        return upvotePost('answers', req, res, next);
       }
+      // question upvote route
+      if (username === question.username) {
+        return res.status(403).json({
+          status: 'failure',
+          message: 'You can not upvote your own question',
+        });
+      }
+      return upvotePost('questions', req, res, next);
+
     case 'downvote':
-      if (username === answer.username) {
-        return res.status(403).json({
-          status: 'failure',
-          message: 'You can not downvote your own answer',
-        });
-      }
-      try {
-        const update = await db.result('UPDATE answers SET score = score - 1 WHERE id =$1 AND "question_id"=$2', [aId, qId]);
-        if (update.rowCount > 0) {
-          await db.none('UPDATE users SET downvoted_answers =  array_append(downvoted_answers, $1) WHERE username = $2', [aId, username]);
-          return res.status(200).json({
-            status: 'success',
-            message: 'Downvoted successfully',
-            answerId: aId,
-            questionId: qId,
+      if (answer) {
+        // answer downvote route
+        if (username === answer.username) {
+          return res.status(403).json({
+            status: 'failure',
+            message: 'You can not downvote your own answer',
           });
         }
-        return res.status(400).json({
-          status: 'failure',
-          message: 'Downvote failed',
-          answerId: aId,
-          questionId: qId,
-        });
-      } catch (e) {
-        res.status(500);
-        return next(new Error(`${e.message}`));
+        return downvotePost('answers', req, res, next);
       }
+      // question downovte route
+      if (username === question.username) {
+        return res.status(403).json({
+          status: 'failure',
+          message: 'You can not downvote your own question',
+        });
+      }
+      return downvotePost('questions', req, res, next);
+
     default:
       console.log('something really bad has happened');
   }
