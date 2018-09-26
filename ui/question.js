@@ -282,6 +282,122 @@ const patchAnswer = (event) => {
 
 document.addEventListener('click', patchAnswer);
 
+/**
+ * Call back from click event to patch a question
+ * @param {object} event - object that propagated click
+ * @returns {void}
+*/
+const patchQuestion = (event) => {
+  const patchQUrl = `${baseUrl}/questions/${questionId}`;
+  const patchBody = {};
+
+  const init = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localStorage.jwt,
+    },
+  };
+
+  switch (event.target.className) {
+    case 'question_down_vote activedown':
+    case 'question_up_vote': {
+      /**
+      * Toggles an upvote icon to active or an active downvote icon to inactive
+      * @returns {void}
+      */
+      const toggleQUpvoteIcon = () => {
+        if (event.target.className === 'question_up_vote') {
+          // add to upvoted answers
+          const userData = JSON.parse(localStorage.getItem('user'));
+          userData.upvoted_questions.push(questionId);
+          localStorage.setItem('user', JSON.stringify(userData));
+          event.target.classList.add('activeup');
+        } else if (event.target.classList.contains('activedown')) {
+          // remove from downvoted
+          const userData = JSON.parse(localStorage.getItem('user'));
+          const index = userData.downvoted_questions.indexOf(questionId);
+          if (index > -1) {
+            userData.downvoted_answers.splice(index, 1);
+          }
+          localStorage.setItem('user', JSON.stringify(userData));
+          event.target.classList.remove('activedown');
+        }
+      };
+
+      /**
+       * Increments the score count
+       * @returns {void}
+       */
+      const incrementQScore = () => {
+        const score = document.getElementById('question_score');
+        score.innerHTML = parseInt(score.innerHTML, 10) + 1;
+      };
+
+      patchBody.type = 'upvote';
+      init.body = JSON.stringify(patchBody);
+      fetch(patchQUrl, init)
+        .then(readResponseAsJSON)
+        .then(validateJsonResponse)
+        .then(toggleQUpvoteIcon)
+        .then(incrementQScore)
+        .catch((error) => {
+          console.log(error);
+        });
+      break;
+    }
+    case 'question_up_vote activeup':
+    case 'question_down_vote': {
+      /**
+      * Toggles a downvote icon to active or an active upvote icon to inactive
+      * @returns {void}
+      */
+      const toggleQDownvoteIcon = () => {
+        if (event.target.className === 'question_down_vote') {
+          // add to downvoted
+          const userData = JSON.parse(localStorage.getItem('user'));
+          userData.downvoted_questions.push(questionId);
+          localStorage.setItem('user', JSON.stringify(userData));
+          event.target.classList.add('activedown');
+        } else if (event.target.classList.contains('activeup')) {
+          // remove from upvoted
+          const userData = JSON.parse(localStorage.getItem('user'));
+          const index = userData.upvoted_questions.indexOf(questionId);
+          if (index > -1) {
+            userData.upvoted_questions.splice(index, 1);
+          }
+          localStorage.setItem('user', JSON.stringify(userData));
+          event.target.classList.remove('activeup');
+        }
+      };
+      /**
+       * Decrements the score count
+       * @returns {void}
+       */
+      const decrementQScore = () => {
+        const score = document.getElementById('question_score');
+        score.innerHTML = parseInt(score.innerHTML, 10) - 1;
+      };
+
+      patchBody.type = 'downvote';
+      init.body = JSON.stringify(patchBody);
+      fetch(patchQUrl, init)
+        .then(readResponseAsJSON)
+        .then(validateJsonResponse)
+        .then(toggleQDownvoteIcon)
+        .then(decrementQScore)
+        .catch((error) => {
+          console.log(error);
+        });
+      break;
+    }
+    default:
+  }
+};
+
+document.addEventListener('click', patchQuestion);
+
+
 /* SET FOCUS TO ANSWER */
 if (pageUrl.searchParams.get('focus') === 'answer') {
   setTimeout(() => {

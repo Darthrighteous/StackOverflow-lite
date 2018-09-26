@@ -308,6 +308,19 @@ const populateElements = (data) => {
   const { question, comments, answers } = data;
   const displayDate = resolveDate(question.created_at);
   // Question Elements
+  const userData = JSON.parse(localStorage.getItem('user'));
+  if (userData) {
+    if (userData.upvoted_questions.indexOf(question.id.toString()) > -1) {
+      // upvoted
+      const upButton = document.getElementById('upvote_question');
+      upButton.classList.add('activeup');
+    }
+    if (userData.downvoted_questions.indexOf(question.id.toString()) > -1) {
+      // downvoted
+      const downButton = document.getElementById('downvote_question');
+      downButton.classList.add('activedown');
+    }
+  }
   addStringToElement(question.score, 'question_score');
   addStringToElement(question.body, 'question_body');
   addStringToElement(question.title, 'question_title');
