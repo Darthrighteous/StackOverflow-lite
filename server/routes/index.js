@@ -6,6 +6,7 @@ import {
   postAnswer,
   postComment,
   deleteQuestion,
+  deleteAnswer,
   modifyPost,
 } from '../controllers/db/queries';
 
@@ -35,6 +36,8 @@ router.post('/v2/questions/:questionId/comments', verifyJWT, postComment); // po
 router.post('/v2/answers/:answerId/comments', verifyJWT, postComment); // post answer comment
 
 router.delete('/v2/questions/:questionId', verifyJWT, deleteQuestion); // delete question
+router.delete('/v2/questions/:questionId/answers/:answerId', verifyJWT, deleteAnswer); // delete question
+
 
 router.patch('/v2/questions/:questionId/answers/:answerId', verifyJWT, modifyPost); // modify answer
 router.patch('/v2/questions/:questionId', verifyJWT, modifyPost); // modify question
