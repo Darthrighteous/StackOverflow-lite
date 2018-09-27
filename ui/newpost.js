@@ -60,8 +60,13 @@ const postQuestion = () => {
 * @returns {void}
 */
 const cancelQuestion = () => {
-  titleText.value = '';
-  bodyText.value = '';
+  if (titleText.value.trim() !== '' || bodyText.value.trim() !== '') {
+    if (confirm('are you sure you want to cancel your new question')) {
+      titleText.value = '';
+      bodyText.value = '';
+      window.history.back();
+    }
+  }
   window.history.back();
 };
 
