@@ -118,6 +118,31 @@ export const getOneQuestion = async (req, res, next) => {
   }
 };
 
+
+/**
+* perform database query to get one user
+* @param {object} req The request
+* @param {object} res The response
+* @param {object} next To pass onto next route
+* @returns {object} the response
+*/
+export const getOneUserPublic = async (req, res, next) => {
+  const { username } = req.params;
+  try {
+    const user = await db.one('SELECT * from users WHERE username = $1', [username]);
+    delete user.password;
+    delete user.email;
+    return res.status(200).json({
+      status: 'success',
+      message: 'Retrieved one user successfully',
+      user,
+    });
+  } catch (e) {
+    res.status(404);
+    return next(new Error(`${e.message} User not found`));
+  }
+};
+
 /**
 * perform database query to post a question
 * @param {object} req The request
