@@ -47,7 +47,7 @@ export const addStringToElement = (string, elementId) => {
 * @param {object} res - the response to be checked
 * @returns {object} res - the okay response
 */
-const validateResponseStatus = (res) => {
+export const validateResponseStatus = (res) => {
   if (!res.ok) {
     throw Error(res.statusText);
   }
@@ -85,9 +85,9 @@ export const createQuestionHtmlDiv = (question) => {
       <div class="summary_body">
         <h3>${question.title}</h3>
         <div class="summary_details">
-          <a href="question.html?id=${question.id}" id="details_date">${displayDate}</a>
+          <a href="question.html?id=${question.id}" class="details_date">${displayDate}</a>
           by
-          <a href="" id="details_user">${question.username}</a>          
+          <a href="profile.html?user=${question.username}" class="details_user">${question.username}</a>          
         </div>
       </div>`;
 
