@@ -255,7 +255,8 @@ const createAnswerHtmlDiv = (answer) => {
           <span class="new_comment_toggle" id="new_comment_togglex${answer.id}">add comment</span>
           <div class="new_comment" id="new_commentx${answer.id}">
             <textarea id="comment_bodyx${answer.id}" maxlength="150" rows="1" placeholder="type comment here"></textarea>
-            <button id="post_comment_buttonx${answer.id}">Add Comment</button>
+            <a class="comment_cancel" id="cancel_comment_buttonx${answer.id}">Cancel</a>
+            <button class="comment_post" id="post_comment_buttonx${answer.id}">Post</button>
           </div>
           
         </div>
@@ -350,6 +351,13 @@ const populateElements = (data) => {
     addQCommentBtn.style.display = 'none';
     document.getElementById('new_comment_question').style.display = 'flex';
   });
+  // question comment cancel button listener
+  const cancelQCommentButton = document.getElementById('cancel_comment_button');
+  cancelQCommentButton.addEventListener('click', () => {
+    document.getElementById('comment_body').value = '';
+    document.getElementById('new_comment_question').style.display = 'none';
+    addQCommentBtn.style.display = 'inline';
+  });
 
   // Answer Elements
   const answerList = document.getElementById('answer_list');
@@ -419,6 +427,13 @@ const populateElements = (data) => {
       addCommentBtn.addEventListener('click', () => {
         addCommentBtn.style.display = 'none';
         document.getElementById(`new_commentx${answer.id}`).style.display = 'flex';
+      });
+      // add comment cancel click listener
+      const cancelCommentBtn = document.getElementById(`cancel_comment_buttonx${answer.id}`);
+      cancelCommentBtn.addEventListener('click', () => {
+        document.getElementById(`comment_bodyx${answer.id}`).value = '';
+        document.getElementById(`new_commentx${answer.id}`).style.display = 'none';
+        addCommentBtn.style.display = 'inline';
       });
     });
     localStorage.setItem('answers', JSON.stringify(answerBodyArray));
