@@ -880,6 +880,7 @@ input[type="button"]:hover {
 
 .new_comment {
 	display: none;
+	align-items: center;
 	justify-content: space-between;
 }
 
@@ -892,10 +893,19 @@ input[type="button"]:hover {
 	width: 100%;
 }
 
-.new_comment button {
-	align-self: flex-start;
+.comment_cancel {
+	margin-left:8px;
+	color: #848d95;
+    cursor: pointer;
+}
+
+.comment_cancel:hover {
+	color: #ff0011;
+}
+
+.comment_post {
 	white-space: nowrap;
-	margin-left: 8px;
+	margin-left: 12px;
 
 	font-size: 12px;
 	color: #3275C3;
@@ -904,8 +914,8 @@ input[type="button"]:hover {
 	border: 1px solid #72ABED;
 	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.20);
 	border-radius: 5px;
-}
 
+}
 
 /*ANSWER LAYOUT*/
 #answersTitle {

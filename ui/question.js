@@ -87,6 +87,7 @@ const postComment = () => {
 };
 document.getElementById('post_comment_button').addEventListener('click', postComment);
 
+
 /* DELETE A QUESTION */
 /**
 * Deletes a question
