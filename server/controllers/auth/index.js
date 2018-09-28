@@ -38,6 +38,7 @@ export const signUp = async (req, res, next) => {
   if (result.email) {
     const user = await getSingleUser(result.email);
     jwt.sign({ user }, secretKey, (err, token) => {
+      delete user.password;
       user.token = token;
       res.status(201).json({
         status: 'success',
@@ -73,6 +74,7 @@ export const logIn = async (req, res, next) => {
     const result = await bcrypt.compare(req.body.password, user.password);
     if (result) {
       jwt.sign({ user }, secretKey, (err, token) => {
+        delete user.password;
         user.token = token;
         res.status(200).send({
           status: 'success',
