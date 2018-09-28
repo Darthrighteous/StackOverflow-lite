@@ -37,6 +37,7 @@ export const signUp = async (req, res, next) => {
   const result = await createUser(req.body);
   if (result.email) {
     const user = await getSingleUser(result.email);
+    delete user.password;
     jwt.sign({ user }, secretKey, (err, token) => {
       user.token = token;
       res.status(201).json({
@@ -69,6 +70,7 @@ export const logIn = async (req, res, next) => {
 
   if (await checkEmailInUse(req.body.email)) {
     const user = await getSingleUser(req.body.email);
+    delete user.password;
     // compare password to hash from DB.
     const result = await bcrypt.compare(req.body.password, user.password);
     if (result) {
