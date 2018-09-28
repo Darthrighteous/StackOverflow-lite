@@ -1,3 +1,8 @@
+import {
+  baseUrl,
+  readResponseAsJSON,
+} from './utils.js';
+
 const dropdowns = document.getElementsByClassName('dropdown_content');
 /**
 * Opens all dropdowns
@@ -32,12 +37,28 @@ if ((document.getElementsByClassName('dropdown')).length > 0) {
 
 // Check if user is signed in and display appropriate nav options
 if (!localStorage.user) {
-  console.log('not signedin');
   // user is not signed in
-  // hide profile options
+  console.log('not signedin');
   document.getElementById('profileOptions').style.display = 'none';
 } else {
+  // user signed in
   console.log('signedin');
-  // hide auth options
   document.getElementById('authIn').style.display = 'none';
+
+  // check that user exists
+  const { username } = JSON.parse(localStorage.user);
+  const url = `${baseUrl}/users/${username}`;
+  fetch(url)
+    .then(readResponseAsJSON)
+    .then((response) => {
+      if (response.status === 'failure') {
+        // user not found
+        localStorage.removeItem('jwt');
+        localStorage.removeItem('user');
+        window.location.replace('../signin.html');
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
