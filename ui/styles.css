@@ -22,6 +22,7 @@ body {
 }
 
 .topnav h1 {
+	white-space: nowrap;
 	font-size: 30px;
 	margin: 0 30px;
 	float: left;
@@ -36,9 +37,11 @@ body {
 }
 
 #search_bar {
+	width: 100%;
+	box-sizing: border-box;
 	font-size: 14px;
 	line-height: 1.5;
-	padding: .5em 3em;
+	padding: .5em .5em .5em 3em ;
 	background: #E9EEF0;
 	background-image: url("icons/search.png");
 	background-size: 27px 27px;
@@ -134,12 +137,26 @@ body {
 }
 
 @media screen and (max-device-width : 600px) {
-	h1 {
+	.topnav h1 {
 		font-size: 45px;
 	}
 
+	#index_topnav_title_search h1 {
+		display: none;
+	}
+
 	.topnav {
-		line-height: 70px;
+		line-height: 100px;
+	}
+
+	#search_bar {
+		margin-left: 20px;
+		line-height: 1px;
+		font-size: 28px;
+		background-size: 50px 50px;
+	    background-position: 10px 6px; 
+		border: 2px solid #D5D9DB;
+		border-radius: 40px;
 	}
 
 	#profile_icon {
@@ -152,12 +169,12 @@ body {
 	}
 
 	.button_secondary {
-		font-size: 24px;
+		font-size: 30px;
 
 	}
 
 	.button_primary {
-		font-size: 24px;
+		font-size: 30px;
 	}
 
 }
@@ -239,9 +256,14 @@ input[type="button"]:hover {
 }
 
 @media screen and (max-device-width : 600px) {
+	.form_container {
+		padding: 20% 0;
+
+	}
+
     form {
-        width: 80%;
-        font-size: 30px
+        width: 100%;
+        font-size: 30px;
     }
 
     input[type="button"] {
@@ -251,6 +273,36 @@ input[type="button"]:hover {
     input[type="text"],[type="Password"] {
     	font-size: 30px;
     }
+
+    .form_container form {
+		width: 80%;
+		font-size: 32px;
+		margin: 20px auto;
+		border: 2px solid #D8D8D8; 	
+	}
+
+	#header {
+		padding: 16px 32px;
+	}
+
+	#body {
+		padding: 32px 32px;
+	}
+
+	#footer {
+		padding: 32px 32px;
+	}
+
+	input[type="submit"] {
+		margin-top: 8px;
+		margin-bottom: 32px;
+
+		font-size: 32px;
+		line-height: 1;
+		padding: .6em 0;
+		box-shadow: 0 2px 4px 0 rgba(0,0,0,0.20);
+		border-radius: 8px;
+	}
 
 }
 
@@ -393,22 +445,23 @@ input[type="button"]:hover {
 
 	/*BODY TITLE*/
 	.body_title {
-		line-height: 70px;
+		line-height: 80px;
 	}
 
 	.body_title h2 {
-		font-size: 35px;
+		font-size: 3.5em;
 	}
 
 	#ask_a_question_btn {
 		font-size: 28px;
-		border-radius: 28px;
+		padding: 16px 72px;
+		border-radius: 40px;
 	}
 
 	/*BODY CONTENT OPTIONS*/
 
 	#homepageOptionsContainer {
-		line-height: 70px;
+		line-height: 80px;
 
 	}
 	.dropdown_title {
@@ -427,13 +480,15 @@ input[type="button"]:hover {
 		width: 35px;
 	}
 
-	#sortDropdown {
-		margin-top: 108px;
-		margin-left: 48px;
+	#indexDropdown {
+		margin-top: 140px;
+		margin-left: 41px;
 	}
 
 	.dropdown_content a {
 		font-size: 28px;
+		padding: 16px;
+		border-width: 2px;
 	}
 }
 
@@ -590,7 +645,7 @@ input[type="button"]:hover {
 	}
 
 	.summary_stats h5 {
-		font-size: 24px;
+		font-size: 28px;
 	}
 
 	.answer_count {
@@ -602,12 +657,12 @@ input[type="button"]:hover {
 	}
 
 	.summary_body h3 {
-		font-size: 28px;
+		font-size: 34px;
 
 	}
 
 	.summary_details{
-		font-size: 14px;
+		font-size: 28px;
 
 	}
 
@@ -630,6 +685,7 @@ input[type="button"]:hover {
 		background-size: 40px 40px;
 	}
 }
+
 /*QUESTION PAGE BODY*/
 .main_body {
 	max-width: 1264px;
@@ -962,6 +1018,229 @@ input[type="button"]:hover {
 	border-radius: 5px;
 }
 
+@media screen and (max-device-width : 600px) {
+	.main_body {
+		padding-top: 12px;
+	}
+
+	#question_title_container {
+		margin: 0 60px;
+		line-height: 1;
+		border-bottom: 2px solid #eff0f1;
+
+	}
+
+	#question_title_container h2 {
+		font-size: 44px;
+	}
+
+	.ask_btn_question_page {
+		display: none;
+	}
+
+	.question_main {
+		margin: 0 30px;
+		width: 85%;
+	}
+
+	/*POST LAYOUT*/
+	.post_layout {
+		padding: 24px 0;
+		border-bottom: 2px solid #BCBDBE;
+	}
+
+	.vote {
+		min-width: 68px;
+		padding-right: 24px;
+	}
+
+	.up_vote {
+		position: relative;
+		height: 60px;
+		width: 60px;
+		background-size: 60px 60px;
+	}
+
+	.up_vote:hover {
+		bottom: 2px;
+	}
+
+
+	.question_up_vote {
+		height: 60px;
+		width: 60px;
+		background-size: 60px 60px;
+	}
+
+	.question_up_vote:hover {
+		bottom: 2px;
+	}
+
+	.activeup:hover {
+		bottom: 2px;
+	}
+
+	.score_count {
+		font-size: 28px;
+
+	}
+
+	.down_vote{
+		height: 60px;
+		width: 60px;
+		background-size: 60px 60px;
+	}
+
+	.down_vote:hover{
+		bottom: 2px;
+	}
+
+	.question_down_vote{
+		height: 60px;
+		width: 60px;
+		background-size: 60px 60px;
+	}
+
+	.question_down_vote:hover{
+		bottom: 2px;
+	}
+
+	.activedown:hover {
+		bottom: 2px;
+	}
+
+	.post_text {
+		font-size: 28px;
+		line-height: 1.2;
+		margin-bottom: 12px;
+	}
+
+	.post_details {
+		margin: 0 16px;
+	}
+
+	.post_options {
+		margin: 12px 0;
+	}
+
+	.post_options a {
+		margin-right: 24px;
+	}
+
+	.post_author {
+		margin: 12px 0;
+	}
+
+	.post_date {
+		margin-right: 10px;
+	}
+
+	.author_details {
+		margin-left: 10px;
+	}
+
+	.accept_cell {
+		padding-top: 24px;
+		padding-right: 24px;
+	}
+
+	.accept_button{
+		height: 60px;
+		width: 60px; 
+		background-size: 60px 60px;
+	}
+
+	.accept_button:hover{
+		bottom: 2px;
+	}
+
+	.comment_list{
+		border-top: 2px solid #e4e6e8;
+		padding-bottom: 20px;
+	}
+
+	.comment_list ul {
+		padding: 0;
+		margin: 0;
+	}
+
+	.comment_list li {
+		padding: 12px 16px;
+		border-bottom: 2px solid #eff0f1;
+	}
+
+	.comment_list span {
+		color: hsl(214, 7%, 47%);
+	}
+
+	.new_comment_toggle {
+		margin: 0 16px;
+	}
+
+	.new_comment {
+		display: none;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.new_comment textarea {
+		border-radius: 10px;
+		border: 2px solid #E8EAEC;
+	}
+
+	.comment_cancel {
+		margin-left: 16px;
+	}
+
+	.comment_post {
+		white-space: nowrap;
+		margin-left: 24px;
+
+		font-size: 24px;
+		color: #3275C3;
+		border: 2px solid #72ABED;
+		box-shadow: 0 2px 4px 0 rgba(0,0,0,0.20);
+		border-radius: 10px;
+
+	}
+
+	/*ANSWER LAYOUT*/
+	#answersTitle {
+		margin-top: 12px;
+		border-bottom: 2px solid #BCBDBE;
+	}
+
+	#answersTitle h3 {
+		font-size: 36px;
+		line-height: 1;
+		margin: 10px 0;
+	}
+
+	#answerSortDropdown {
+		margin-top: 100px;
+		margin-left: 50px;	
+	}
+
+	.new_answer {
+		padding: 24px 0;
+	}
+
+	#newAnswerTitle {
+		margin-bottom: 12px;
+	}
+
+	.new_answer button {
+		float: right;
+		margin: 24px 0 64px;
+
+		font-size: 28px;
+		line-height: 1;
+		border: 2px solid #3F84E1;
+		box-shadow: 0 2px 4px 0 rgba(0,0,0,0.20), inset 0 6px 4px 0 rgba(255,255,255,0.16);
+		border-radius: 10px;
+	}
+
+}
 
 /*PROFILE PAGE*/
 .profile_container {
@@ -1160,8 +1439,8 @@ input[type="button"]:hover {
 	}
 
 	.postTextArea {
-		font-size: 30px;
-		line-height: 2;
+		font-size: 24px;
+		line-height: 1;
 	}
 
 }

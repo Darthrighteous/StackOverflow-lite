@@ -3,37 +3,22 @@ import {
   readResponseAsJSON,
 } from './utils.js';
 
-const dropdowns = document.getElementsByClassName('dropdown_content');
 /**
-* Opens all dropdowns
+* Call back function that retracts dropdown on click
+* @param {object} event - the event from which call back was made
 * @returns {void}
 */
-const dropdownOpen = () => {
-  for (let i = 0; i < dropdowns.length; i += 1) {
-    const openDropdown = dropdowns[i];
-    openDropdown.classList.toggle('show');
-  }
-};
-
-if ((document.getElementsByClassName('dropdown')).length > 0) {
-  /**
-  * Call back function that retracts dropdown on click
-  * @param {object} event - the event from which call back was made
-  * @returns {void}
-  */
-  const dropdownRetract = (event) => {
-    if (!document.getElementsByClassName('dropdown')[0].contains(event.target)) {
-      for (let i = 0; i < dropdowns.length; i += 1) {
-        const openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
-      }
+const dropdownToggle = (event) => {
+  Array.from(document.getElementsByClassName('dropdown')).forEach((dropdown, index) => {
+    const content = document.getElementsByClassName('dropdown_content')[index];
+    if (document.getElementsByClassName('dropdown')[index].contains(event.target)) {
+      content.classList.toggle('show');
+    } else {
+      content.classList.remove('show');
     }
-  };
-
-  window.addEventListener('click', dropdownRetract);
-}
+  });
+};
+window.addEventListener('click', dropdownToggle);
 
 // Check if user is signed in and display appropriate nav options
 if (!localStorage.user) {
