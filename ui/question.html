@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="styles.css" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Vollkorn" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<title>Question Page</title>
@@ -11,13 +11,15 @@
 	<header class="topnav">
 		<div class="topnav_content">
 			<div class="topnav_title_search">
-				<h1><a href="index.html">Stackoverflow-lite</a></h1>
+				<div class="title" onclick="location.href ='index.html'">
+					<img class="logo" src="icons/s-logo.png"/>
+					<h1><a>Stackoverflow-lite</a></h1>
+				</div>
 				<form id="search_form" action="search.html">
 					<input id="search_bar" type="text" name="search" placeholder="Search all questions..">
 				</form>
 			</div>
 		
-
 			<div class="topnav_options_container">
 				<ol class="profile_options" id="profileOptions">
 					<li class="profile">

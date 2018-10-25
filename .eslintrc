@@ -2,11 +2,11 @@
 	"extends": "airbnb-base",
 	"rules": {
 		"max-len": [1, 80, 2, {
-			ignoreUrls: true,
-			ignoreComments: false,
-			ignoreRegExpLiterals: true,
-			ignoreStrings: true,
-			ignoreTemplateLiterals: true,
+			"ignoreUrls": true,
+			"ignoreComments": false,
+			"ignoreRegExpLiterals": true,
+			"ignoreStrings": true,
+			"ignoreTemplateLiterals": true
 	    }],
 	    "require-jsdoc": ["error", {
 	        "require": {
