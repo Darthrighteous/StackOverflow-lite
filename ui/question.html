@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="styles.css" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Vollkorn" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<title>Question Page</title>
@@ -11,13 +11,15 @@
 	<header class="topnav">
 		<div class="topnav_content">
 			<div class="topnav_title_search">
-				<h1><a href="index.html">Stackoverflow-lite</a></h1>
+				<div class="title" onclick="location.href ='index.html'">
+					<img class="logo" src="icons/s-logo.png"/>
+					<h1><a>Stackoverflow-lite</a></h1>
+				</div>
 				<form id="search_form" action="search.html">
 					<input id="search_bar" type="text" name="search" placeholder="Search all questions..">
 				</form>
 			</div>
 		
-
 			<div class="topnav_options_container">
 				<ol class="profile_options" id="profileOptions">
 					<li class="profile">
@@ -38,7 +40,7 @@
 		<div class="options_container" id="question_title_container">
 			<h2 id="question_title"></h2>
 			<div class="question_new_button">
-				<a href="newpost.html" id="ask_a_question_btn">Ask a Question</a>
+				<a href="newpost.html" class="ask_btn_question_page" id="ask_a_question_btn">Ask a Question</a>
 			</div>
 		</div>
 
@@ -95,7 +97,7 @@
 
 			<div id="answersTitle" class="options_container">
 				<h3 id="answer_count"></h3>
-				<div class="dropdown" id="answer_sort_dropdown" onclick="dropdownOpen()">
+				<div class="dropdown" id="answer_sort_dropdown">
 					<div class="dropdown_title">Sort</div>
 					<div class="dropdown_container">
 						<button class="dropbtn" id="answer_dropbtn">Most Recent</button>
