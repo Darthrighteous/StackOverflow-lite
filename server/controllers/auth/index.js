@@ -48,8 +48,6 @@ export const signUp = async (req, res, next) => {
     });
     return res;
   }
-
-  console.log('SIGNUP ERROR' + result);
   res.status(400);
   return next(result);
 };

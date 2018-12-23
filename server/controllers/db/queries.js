@@ -590,7 +590,6 @@ export const modifyPost = async (req, res, next) => {
       return downvotePost('questions', req, res, next);
 
     default:
-      console.log('something really bad has happened');
   }
   return 7;
 };
