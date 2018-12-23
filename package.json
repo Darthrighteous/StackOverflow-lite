@@ -4,9 +4,9 @@
   "description": "",
   "main": "lib/app.js",
   "scripts": {
-    "nodemon": "nodemon app.js --exec babel-node",
+    "start:dev": "nodemon app.js --exec babel-node",
     "build": "babel server -d dist/server && babel app.js -d dist",
-    "start": "npm run build && node dist/app.js",
+    "start:prod": "npm run build && node dist/app.js",
     "test-init": "jasmine init",
     "test": "babel-node server/spec/run.js",
     "coverage": "nyc npm run test && nyc report --reporter=text-lcov | coveralls"

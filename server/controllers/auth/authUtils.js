@@ -46,7 +46,6 @@ export const validateUserBody = (user) => {
     const validFirstName = typeof user.firstname === 'string'
     && user.firstname.trim() !== ''
     && user.firstname.trim().length <= 16;
-    // && (/[^A-Za-z]+/g).test(user.firstname);
     if (!validFirstName) {
       return 'first name must be a non-empty string';
     }
@@ -56,7 +55,6 @@ export const validateUserBody = (user) => {
     const validFirstName = typeof user.firstname === 'string'
     && user.lastname.trim() !== ''
     && user.lastname.trim().length <= 16;
-    // && (/[^A-Za-z]+/g).test(user.lastname);
     if (!validFirstName) {
       return 'last name must be a non-empty string';
     }
@@ -68,7 +66,6 @@ export const validateUserBody = (user) => {
   const validUsername = typeof user.username === 'string'
     && user.username.trim() !== ''
     && user.username.trim().length <= 16;
-    // && (/[^A-Za-z]+/g).test(user.username);
   if (!validUsername) {
     return 'Username must be a non-empty string';
   }
