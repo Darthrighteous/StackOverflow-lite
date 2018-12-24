@@ -8,10 +8,16 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, '../client')));
-
+// api
 app.use('/api/v1', routes);
 
+// webpack compiled static files
+app.use(express.static(path.join(__dirname, '../client')));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client', 'index.html'));
+});
+
+// vanilla js pages
 app.use('/pages', express.static(path.join(__dirname, '../../ui')));
 
 // PORT declaration
