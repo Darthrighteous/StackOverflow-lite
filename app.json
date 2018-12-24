@@ -1,0 +1,23 @@
+{
+  "name": "StackOverflow-lite",
+  "scripts": {},
+  "env": {
+    "SECRET": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "stack": "heroku-16",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

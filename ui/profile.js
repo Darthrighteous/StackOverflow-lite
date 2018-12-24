@@ -68,7 +68,7 @@ if (username) {
 } else {
   userData = myData;
   if (!userData) {
-    window.location.replace('../signin.html');
+    window.location.replace('/pages/signin.html');
   }
   populateProfile(userData);
 }
@@ -80,7 +80,7 @@ if (username) {
 const logOut = () => {
   localStorage.removeItem('jwt');
   localStorage.removeItem('user');
-  window.location.replace('../index.html');
+  window.location.replace('/pages/index.html');
 };
 
 document.getElementById('log_out_btn').addEventListener('click', logOut);

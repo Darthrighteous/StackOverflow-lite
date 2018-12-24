@@ -1,6 +1,17 @@
+# dependency directory
 /node_modules
+
+# test coverage info directory
 .nyc_output
+
+# environment variables
 .env
+
+# coveralls config
 .coveralls.yml
-dredd.yml
+
+# production source code
 /dist
+
+#dredd config
+dredd.yml

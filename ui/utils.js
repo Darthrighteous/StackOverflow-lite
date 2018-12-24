@@ -1,5 +1,5 @@
-export const baseUrl = 'https://vast-waters-81120.herokuapp.com/v2';
-// export const baseUrl = 'http://localhost:4001/v2';
+export const baseUrl = 'https://vast-waters-81120.herokuapp.com/api/v1';
+// export const baseUrl = 'http://localhost:4001/api/v1';
 
 /**
 * Resolves a date string to a user friendly string
@@ -177,7 +177,7 @@ export const validateJsonResponse = (res) => {
   }
   if (res.status === 'unauthorized') {
     // redirect to login
-    window.location.replace('../signin.html');
+    window.location.replace('/pages/signin.html');
   }
   throw Error(res.message);
 };
@@ -560,7 +560,7 @@ export const authenticateUser = (url, userData) => {
     .then(validateJsonResponse)
     .then(saveToken)
     .then(() => {
-      window.location.replace('../profile.html');
+      window.location.replace('/pages/profile.html');
     })
     .catch((error) => {
       console.log(error);

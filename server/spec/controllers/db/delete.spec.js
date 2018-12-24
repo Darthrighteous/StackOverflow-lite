@@ -8,10 +8,10 @@ describe('DELETE ROUTE', () => {
 
   beforeAll((done) => {
     // log in, get token
-    Request({ url: 'http://localhost:4001/v2/auth/login', method: 'POST', json: logInInput }, (error, response, body) => {
+    Request({ url: 'http://localhost:4001/api/v1/auth/login', method: 'POST', json: logInInput }, (error, response, body) => {
       data.token = body.user.token;
       options = {
-        url: 'http://localhost:4001/v2/questions',
+        url: 'http://localhost:4001/api/v1/questions',
         method: 'POST',
         headers: {
           authorization: data.token,
@@ -27,7 +27,7 @@ describe('DELETE ROUTE', () => {
     Request.post(options, (error, response, body) => {
       qId = body.id;
       options = {
-        url: `http://localhost:4001/v2/questions/${body.id}`,
+        url: `http://localhost:4001/api/v1/questions/${body.id}`,
         method: 'DELETE',
         headers: {
           authorization: data.token,
@@ -40,7 +40,7 @@ describe('DELETE ROUTE', () => {
   describe('for a question without token', () => {
     // delete question without token
     beforeAll((done) => {
-      Request.delete(`http://localhost:4001/v2/questions/${qId}`, (error, response, body) => {
+      Request.delete(`http://localhost:4001/api/v1/questions/${qId}`, (error, response, body) => {
         data.status = response.statusCode;
         data.body = JSON.parse(body);
         done();

@@ -110,7 +110,7 @@ const deleteQuestion = () => {
         const userData = JSON.parse(localStorage.getItem('user'));
         userData.question_count -= 1;
         localStorage.setItem('user', JSON.stringify(userData));
-        window.location.replace('../index.html');
+        window.location.replace('/pages/index.html');
       })
       .catch((error) => {
         console.log(error);

@@ -24,29 +24,41 @@ import {
 
 const router = express.Router();
 
-router.use('/v2/questions/:questionId', validateQId);
-router.use('/v2/questions/:questionId/answers/:answerId', validateAId);
+router.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Welcome to the Stackoverflow-lite API'
+  });
+});
+
+router.use('/questions/:questionId', validateQId);
+router.use('/questions/:questionId/answers/:answerId', validateAId);
 
 // DATABASE ROUTES
-router.get('/v2/questions', getAllQuestions); // get all questions
-router.get('/v2/questions/:questionId', getOneQuestion); // get a single question
-router.get('/v2/users/:username', getOneUserPublic); // get a single user
+router.get('/questions', getAllQuestions); // get all questions
+router.get('/questions/:questionId', getOneQuestion); // get a single question
+router.get('/users/:username', getOneUserPublic); // get a single user
 
-router.post('/v2/questions', verifyJWT, postQuestion); // post question
-router.post('/v2/questions/:questionId/answers', verifyJWT, postAnswer); // post answer
-router.post('/v2/questions/:questionId/comments', verifyJWT, postComment); // post question comment
-router.post('/v2/answers/:answerId/comments', verifyJWT, postComment); // post answer comment
+router.post('/questions', verifyJWT, postQuestion); // post question
+router.post('/questions/:questionId/answers', verifyJWT, postAnswer); // post answer
+router.post('/questions/:questionId/comments', verifyJWT, postComment); // post question comment
+router.post('/answers/:answerId/comments', verifyJWT, postComment); // post answer comment
 
-router.delete('/v2/questions/:questionId', verifyJWT, deleteQuestion); // delete question
-router.delete('/v2/questions/:questionId/answers/:answerId', verifyJWT, deleteAnswer); // delete question
+router.delete('/questions/:questionId', verifyJWT, deleteQuestion); // delete question
+router.delete('/questions/:questionId/answers/:answerId', verifyJWT, deleteAnswer); // delete question
 
-
-router.patch('/v2/questions/:questionId/answers/:answerId', verifyJWT, modifyPost); // modify answer
-router.patch('/v2/questions/:questionId', verifyJWT, modifyPost); // modify question
+router.patch('/questions/:questionId/answers/:answerId', verifyJWT, modifyPost); // modify answer
+router.patch('/questions/:questionId', verifyJWT, modifyPost); // modify question
 
 // AUTH ROUTES
-router.post('/v2/auth/signup', signUp);
-router.post('/v2/auth/login', logIn);
+router.post('/auth/signup', signUp);
+router.post('/auth/login', logIn);
+
+router.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
 router.use((err, req, res, next) => {
   if (!res.headersSent) {

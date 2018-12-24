@@ -14,10 +14,10 @@ describe('POST ROUTE', () => {
     const qId = 1;
     // log in, get token
     beforeAll((done) => {
-      Request({ url: 'http://localhost:4001/v2/auth/login', method: 'POST', json: logInInput }, (error, response, body) => {
+      Request({ url: 'http://localhost:4001/api/v1/auth/login', method: 'POST', json: logInInput }, (error, response, body) => {
         data.token = body.user.token;
         options = {
-          url: `http://localhost:4001/v2/questions/${qId}/answers`,
+          url: `http://localhost:4001/api/v1/questions/${qId}/answers`,
           method: 'POST',
           headers: {
             authorization: data.token,
@@ -91,10 +91,10 @@ describe('POST ROUTE', () => {
     let options;
     // log in, get token
     beforeAll((done) => {
-      Request({ url: 'http://localhost:4001/v2/auth/login', method: 'POST', json: logInInput }, (error, response, body) => {
+      Request({ url: 'http://localhost:4001/api/v1/auth/login', method: 'POST', json: logInInput }, (error, response, body) => {
         data.token = body.user.token;
         options = {
-          url: 'http://localhost:4001/v2/questions',
+          url: 'http://localhost:4001/api/v1/questions',
           method: 'POST',
           headers: {
             authorization: data.token,
@@ -187,10 +187,10 @@ describe('POST ROUTE', () => {
     let options;
     // log in, get token
     beforeAll((done) => {
-      Request({ url: 'http://localhost:4001/v2/auth/login', method: 'POST', json: logInInput }, (error, response, body) => {
+      Request({ url: 'http://localhost:4001/api/v1/auth/login', method: 'POST', json: logInInput }, (error, response, body) => {
         data.token = body.user.token;
         options = {
-          url: `http://localhost:4001/v2/questions/${qId}/comments`,
+          url: `http://localhost:4001/api/v1/questions/${qId}/comments`,
           method: 'POST',
           headers: {
             authorization: data.token,
@@ -220,7 +220,7 @@ describe('POST ROUTE', () => {
 
     describe('for an answer, with valid inputs', () => {
       beforeAll((done) => {
-        options.url = `http://localhost:4001/v2/answers/${aId}/comments`;
+        options.url = `http://localhost:4001/api/v1/answers/${aId}/comments`;
         Request(options, (error, response, body) => {
           data.status = response.statusCode;
           data.body = body;

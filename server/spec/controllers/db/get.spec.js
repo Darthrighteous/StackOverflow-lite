@@ -7,7 +7,7 @@ describe('GET ROUTE', () => {
   describe('for all questions', () => {
     const data = {};
     beforeAll((done) => {
-      Request.get('http://localhost:4001/v2/questions', (error, response, body) => {
+      Request.get('http://localhost:4001/api/v1/questions', (error, response, body) => {
         data.status = response.statusCode;
         data.body = JSON.parse(body);
         data.questions = JSON.parse(body).questions;
@@ -30,10 +30,10 @@ describe('GET ROUTE', () => {
     let qId;
     // log in, get token
     beforeAll((done) => {
-      Request({ url: 'http://localhost:4001/v2/auth/login', method: 'POST', json: logInInput }, (error, response, body) => {
+      Request({ url: 'http://localhost:4001/api/v1/auth/login', method: 'POST', json: logInInput }, (error, response, body) => {
         data.token = body.user.token;
         options = {
-          url: 'http://localhost:4001/v2/questions',
+          url: 'http://localhost:4001/api/v1/questions',
           method: 'POST',
           headers: {
             authorization: data.token,
@@ -52,7 +52,7 @@ describe('GET ROUTE', () => {
     });
     // get the posted question
     beforeAll((done) => {
-      Request.get(`http://localhost:4001/v2/questions/${qId}`, (error, response, body) => {
+      Request.get(`http://localhost:4001/api/v1/questions/${qId}`, (error, response, body) => {
         data.status = response.statusCode;
         data.body = JSON.parse(body);
         data.question = JSON.parse(body).question;
@@ -78,7 +78,7 @@ describe('GET ROUTE', () => {
   describe('for one question with invalid id', () => {
     const data = {};
     beforeAll((done) => {
-      Request.get(`http://localhost:4001/v2/questions/${invalidQId}`, (error, response, body) => {
+      Request.get(`http://localhost:4001/api/v1/questions/${invalidQId}`, (error, response, body) => {
         data.status = response.statusCode;
         data.body = JSON.parse(body);
         data.question = JSON.parse(body).question;
@@ -99,7 +99,7 @@ describe('GET ROUTE', () => {
   describe('for one question that doesn\'t exist', () => {
     const data = {};
     beforeAll((done) => {
-      Request.get('http://localhost:4001/v2/questions/100000000000', (error, response, body) => {
+      Request.get('http://localhost:4001/api/v1/questions/100000000000', (error, response, body) => {
         data.status = response.statusCode;
         data.body = JSON.parse(body);
         data.question = JSON.parse(body).question;
@@ -119,7 +119,7 @@ describe('GET ROUTE', () => {
   describe('for questions by a user', () => {
     const data = {};
     beforeAll((done) => {
-      Request.get('http://localhost:4001/v2/questions?user=jb0077', (error, response, body) => {
+      Request.get('http://localhost:4001/api/v1/questions?user=jb0077', (error, response, body) => {
         data.status = response.statusCode;
         data.body = JSON.parse(body);
         data.questions = JSON.parse(body).questions;
@@ -144,7 +144,7 @@ describe('GET ROUTE', () => {
   describe('to search for question three', () => {
     const data = {};
     beforeAll((done) => {
-      Request.get('http://localhost:4001/v2/questions?search=test', (error, response, body) => {
+      Request.get('http://localhost:4001/api/v1/questions?search=test', (error, response, body) => {
         data.status = response.statusCode;
         data.body = JSON.parse(body);
         data.questions = JSON.parse(body).questions;

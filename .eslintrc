@@ -1,5 +1,29 @@
 {
-	"extends": "airbnb-base",
+	"extends": [
+		"airbnb-base",
+		"eslint:recommended",
+    "plugin:import/errors",
+		"plugin:import/warnings",
+		"react-app"
+	],
+	"parser": "babel-eslint",
+	"plugins": [
+		"react"
+	],
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "jquery": true,
+    "jest": true
+  },
 	"rules": {
 		"max-len": [1, 80, 2, {
 			"ignoreUrls": true,
@@ -13,8 +37,8 @@
 	            "FunctionDeclaration": true,
 	            "MethodDefinition": true,
 	            "ClassDeclaration": true,
-	            "ArrowFunctionExpression": true,
-	            "FunctionExpression": true
+	            "ArrowFunctionExpression": false,
+	            "FunctionExpression": false
         	}
     	}],
     	"valid-jsdoc": ["error", {
