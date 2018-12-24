@@ -40,7 +40,7 @@ if (!localStorage.user) {
         // user not found
         localStorage.removeItem('jwt');
         localStorage.removeItem('user');
-        window.location.replace('../signin.html');
+        window.location.replace('/pages/signin.html');
       }
     })
     .catch((error) => {

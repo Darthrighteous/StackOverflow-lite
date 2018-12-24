@@ -7,7 +7,7 @@ import {
 // Check if user is signed in
 const userData = JSON.parse(localStorage.getItem('user'));
 if (!userData) {
-  window.location.replace('../signin.html');
+  window.location.replace('/pages/signin.html');
 }
 
 
@@ -21,7 +21,7 @@ const postQUrl = `${baseUrl}/questions`;
 const redirectToQuestionPage = (res) => {
   userData.question_count += 1;
   localStorage.setItem('user', JSON.stringify(userData));
-  window.location.replace(`../question.html?id=${res.id}`);
+  window.location.replace(`/pages/question.html?id=${res.id}`);
 };
 
 const titleText = document.getElementById('question_title');

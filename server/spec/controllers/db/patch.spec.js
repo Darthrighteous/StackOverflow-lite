@@ -21,10 +21,10 @@ describe('PATCH ROUTE', () => {
 
     beforeAll((done) => {
       // sign up user1, get token
-      Request({ url: 'http://localhost:4001/v2/auth/signup', method: 'POST', json: signUpInput3 }, (error, response, body) => {
+      Request({ url: 'http://localhost:4001/api/v1/auth/signup', method: 'POST', json: signUpInput3 }, (error, response, body) => {
         data.tokenQuestion = body.user.token;
         optionsQuestion = {
-          url: 'http://localhost:4001/v2/questions',
+          url: 'http://localhost:4001/api/v1/questions',
           method: 'POST',
           headers: {
             authorization: data.tokenQuestion,
@@ -37,7 +37,7 @@ describe('PATCH ROUTE', () => {
 
     beforeAll((done) => {
     // log in user 2, get token
-      Request({ url: 'http://localhost:4001/v2/auth/login', method: 'POST', json: logInInput }, (error, response, body) => {
+      Request({ url: 'http://localhost:4001/api/v1/auth/login', method: 'POST', json: logInInput }, (error, response, body) => {
         data.tokenAnswer = body.user.token;
         done();
       });
@@ -49,7 +49,7 @@ describe('PATCH ROUTE', () => {
         qId = body.id;
         // options to post answer
         optionsAnswer = {
-          url: `http://localhost:4001/v2/questions/${qId}/answers`,
+          url: `http://localhost:4001/api/v1/questions/${qId}/answers`,
           method: 'POST',
           headers: {
             authorization: data.tokenAnswer,
@@ -66,7 +66,7 @@ describe('PATCH ROUTE', () => {
         // get the answer Id
         aId = body.answer.id;
         options = {
-          url: `http://localhost:4001/v2/questions/${qId}/answers/${aId}`,
+          url: `http://localhost:4001/api/v1/questions/${qId}/answers/${aId}`,
           method: 'PATCH',
           headers: {
             authorization: data.tokenQuestion,
