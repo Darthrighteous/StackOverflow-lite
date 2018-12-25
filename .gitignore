@@ -15,3 +15,8 @@
 
 #dredd config
 dredd.yml
+
+# code coverage directory
+coverage
+
+.coveralls.yml

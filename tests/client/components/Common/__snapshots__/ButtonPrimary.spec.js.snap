@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Primary button snapshot test 1`] = `
+<Link
+  replace={false}
+  to="/test"
+>
+  <button
+    onClick={null}
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "color": "#000",
+      }
+    }
+    type="button"
+  >
+    test
+  </button>
+</Link>
+`;

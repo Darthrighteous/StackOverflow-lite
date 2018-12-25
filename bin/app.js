@@ -11,14 +11,14 @@ app.use(cors());
 // api
 app.use('/api/v1', routes);
 
+// vanilla js pages
+app.use('/pages', express.static(path.join(__dirname, '../../ui')));
+
 // webpack compiled static files
 app.use(express.static(path.join(__dirname, '../client')));
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client', 'index.html'));
 });
-
-// vanilla js pages
-app.use('/pages', express.static(path.join(__dirname, '../../ui')));
 
 // PORT declaration
 const PORT = process.env.PORT || 4001;
