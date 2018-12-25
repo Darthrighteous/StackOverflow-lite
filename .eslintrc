@@ -1,10 +1,7 @@
 {
 	"extends": [
-		"airbnb-base",
-		"eslint:recommended",
-    "plugin:import/errors",
-		"plugin:import/warnings",
-		"react-app"
+		"airbnb",
+		"eslint:recommended"
 	],
 	"parser": "babel-eslint",
 	"plugins": [
@@ -25,6 +22,7 @@
     "jest": true
   },
 	"rules": {
+		"semi": [2, "always"],
 		"max-len": [1, 80, 2, {
 			"ignoreUrls": true,
 			"ignoreComments": false,
@@ -49,6 +47,7 @@
 				"return": "returns",
 				"virtual": "abstract" 
 			}
-		}]
+		}],
+		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
 	}
 }
