@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`New Question button snapshot test 1`] = `
+<Link
+  replace={false}
+  to="/new-question"
+>
+  <button
+    className="btn-new-question"
+    type="button"
+  >
+    Ask a Question
+  </button>
+</Link>
+`;

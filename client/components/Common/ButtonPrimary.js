@@ -23,10 +23,10 @@ ButtonPrimary.propTypes = {
   colorBtn: PropTypes.string.isRequired,
   colorTxt: PropTypes.string.isRequired,
   onClick: PropTypes.func,
-}
+};
 
 ButtonPrimary.defaultProps = {
   onClick: null,
-}
+};
 
 export default ButtonPrimary;

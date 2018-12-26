@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spinner snapshot tests is loading 1`] = `
+<div
+  className="spinner-overlay"
+>
+  <i
+    className="fas fa-spinner fa-spin"
+  />
+</div>
+`;
+
+exports[`Spinner snapshot tests not loading 1`] = `""`;

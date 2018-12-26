@@ -24,6 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
+    "axios": "^0.18.0",
     "bcrypt": "^3.0.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
@@ -32,6 +33,7 @@
     "express": "^4.16.3",
     "jasmine": "^3.2.0",
     "jsonwebtoken": "^8.3.0",
+    "moment": "^2.23.0",
     "nodemon": "^1.18.3",
     "pg": "^7.4.3",
     "pg-promise": "^8.4.6",
@@ -42,7 +44,8 @@
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "toastr": "^2.1.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -54,6 +57,7 @@
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
     "autoprefixer": "^9.4.3",
+    "axios-mock-adapter": "^1.15.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "babel-plugin-transform-object-rest-spread": "^7.0.0-beta.3",
