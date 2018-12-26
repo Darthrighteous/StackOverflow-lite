@@ -33,7 +33,7 @@
 	    "require-jsdoc": ["error", {
 	        "require": {
 	            "FunctionDeclaration": true,
-	            "MethodDefinition": true,
+	            "MethodDefinition": false,
 	            "ClassDeclaration": true,
 	            "ArrowFunctionExpression": false,
 	            "FunctionExpression": false
@@ -48,6 +48,7 @@
 				"virtual": "abstract" 
 			}
 		}],
-		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+		"react/forbid-prop-types": [1, { "forbid": ["any"] }]
 	}
 }

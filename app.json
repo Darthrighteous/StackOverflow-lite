@@ -4,6 +4,9 @@
   "env": {
     "SECRET": {
       "required": true
+    },
+    "API_BASE_URL": {
+      "required": true
     }
   },
   "formation": {

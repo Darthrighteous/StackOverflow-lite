@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Question summary snapshot tests for non owner 1`] = `
+<div
+  className="question-summary"
+  onClick={[Function]}
+  onKeyDown={null}
+  role="button"
+  tabIndex="0"
+>
+  <div
+    className="question-stats"
+  >
+    <div
+      className="stat-answers"
+    >
+      <span>
+        0
+      </span>
+      <h5>
+        answers
+      </h5>
+    </div>
+    <div
+      className="stat-score"
+    >
+      <span>
+        0
+      </span>
+      <h5>
+        score
+      </h5>
+    </div>
+  </div>
+  <div
+    className="summary-body"
+  >
+    <h3>
+      Why do we celebrate when we win?
+    </h3>
+    <div
+      className="summary-details"
+    >
+      <Link
+        className="details-date"
+        replace={false}
+        to="/question/4"
+      >
+        13 hours ago
+      </Link>
+      by
+      <Link
+        className="details-user"
+        replace={false}
+        to="/user"
+      >
+        Darthrighteous
+      </Link>
+    </div>
+  </div>
+  <div
+    className="summary-options"
+  >
+    <Link
+      id="comment-icon"
+      replace={false}
+      to="/question?focus=answer"
+    >
+      <i
+        className="fas fa-comment-alt"
+      />
+    </Link>
+    <div />
+  </div>
+</div>
+`;
+
+exports[`Question summary snapshot tests for owner 1`] = `
+<div
+  className="question-summary"
+  onClick={[Function]}
+  onKeyDown={null}
+  role="button"
+  tabIndex="0"
+>
+  <div
+    className="question-stats"
+  >
+    <div
+      className="stat-answers"
+    >
+      <span>
+        0
+      </span>
+      <h5>
+        answers
+      </h5>
+    </div>
+    <div
+      className="stat-score"
+    >
+      <span>
+        0
+      </span>
+      <h5>
+        score
+      </h5>
+    </div>
+  </div>
+  <div
+    className="summary-body"
+  >
+    <h3>
+      Why do we celebrate when we win?
+    </h3>
+    <div
+      className="summary-details"
+    >
+      <Link
+        className="details-date"
+        replace={false}
+        to="/question/4"
+      >
+        13 hours ago
+      </Link>
+      by
+      <Link
+        className="details-user"
+        replace={false}
+        to="/user"
+      >
+        Darthrighteous
+      </Link>
+    </div>
+  </div>
+  <div
+    className="summary-options"
+  >
+    <Link
+      id="comment-icon"
+      replace={false}
+      to="/question?focus=answer"
+    >
+      <i
+        className="fas fa-comment-alt"
+      />
+    </Link>
+    <Link
+      id="delete-icon"
+      replace={false}
+      to="/question/4"
+    >
+      <i
+        className="fas fa-trash"
+      />
+    </Link>
+  </div>
+</div>
+`;

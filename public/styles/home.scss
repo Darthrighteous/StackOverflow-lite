@@ -1,0 +1,91 @@
+.content-header {
+  align-items: center;
+  background-color: $color-bg;
+  display: flex;
+  height: 2.5em;
+  justify-content: space-between;
+  margin-top: 2px;
+  padding: 0 1em;
+
+  h2 {
+    font-family: 'vollkorn', sans-serif;
+    font-weight: 500;
+  }
+}
+
+.content-options {
+  align-items: center;
+  display: flex;
+  height: 2.5em;
+  justify-content: flex-end;
+  padding: 0 1em 0 0;
+
+  .dropdown {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: 2.5em;
+    outline: 0;
+
+    .dropdown-title{
+      color: $text-secondary;
+      font-size: 0.7em;
+      font-weight: 500;
+      padding-right: 0.3em;
+      text-transform: uppercase;
+    }
+
+    .dropdown-container {
+      align-items: center;
+      display: flex;
+
+      .drop-btn {
+        border: 0;
+        color: $color-accent;
+        cursor: pointer;
+        font-size: 0.8em;
+        font-weight: 500;
+        padding: 0.2em 0.2em 0.27em;
+        text-transform: uppercase;
+      }
+
+      .drop-icon {
+        fill: $color-accent;
+        padding-bottom: 0.24em;
+        width: 1.5em;
+      }
+    }
+
+    .dropdown-content {
+      background-color: $color-white;
+      border-radius: 0.2em;
+      box-shadow: 0 2px 4px 0 $box-shadow-alt;
+      display: flex;
+      flex-direction: column;
+      margin: 4em 0 0 1.6em;
+      min-width: 7.5em;
+      position: absolute;
+      z-index: 2;
+
+      .dropdown-item {
+        border: 1px solid $color-border-light;
+        color: $text-secondary;
+        cursor: pointer;
+        font-size: 0.8em;
+        line-height: 1.5;
+        outline: 0;
+        padding: 0.5em;
+        text-align: left;
+        text-transform: capitalize;
+
+        &:hover {
+          background-color: $color-bg-light;
+        }
+      }
+
+      .active {
+        color: $color-accent;
+      }
+    }
+  }
+}

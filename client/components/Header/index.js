@@ -13,7 +13,7 @@ const Header = (props) => {
           <Link to="/">
             <div className="title">
               <i className="fab fa-stack-overflow" />
-              <span>Stackoverflow-lite</span>
+              <span>stackoverflow-lite</span>
             </div>
           </Link>
           

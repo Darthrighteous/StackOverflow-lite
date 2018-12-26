@@ -19,7 +19,7 @@ exports[`Header snapshot tests  - logged in 1`] = `
             className="fab fa-stack-overflow"
           />
           <span>
-            Stackoverflow-lite
+            stackoverflow-lite
           </span>
         </div>
       </Link>
@@ -88,7 +88,7 @@ exports[`Header snapshot tests  - logged out 1`] = `
             className="fab fa-stack-overflow"
           />
           <span>
-            Stackoverflow-lite
+            stackoverflow-lite
           </span>
         </div>
       </Link>

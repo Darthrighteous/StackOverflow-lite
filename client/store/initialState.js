@@ -4,6 +4,7 @@ const initialState = {
     isLoggedIn: false,
     error: '',
   },
+  questions: []
 };
 
 export default initialState;

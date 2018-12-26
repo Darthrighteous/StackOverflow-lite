@@ -1,0 +1,104 @@
+.question-summary {
+  align-items: center;
+  background-color: $color-bg;
+  border: 1px solid $color-border-light;
+  cursor: pointer;
+  display: flex;
+  margin: 0.15em 0;
+  padding: 0.4em 0.3em;
+
+  &:hover {
+    border: 1px solid $color-border-dark;
+    box-shadow: 0 1px 2px -1px $box-shadow;
+  }
+
+  .question-stats {
+    display: flex;
+    margin: 0 1em;
+
+    .stat-answers,
+    .stat-score {
+      display: inline-block;
+      min-width: 2.5em;
+      padding: 5px;
+      text-align: center;
+    }
+
+    span {
+      font-size: 1em;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    h5 {
+      color: $text-secondary;
+      font-size: 0.8em;
+      font-weight: 500;
+    }
+  }
+
+  .summary-body {
+    width: 100%;
+
+    h3 {
+      font-size: 1.1em;
+      font-weight: 500;
+      margin: 0 0 0.2em;
+
+      &::first-letter{
+        text-transform: uppercase;
+      }
+    }
+
+    .summary-details {
+      font-size: 0.8em;
+      margin: 0.2em 0 0;
+
+      .details-date,
+      .details-user {
+        text-decoration: none;
+      }
+
+      .details-date {
+        margin: 0 0.5em 0 0;
+      }
+
+      .details-user {
+        color: $color-accent;
+        margin: 0 0 0 0.5em;
+
+        &:hover {
+          color: $color-highlight;
+        }
+      }
+    }
+  }
+
+  .summary-options {
+    display: flex;
+    margin: 0 1em 0 0;
+
+    #comment-icon,
+    #delete-icon {
+      margin-left: 0.8em;
+      position: relative;
+      z-index: 1;
+
+      &:hover {
+        bottom: 1px;
+      }
+
+      &:active {
+        bottom: 0;
+      }
+    }
+
+    #comment-icon {
+      margin: 0.1em 0 0;
+    }
+
+    #delete-icon {
+      color: $color-red;
+    }
+  }
+}
