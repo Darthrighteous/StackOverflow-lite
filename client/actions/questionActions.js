@@ -14,16 +14,16 @@ export const fetchQuestions = () => (dispatch) => {
   return axios.get(`${process.env.API_BASE_URL}/questions`)
     .then(response => {
       const { data } = response;
-      if(data.status === 'success') {
-        Toaster.success('Questions successfully fetched', 'Success');
-        return dispatch(fetchQuestionsSuccess(data.questions));
-      }
-      Toaster.error('Failed to fetch questions', data.message);
+      Toaster.success('Questions successfully fetched', 'Success');
+      return dispatch(fetchQuestionsSuccess(data.questions));
+    })
+    .catch((error) => {
+      const { data } = error.response;
+      Toaster.error(data.message, data.status);
     })
     .then(() => {
       dispatch(setLoading(false));
     });
-
 };
 
 export const i = null;

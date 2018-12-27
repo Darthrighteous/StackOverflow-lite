@@ -12,7 +12,6 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 
-
 describe('question actions test', () => {
   afterEach(() => {
     axiosMock.restore();
@@ -51,7 +50,7 @@ describe('question actions test', () => {
   it('does not create FETCH_QUESTION_SUCCESS if no questions', () => {
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock.onGet(`${process.env.API_BASE_URL}/questions`)
-      .reply(200, { data: mockQuestionResponse });
+      .reply(400, { error: {} });
 
     const expectedActions = [
       { type: SET_LOADING, isLoading: true },

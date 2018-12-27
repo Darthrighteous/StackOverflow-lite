@@ -2,6 +2,7 @@
 
 exports[`Connected Header snapshot test 1`] = `
 <Header
+  dispatch={[Function]}
   loginStatus={true}
   store={
     Object {
