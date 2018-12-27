@@ -19,7 +19,7 @@
     "browser": true,
     "node": true,
     "jquery": true,
-    "jest": true
+		"jest": true
   },
 	"rules": {
 		"semi": [2, "always"],

@@ -40,7 +40,18 @@ describe('Question summary snapshot tests', () => {
   });
 });
 
-describe('handler test', () => {
+describe('event simulations', () => {
+  const { questionSummary } = setup();
+  it('should stop propagation of child element clicks', () => {
+    const event = {
+      stopPropagation: jest.fn()
+    };
+    questionSummary.find('#comment-icon').simulate('click', event);
+    expect(event.stopPropagation).toHaveBeenCalled();
+  });
+});
+
+describe('handler unit tests', () => {
   const { props, questionSummary } = setup();
   const instance = questionSummary.instance();
   it('should navigate', () => {

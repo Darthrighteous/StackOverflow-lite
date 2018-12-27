@@ -6,4 +6,4 @@ const mapStateToProps = state => ({
   loginStatus: state.global.isLoggedIn
 });
 
-export default connect(mapStateToProps, {})(Header);
+export default connect(mapStateToProps, null, null, { pure: false })(Header);

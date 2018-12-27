@@ -1,9 +1,97 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Signup snapshot test  1`] = `
-<div>
-  <h1>
-    StackOverflow-Lite Signup
-  </h1>
+exports[`Signup snapshot test snapshot 1`] = `
+<div
+  className="main-content"
+>
+  <div
+    className="auth-form-container"
+  >
+    <div
+      className="header"
+    />
+    <div
+      className="body"
+    >
+      <form
+        className="auth-form"
+        onSubmit={[Function]}
+      >
+        <input
+          name="firstname"
+          onChange={[Function]}
+          placeholder="First Name"
+          required={true}
+          type="text"
+          value=""
+        />
+        <br />
+        <input
+          name="lastname"
+          onChange={[Function]}
+          placeholder="Last Name"
+          required={true}
+          type="text"
+          value=""
+        />
+        <br />
+        <input
+          name="email"
+          onChange={[Function]}
+          placeholder="Email"
+          required={true}
+          type="text"
+          value=""
+        />
+        <br />
+        <input
+          name="username"
+          onChange={[Function]}
+          placeholder="Display Name"
+          required={true}
+          type="text"
+          value=""
+        />
+        <br />
+        <input
+          name="password"
+          onChange={[Function]}
+          placeholder="Password"
+          required={true}
+          type="Password"
+          value=""
+        />
+        <br />
+        <input
+          name="signUpButton"
+          type="submit"
+          value="Sign Up"
+        />
+        <br />
+        <p>
+          By creating an account you agree to our 
+          <Link
+            replace={false}
+            to="/terms-and-privacy"
+          >
+            Terms & Privacy.
+          </Link>
+        </p>
+      </form>
+    </div>
+    <div
+      className="footer"
+    >
+      <p>
+        Already have an account? 
+        <Link
+          replace={false}
+          to="/login"
+        >
+          Log in
+        </Link>
+      </p>
+    </div>
+  </div>
 </div>
 `;

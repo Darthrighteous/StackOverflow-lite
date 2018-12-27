@@ -1,0 +1,86 @@
+.auth-form-container {
+  margin: auto;
+  padding-top: 10%;
+  width: 60%;
+
+  p{
+    font-size: 0.8em;
+    text-align: center;
+  }
+
+  .header {
+    background-color: $color-white;
+    border: 1px solid $color-border;
+    border-bottom: 0;
+    height: 2.2em;
+  }
+
+  .body {
+    background-color: $color-bg-light;
+    border: 1px solid $color-border;
+    border-bottom: 0;
+    border-top: 0;
+    padding: 1em 3em;
+
+    .auth-form {
+      input {
+        border: 1px solid $color-border;
+        border-radius: 0.2em;
+        font-size: 0.8em;
+        line-height: 1.5;
+        margin: 0.2em 0;
+        padding: 0.5em 0.8em;
+        width: 100%;
+
+        &[type="submit"] {
+          background-color: $color-accent;
+          border: 0;
+          border-radius: 0.2em;
+          box-shadow: 0 1px 2px 0 $box-shadow;
+          color: $color-white;
+          cursor: pointer;
+          font-size: 0.9em;
+          line-height: 1.5;
+          margin: 1em 0;
+          outline: 0;
+          position: relative;
+          white-space: nowrap;
+
+          &:hover {
+            bottom: 1px;
+            box-shadow: 0 1px 2px 1px $box-shadow;
+          }
+
+          &:active {
+            bottom: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .footer {
+    background-color: $color-bg;
+    border: 1px solid $color-border;
+    border-top: 0;
+    line-height: 3em;
+  }
+}
+
+
+@media screen and (max-width: 1000px) {
+  .auth-form-container {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .auth-form-container {
+    width: 80%;
+
+    .body {
+      padding: 1em 1.3em;
+    }
+  }
+}
+

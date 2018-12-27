@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const ButtonPrimary = (props) => {
@@ -9,11 +9,11 @@ const ButtonPrimary = (props) => {
     color: colorTxt,
   };
   return(
-    <Link to={link}>
+    <NavLink activeStyle={{ display: 'none' }} to={link}>
       <button type="button" onClick={onClick} style={btnStyle}>
         {label}
       </button>
-    </Link>
+    </NavLink>
   );
 };
 

@@ -2,8 +2,9 @@
 @import 'toastr/build/toastr';
 @import './variables';
 @import './mixins';
-@import './home';
 @import './questionSummary';
+@import './home';
+@import './signup';
 
 * {
   box-sizing: border-box;
@@ -43,6 +44,7 @@ body {
 .main-content {
   margin: auto;
   max-width: 79em;
+  min-height: 90vh;
 }
 
 .btn-new-question {

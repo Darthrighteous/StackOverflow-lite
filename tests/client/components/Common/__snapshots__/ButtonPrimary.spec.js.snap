@@ -1,8 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Primary button snapshot test 1`] = `
-<Link
-  replace={false}
+<NavLink
+  activeClassName="active"
+  activeStyle={
+    Object {
+      "display": "none",
+    }
+  }
+  aria-current="page"
   to="/test"
 >
   <button
@@ -17,5 +23,5 @@ exports[`Primary button snapshot test 1`] = `
   >
     test
   </button>
-</Link>
+</NavLink>
 `;

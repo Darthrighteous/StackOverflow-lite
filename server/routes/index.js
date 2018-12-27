@@ -62,6 +62,7 @@ router.use((req, res, next) => {
 
 router.use((err, req, res, next) => {
   if (!res.headersSent) {
+    res.status(err.status || 500);
     res.json({
       status: 'failure',
       message: err.message,

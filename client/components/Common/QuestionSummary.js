@@ -13,6 +13,10 @@ class QuestionSummary extends Component {
     this.navigateToQuestion = this.navigateToQuestion.bind(this, questionPath);
   }
 
+  stopPropagation(e) {
+    e.stopPropagation();
+  }
+  
   navigateToQuestion(path) {
     const { history } = this.props;
     history.push(path);
@@ -38,18 +42,30 @@ class QuestionSummary extends Component {
         <div className="summary-body">
           <h3>{title}</h3>
           <div className="summary-details">
-            <Link to={questionPath} className="details-date">{moment(created_at).fromNow()}</Link>
+            <Link
+              to={questionPath}
+              onClick={this.stopPropagation}
+              className="details-date"
+            >
+              {moment(created_at).fromNow()}
+            </Link>
             by
-            <Link to="/user" className="details-user">{username}</Link>          
+            <Link
+              to={`/user/${username}`}
+              onClick={this.stopPropagation}
+              className="details-user"
+            >
+              {username}
+            </Link>          
           </div>
         </div>
 
         <div className="summary-options">
-          <Link to="/question?focus=answer" id="comment-icon">
+          <Link to={`${questionPath}?focus=answer`} onClick={this.stopPropagation} id="comment-icon">
             <i className="fas fa-comment-alt" />
           </Link>
           {(isOwner) ? (
-            <Link to={questionPath} id="delete-icon">
+            <Link to={questionPath} onClick={this.stopPropagation} id="delete-icon">
               <i className="fas fa-trash" />
             </Link>
           ) : (
