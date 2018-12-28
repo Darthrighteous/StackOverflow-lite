@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { signUpAction } from '../../actions/authActions';
+import { authAction } from '../../actions/authActions';
 
 /**
  * Sign up component
@@ -34,7 +34,7 @@ export class Signup extends Component {
       username,
       password,
     };
-    signUpRequest(body, history);
+    signUpRequest('signup', body, history);
   }
 
   handleChange(e) {
@@ -132,7 +132,7 @@ Signup.propTypes = {
 };
 
 const mapActionsToProps = {
-  signUpRequest: signUpAction
+  signUpRequest: authAction
 };
 
 export default connect(null, mapActionsToProps)(Signup);

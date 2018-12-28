@@ -2,7 +2,7 @@ import axios from 'axios';
 import AxiosMockAdapter from 'axios-mock-adapter';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { signUpAction } from '../../../client/actions/authActions';
+import { authAction } from '../../../client/actions/authActions';
 import { SET_LOADING, SET_LOGGED_IN } from '../../../client/actions/actionTypes';
 
 const axiosMock = new AxiosMockAdapter(axios);
@@ -24,7 +24,8 @@ describe('sign up action test', () => {
     };
 
     const axiosMock = new AxiosMockAdapter(axios);
-    axiosMock.onPost(`${process.env.API_BASE_URL}/auth/signup`)
+    const type='signup';
+    axiosMock.onPost(`${process.env.API_BASE_URL}/auth/${type}`)
       .reply(201, successResponse);
 
     const expectedActions = [
@@ -35,7 +36,7 @@ describe('sign up action test', () => {
 
     const store = mockStore({});
 
-    return store.dispatch(signUpAction(null, { push: jest.fn() }))
+    return store.dispatch(authAction('signup', null, { push: jest.fn() }))
     .then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
@@ -50,7 +51,8 @@ describe('sign up action test', () => {
     };
 
     const axiosMock = new AxiosMockAdapter(axios);
-    axiosMock.onPost(`${process.env.API_BASE_URL}/auth/signup`)
+    const type='signup';
+    axiosMock.onPost(`${process.env.API_BASE_URL}/auth/${type}`)
       .reply(409, failureResponse);
 
       const expectedActions = [
@@ -66,7 +68,7 @@ describe('sign up action test', () => {
         questions: [],
       });
   
-      return store.dispatch(signUpAction())
+      return store.dispatch(authAction('signup'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
