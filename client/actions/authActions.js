@@ -2,9 +2,9 @@ import axios from 'axios';
 import Toaster from '../utils/Toaster';
 import { setLoading, setLoggedIn } from './globalActions';
 
-export const signUpAction = (userData, history) => (dispatch) => {
+export const authAction = (type, userData, history) => (dispatch) => {
   dispatch(setLoading(true));
-  return axios.post(`${process.env.API_BASE_URL}/auth/signup`, userData)
+  return axios.post(`${process.env.API_BASE_URL}/auth/${type}`, userData)
     .then(response => {
       const { data } = response;
       localStorage.setItem('user', JSON.stringify(data.user));
