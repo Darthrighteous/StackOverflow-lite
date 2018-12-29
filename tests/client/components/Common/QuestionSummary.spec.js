@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import QuestionSummary from '../../../../client/components/Common/QuestionSummary';
-import { mockQuestionResponse } from '../../../support/mockData';
+import { mockQuestionsResponse } from '../../../support/mockData';
 
 /**
  * setup for test
@@ -11,7 +11,7 @@ import { mockQuestionResponse } from '../../../support/mockData';
 function setup() {
   const props = {
     history: { push: jest.fn() },
-    question: mockQuestionResponse.questions[0],
+    question: mockQuestionsResponse.questions[0],
   };
 
   const questionSummary = shallow(

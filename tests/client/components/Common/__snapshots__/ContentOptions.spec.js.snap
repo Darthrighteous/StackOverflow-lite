@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`content options test snapshot tests 1`] = `
+<div
+  className="content-options"
+  style={null}
+>
+  <h4 />
+  <div
+    className="dropdown"
+    onClick={[MockFunction]}
+    onKeyDown={null}
+    role="button"
+    tabIndex="0"
+  >
+    <span
+      className="dropdown-title"
+    >
+      Sort
+    </span>
+    <div
+      className="dropdown-container"
+    >
+      <button
+        className="drop-btn"
+        type="button"
+      >
+        most recent
+      </button>
+      <svg
+        className="drop-icon"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g>
+          <path
+            d="M14.1711599,9.3535 L9.99925636,13.529 L5.82735283,9.3535 C5.51262415,9.0385 5.73543207,8.5 6.18054835,8.5 L13.8179644,8.5 C14.2630807,8.5 14.4858886,9.0385 14.1711599,9.3535"
+            fill="inherit"
+          />
+        </g>
+      </svg>
+    </div>
+    <div
+      className="dropdown-content"
+    >
+      <button
+        className="dropdown-item active"
+        onClick={[Function]}
+        type="button"
+      >
+        Most Recent
+      </button>
+      <button
+        className="dropdown-item"
+        onClick={[Function]}
+        type="button"
+      >
+        Most Answered
+      </button>
+      <button
+        className="dropdown-item"
+        onClick={[Function]}
+        type="button"
+      >
+        Most Rated
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`content options test snapshot tests 2`] = `
+<div
+  className="content-options"
+  style={
+    Object {
+      "background": "#f5f5f5",
+    }
+  }
+>
+  <h4 />
+  <div
+    className="dropdown"
+    onClick={[MockFunction]}
+    onKeyDown={null}
+    role="button"
+    tabIndex="0"
+  >
+    <span
+      className="dropdown-title"
+    >
+      Sort
+    </span>
+    <div
+      className="dropdown-container"
+    >
+      <button
+        className="drop-btn"
+        type="button"
+      >
+        most recent
+      </button>
+      <svg
+        className="drop-icon"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g>
+          <path
+            d="M14.1711599,9.3535 L9.99925636,13.529 L5.82735283,9.3535 C5.51262415,9.0385 5.73543207,8.5 6.18054835,8.5 L13.8179644,8.5 C14.2630807,8.5 14.4858886,9.0385 14.1711599,9.3535"
+            fill="inherit"
+          />
+        </g>
+      </svg>
+    </div>
+    <div />
+  </div>
+</div>
+`;

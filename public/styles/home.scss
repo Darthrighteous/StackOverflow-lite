@@ -1,24 +1,9 @@
-.content-header {
-  align-items: center;
-  background-color: $color-bg;
-  display: flex;
-  height: 2.5em;
-  justify-content: space-between;
-  margin-top: 2px;
-  padding: 0 1em;
-
-  h2 {
-    font-family: 'vollkorn', sans-serif;
-    font-weight: 500;
-  }
-}
-
 .content-options {
   align-items: center;
   display: flex;
   height: 2.5em;
-  justify-content: flex-end;
-  padding: 0 1em 0 0;
+  justify-content: space-between;
+  padding: 0 1em;
 
   .dropdown {
     align-items: center;
