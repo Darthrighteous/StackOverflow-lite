@@ -1,73 +1,91 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import ButtonPrimary from '../Common/ButtonPrimary';
+import verifyToken from '../../utils/verifyToken';
 
-const Header = (props) => {
-  const { loginStatus } = props;
-  return (
-    <header>
-      <div className="header-content">
-        <div className="title-search-cont">
-          <Link to="/">
-            <div className="title">
-              <i className="fab fa-stack-overflow" />
-              <span>stackoverflow-lite</span>
-            </div>
-          </Link>
-          
-          <form className="search-form">
-            <Link to="/search">
-              <i className="fas fa-search" />
+/**
+ * Header component
+ */
+class Header extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    const { setLoggedIn } = this.props;
+    if(verifyToken()) {
+      setLoggedIn(true);
+    }
+  }
+
+  render() {
+    const { loginStatus } = this.props;
+    return (
+      <header>
+        <div className="header-content">
+          <div className="title-search-cont">
+            <Link to="/">
+              <div className="title">
+                <i className="fab fa-stack-overflow" />
+                <span>stackoverflow-lite</span>
+              </div>
             </Link>
-            <input
-              id="search-bar"
-              type="text"
-              name="search"
-              placeholder="Search all questions..."
-            />
-          </form>
-        </div>
-
-        <div className="user-options-cont">
-          {(loginStatus) ? (
-            <div className="user-options">
-              <Link to="/profile">
-                <i className="fas fa-user-circle" />
+            
+            <form className="search-form">
+              <Link to="/search">
+                <i className="fas fa-search" />
               </Link>
-              <ButtonPrimary
-                link=""
-                label="Log Out"
-                colorTxt="#3275c3"
-                colorBtn="#ebf4ff"
+              <input
+                id="search-bar"
+                type="text"
+                name="search"
+                placeholder="Search all questions..."
               />
-            </div>
-            ) : (
-              <div className="guest-options">
+            </form>
+          </div>
+
+          <div className="user-options-cont">
+            {(loginStatus) ? (
+              <div className="user-options">
+                <Link to="/profile">
+                  <i className="fas fa-user-circle" />
+                </Link>
                 <ButtonPrimary
-                  link="/login"
-                  label="Log In"
+                  link=""
+                  label="Log Out"
                   colorTxt="#3275c3"
                   colorBtn="#ebf4ff"
                 />
-                <ButtonPrimary
-                  link="/signup"
-                  label="Sign Up"
-                  colorTxt="#fff"
-                  colorBtn="#3275c3"
-                />
               </div>
-            )
-          }
+              ) : (
+                <div className="guest-options">
+                  <ButtonPrimary
+                    link="/login"
+                    label="Log In"
+                    colorTxt="#3275c3"
+                    colorBtn="#ebf4ff"
+                  />
+                  <ButtonPrimary
+                    link="/signup"
+                    label="Sign Up"
+                    colorTxt="#fff"
+                    colorBtn="#3275c3"
+                  />
+                </div>
+              )
+            }
+          </div>
         </div>
-      </div>
-    </header>
-  );
-};
+      </header>
+    );
+  }
+}
 
 Header.propTypes = {
-  loginStatus: PropTypes.bool.isRequired
+  loginStatus: PropTypes.bool.isRequired,
+  setLoggedIn: PropTypes.func.isRequired,
 };
 
 export default Header;

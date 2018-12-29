@@ -69,7 +69,75 @@ exports[`Header snapshot tests  - logged in 1`] = `
 </header>
 `;
 
-exports[`Header snapshot tests  - logged out 1`] = `
+exports[`Header snapshot tests no user - logged out 1`] = `
+<header>
+  <div
+    className="header-content"
+  >
+    <div
+      className="title-search-cont"
+    >
+      <Link
+        replace={false}
+        to="/"
+      >
+        <div
+          className="title"
+        >
+          <i
+            className="fab fa-stack-overflow"
+          />
+          <span>
+            stackoverflow-lite
+          </span>
+        </div>
+      </Link>
+      <form
+        className="search-form"
+      >
+        <Link
+          replace={false}
+          to="/search"
+        >
+          <i
+            className="fas fa-search"
+          />
+        </Link>
+        <input
+          id="search-bar"
+          name="search"
+          placeholder="Search all questions..."
+          type="text"
+        />
+      </form>
+    </div>
+    <div
+      className="user-options-cont"
+    >
+      <div
+        className="guest-options"
+      >
+        <ButtonPrimary
+          colorBtn="#ebf4ff"
+          colorTxt="#3275c3"
+          label="Log In"
+          link="/login"
+          onClick={null}
+        />
+        <ButtonPrimary
+          colorBtn="#3275c3"
+          colorTxt="#fff"
+          label="Sign Up"
+          link="/signup"
+          onClick={null}
+        />
+      </div>
+    </div>
+  </div>
+</header>
+`;
+
+exports[`Header snapshot tests wrong token - logged out 1`] = `
 <header>
   <div
     className="header-content"

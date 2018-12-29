@@ -1,0 +1,602 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Post component test snapshot test 1`] = `
+<div
+  className="post-grid"
+>
+  <div
+    className="vote-cell"
+  >
+    <button
+      className="btn-action btn-upvote"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="fas fa-chevron-circle-up active"
+      />
+    </button>
+    <span
+      className="score-count"
+    >
+      0
+    </span>
+    <button
+      className="btn-action btn-downvote"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="fas fa-chevron-circle-down active"
+      />
+    </button>
+  </div>
+  <div
+    className="post-cell"
+  >
+    <div
+      className="post-body"
+    >
+      What is the point of celebrating when we win? Is it cause we feel happy? is it cause we don't know how to act when we feel happy. I am coming from a place of winning all the time and I'm not sure what to do about this, I feel like I 'NEED' to celebrate. This doesn't feel normal to me. I don't want to celebrate because I want to, it feels more like society has programmed me to NEED to celebrate. Why can't I just go about my day normally?
+    </div>
+    <div
+      className="post-details"
+    >
+      <div
+        className="post-options"
+      >
+        <button
+          type="button"
+        >
+          edit
+        </button>
+        <button
+          className="btn-delete"
+          onClick={[Function]}
+          type="button"
+        >
+          delete
+        </button>
+      </div>
+      <div
+        className="post-author-details"
+      >
+        <span>
+          4 days ago
+        </span>
+        by
+        <Link
+          replace={false}
+          to="/users/Darthrighteous"
+        >
+          Darthrighteous
+        </Link>
+      </div>
+    </div>
+  </div>
+  <div
+    className="accept-cell"
+  >
+    <div />
+  </div>
+  <div
+    className="comment-cell"
+  >
+    <ul
+      className="comment-list"
+    >
+      <li
+        className="comment-item"
+        key="3"
+      >
+        this is a very serious question, please answer if you know
+        <span>
+           — by 
+          <Link
+            replace={false}
+            to="/users/Darthrighteous"
+          >
+            Darthrighteous
+          </Link>
+           
+          2 days ago
+        </span>
+      </li>
+      <li
+        className="comment-item"
+        key="4"
+      >
+        This is a new comment that I am posting for the sake of it
+        <span>
+           — by 
+          <Link
+            replace={false}
+            to="/users/Darthrighteous"
+          >
+            Darthrighteous
+          </Link>
+           
+          2 days ago
+        </span>
+      </li>
+    </ul>
+    <div
+      className="add-comment"
+    >
+      <button
+        className="btn-new-comment"
+        onClick={[Function]}
+        type="button"
+      >
+        add a comment..
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Post component test snapshot test 2`] = `
+<div
+  className="post-grid"
+>
+  <div
+    className="vote-cell"
+  >
+    <button
+      className="btn-action btn-upvote"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="fas fa-chevron-circle-up active"
+      />
+    </button>
+    <span
+      className="score-count"
+    >
+      0
+    </span>
+    <button
+      className="btn-action btn-downvote"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="fas fa-chevron-circle-down active"
+      />
+    </button>
+  </div>
+  <div
+    className="post-cell"
+  >
+    <div
+      className="post-body"
+    >
+      What is the point of celebrating when we win? Is it cause we feel happy? is it cause we don't know how to act when we feel happy. I am coming from a place of winning all the time and I'm not sure what to do about this, I feel like I 'NEED' to celebrate. This doesn't feel normal to me. I don't want to celebrate because I want to, it feels more like society has programmed me to NEED to celebrate. Why can't I just go about my day normally?
+    </div>
+    <div
+      className="post-details"
+    >
+      <div
+        className="post-options"
+      >
+        <button
+          type="button"
+        >
+          edit
+        </button>
+        <button
+          className="btn-delete"
+          onClick={[Function]}
+          type="button"
+        >
+          delete
+        </button>
+      </div>
+      <div
+        className="post-author-details"
+      >
+        <span>
+          4 days ago
+        </span>
+        by
+        <Link
+          replace={false}
+          to="/users/Darthrighteous"
+        >
+          Darthrighteous
+        </Link>
+      </div>
+    </div>
+  </div>
+  <div
+    className="accept-cell"
+  >
+    <div />
+  </div>
+  <div
+    className="comment-cell"
+  >
+    <ul
+      className="comment-list"
+    >
+      <li
+        className="comment-item"
+        key="3"
+      >
+        this is a very serious question, please answer if you know
+        <span>
+           — by 
+          <Link
+            replace={false}
+            to="/users/Darthrighteous"
+          >
+            Darthrighteous
+          </Link>
+           
+          2 days ago
+        </span>
+      </li>
+      <li
+        className="comment-item"
+        key="4"
+      >
+        This is a new comment that I am posting for the sake of it
+        <span>
+           — by 
+          <Link
+            replace={false}
+            to="/users/Darthrighteous"
+          >
+            Darthrighteous
+          </Link>
+           
+          2 days ago
+        </span>
+      </li>
+    </ul>
+    <div
+      className="add-comment"
+    >
+      <Link
+        replace={false}
+        to="/signup"
+      >
+        Sign up to add a comment
+      </Link>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Post component test snapshot test 3`] = `
+<div
+  className="post-grid"
+>
+  <div
+    className="vote-cell"
+  >
+    <button
+      className="btn-action btn-upvote"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="fas fa-chevron-circle-up"
+      />
+    </button>
+    <span
+      className="score-count"
+    >
+      0
+    </span>
+    <button
+      className="btn-action btn-downvote"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="fas fa-chevron-circle-down"
+      />
+    </button>
+  </div>
+  <div
+    className="post-cell"
+  >
+    <div
+      className="post-body"
+    >
+      Well, we celebrate winning cause it makes us feel good. You shouldn't worry about why we do it. All that matters is your happiness whether you've been programmed to do it or not.
+    </div>
+    <div
+      className="post-details"
+    >
+      <div
+        className="post-options"
+      >
+        <button
+          type="button"
+        >
+          edit
+        </button>
+        <button
+          className="btn-delete"
+          onClick={[Function]}
+          type="button"
+        >
+          delete
+        </button>
+      </div>
+      <div
+        className="post-author-details"
+      >
+        <span>
+          a day ago
+        </span>
+        by
+        <Link
+          replace={false}
+          to="/users/Darthrighteous"
+        >
+          Darthrighteous
+        </Link>
+      </div>
+    </div>
+  </div>
+  <div
+    className="accept-cell"
+  >
+    <button
+      className="btn-action btn-accept"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="fas fa-check"
+      />
+    </button>
+  </div>
+  <div
+    className="comment-cell"
+  >
+    <div />
+    <div
+      className="add-comment"
+    >
+      <button
+        className="btn-new-comment"
+        onClick={[Function]}
+        type="button"
+      >
+        add a comment..
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Post component test snapshot test 4`] = `
+<div
+  className="post-grid"
+>
+  <div
+    className="vote-cell"
+  >
+    <button
+      className="btn-action btn-upvote"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="fas fa-chevron-circle-up"
+      />
+    </button>
+    <span
+      className="score-count"
+    >
+      0
+    </span>
+    <button
+      className="btn-action btn-downvote"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="fas fa-chevron-circle-down active"
+      />
+    </button>
+  </div>
+  <div
+    className="post-cell"
+  >
+    <div
+      className="post-body"
+    >
+      Duplicated. Well, we celebrate winning cause it makes us feel good. You shouldn't worry about why we do it. All that matters is your happiness whether you've been programmed to do it or not.
+    </div>
+    <div
+      className="post-details"
+    >
+      <div
+        className="post-options"
+      >
+        <button
+          type="button"
+        >
+          edit
+        </button>
+        <button
+          className="btn-delete"
+          onClick={[Function]}
+          type="button"
+        >
+          delete
+        </button>
+      </div>
+      <div
+        className="post-author-details"
+      >
+        <span>
+          a day ago
+        </span>
+        by
+        <Link
+          replace={false}
+          to="/users/Darthrighteous"
+        >
+          Darthrighteous
+        </Link>
+      </div>
+    </div>
+  </div>
+  <div
+    className="accept-cell"
+  >
+    <button
+      className="btn-action btn-accept"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="fas fa-check active"
+      />
+    </button>
+  </div>
+  <div
+    className="comment-cell"
+  >
+    <div />
+    <div
+      className="add-comment"
+    >
+      <button
+        className="btn-new-comment"
+        onClick={[Function]}
+        type="button"
+      >
+        add a comment..
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Post component test snapshot test 5`] = `
+<div
+  className="post-grid"
+>
+  <div
+    className="vote-cell"
+  >
+    <button
+      className="btn-action btn-upvote"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="fas fa-chevron-circle-up"
+      />
+    </button>
+    <span
+      className="score-count"
+    >
+      0
+    </span>
+    <button
+      className="btn-action btn-downvote"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="fas fa-chevron-circle-down"
+      />
+    </button>
+  </div>
+  <div
+    className="post-cell"
+  >
+    <div
+      className="post-body"
+    >
+      What is the point of celebrating when we win? Is it cause we feel happy? is it cause we don't know how to act when we feel happy. I am coming from a place of winning all the time and I'm not sure what to do about this, I feel like I 'NEED' to celebrate. This doesn't feel normal to me. I don't want to celebrate because I want to, it feels more like society has programmed me to NEED to celebrate. Why can't I just go about my day normally?
+    </div>
+    <div
+      className="post-details"
+    >
+      <div />
+      <div
+        className="post-author-details"
+      >
+        <span>
+          4 days ago
+        </span>
+        by
+        <Link
+          replace={false}
+          to="/users/Darthrighteous"
+        >
+          Darthrighteous
+        </Link>
+      </div>
+    </div>
+  </div>
+  <div
+    className="accept-cell"
+  >
+    <div />
+  </div>
+  <div
+    className="comment-cell"
+  >
+    <ul
+      className="comment-list"
+    >
+      <li
+        className="comment-item"
+        key="3"
+      >
+        this is a very serious question, please answer if you know
+        <span>
+           — by 
+          <Link
+            replace={false}
+            to="/users/Darthrighteous"
+          >
+            Darthrighteous
+          </Link>
+           
+          2 days ago
+        </span>
+      </li>
+      <li
+        className="comment-item"
+        key="4"
+      >
+        This is a new comment that I am posting for the sake of it
+        <span>
+           — by 
+          <Link
+            replace={false}
+            to="/users/Darthrighteous"
+          >
+            Darthrighteous
+          </Link>
+           
+          2 days ago
+        </span>
+      </li>
+    </ul>
+    <div
+      className="add-comment"
+    >
+      <button
+        className="btn-new-comment"
+        onClick={[Function]}
+        type="button"
+      >
+        add a comment..
+      </button>
+    </div>
+  </div>
+</div>
+`;

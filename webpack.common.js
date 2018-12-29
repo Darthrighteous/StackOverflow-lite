@@ -76,6 +76,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.API_BASE_URL': JSON.stringify(process.env.API_BASE_URL),
+      'process.env.SECRET': JSON.stringify(process.env.SECRET),
     }),
     new HtmlWebpackPlugin({
       template: './client/index.html',

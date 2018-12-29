@@ -5,10 +5,12 @@ import store from './store';
 import Header from './containers/Header';
 import Spinner from './containers/Spinner';
 
-import Home from './components/Home';
-import Signup from './components/Signup';
-import Login from './components/Login';
+import HomePage from './components/Home';
+import SignupPage from './components/Signup';
+import LoginPage from './components/Login';
 import NotFound from './components/NotFound';
+import QuestionPage from './components/Question';
+import Reloading from './components/Common/Reloading';
 
 const App = () => (
   <Provider store={store}>
@@ -17,11 +19,12 @@ const App = () => (
         <Spinner />
         <Header />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/login" component={Login} />
+          <Route exact path="/" component={HomePage} />
+          <Route path="/signup" component={SignupPage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/question/:id" component={QuestionPage} />
           {/* <Route path="/new-question" component={NewQuestion} /> */}
-          {/* <Route path="/question/:id" component={Question} /> */}
+          <Route path="/reload" component={Reloading} />
           <Route component={NotFound} />
         </Switch>
       </Fragment>

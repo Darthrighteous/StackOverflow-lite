@@ -3,17 +3,17 @@ import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 
 import ConnectedHome, { Home } from '../../../../client/components/Home';
-import { mockQuestionResponse } from '../../../support/mockData';
+import { mockQuestionsResponse } from '../../../support/mockData';
 
 
 /**
  * setup for test
- * @returns {object} containing props
+ * @returns {object} containing props and enzyme wrappers
  */
 function setup() {
   const props = {
     fetchQuestions: jest.fn(),
-    questions: mockQuestionResponse.questions,
+    questions: mockQuestionsResponse.questions,
     history: {},
   };
   const noQuestionProps = { ...props, questions: [] };
