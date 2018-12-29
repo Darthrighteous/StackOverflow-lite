@@ -2,8 +2,8 @@
 
 exports[`Connected Header snapshot test 1`] = `
 <Header
-  dispatch={[Function]}
   loginStatus={true}
+  setLoggedIn={[Function]}
   store={
     Object {
       "clearActions": [Function],

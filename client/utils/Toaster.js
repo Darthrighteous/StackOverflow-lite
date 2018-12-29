@@ -4,6 +4,8 @@ toastr.options = {
   progressBar: true,
   closeButton: true,
   preventDuplicates: true,
+  maxOpened: 1,
+  autoDismiss: false,
   extendedTimeout: 0,
   hideDuration: 200,
   closeDuration: 100,

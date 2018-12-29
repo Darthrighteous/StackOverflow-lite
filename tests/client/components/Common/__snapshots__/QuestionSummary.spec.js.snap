@@ -47,7 +47,7 @@ exports[`Question summary snapshot tests for non owner 1`] = `
         replace={false}
         to="/question/4"
       >
-        2 days ago
+        4 days ago
       </Link>
       by
       <Link
@@ -125,7 +125,7 @@ exports[`Question summary snapshot tests for owner 1`] = `
         replace={false}
         to="/question/4"
       >
-        2 days ago
+        4 days ago
       </Link>
       by
       <Link
