@@ -503,6 +503,9 @@ export const modifyPost = async (req, res, next) => {
             acceptId = aId;
             messagePrefix = 'Accepted';
           }
+          // reset accepted answer then accept
+          await db.none('UPDATE answers SET accepted = $1 WHERE accepted != $2 AND "question_id"=$3',
+            [false, false, qId]);
           const accept = await db.result('UPDATE answers SET accepted = $1 WHERE id= $2 AND "question_id"=$3',
             [acceptState, aId, qId]);
           if (accept.rowCount > 0) {
