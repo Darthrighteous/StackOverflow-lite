@@ -10,6 +10,7 @@ import SignupPage from './components/Signup';
 import LoginPage from './components/Login';
 import NotFound from './components/NotFound';
 import QuestionPage from './components/Question';
+import NewQuestionPage from './components/NewQuestion';
 import Reloading from './components/Common/Reloading';
 
 const App = () => (
@@ -23,7 +24,7 @@ const App = () => (
           <Route path="/signup" component={SignupPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/question/:id" component={QuestionPage} />
-          {/* <Route path="/new-question" component={NewQuestion} /> */}
+          <Route path="/new-question" component={NewQuestionPage} />
           <Route path="/reload" component={Reloading} />
           <Route component={NotFound} />
         </Switch>
