@@ -4,7 +4,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { FETCH_QUESTIONS_SUCCESS, SET_LOADING, FETCH_SINGLE_SUCCESS } from "../../../client/actions/actionTypes";
-import { fetchQuestions, fetchSingleQuestion, postComment, postAnswer, deletePost, modifyPost } from '../../../client/actions/questionActions';
+import { fetchQuestions, fetchSingleQuestion, postComment, postAnswer, deletePost, modifyPost, postQuestion } from '../../../client/actions/questionActions';
 import { mockQuestionsResponse, mockSingleQuestionResponse } from '../../support/mockData';
 
 const axiosMock = new AxiosMockAdapter(axios);
@@ -582,6 +582,58 @@ describe('question actions test', () => {
     const store = mockStore({});
 
     return store.dispatch(deletePost('answers', { questionId: 1, answerId: 1 }, history))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+
+  /* POSTING A NEW QUESTION */
+  it('should load when posting a NEW QUESTION- success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPost(`${process.env.API_BASE_URL}/questions`)
+        .reply(201, {});
+
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(postQuestion({title: 'test title', body: 'test body'}, history))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should handle when posting an NEW QUESTION with no token', () => {
+    const store = mockStore({
+      global: {
+        isLoading: false,
+        isLoggedIn: false
+      },
+      questions: [],
+    });
+
+    return store.dispatch(postQuestion({title: 'test title', body: 'test body'}, history));
+  });
+
+  it('should load when posting a NEW QUESTION and error occurs', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPost(`${process.env.API_BASE_URL}/questions`)
+        .reply(422, {});
+
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(postQuestion({title: 'test title', body: 'test body'}, history))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });

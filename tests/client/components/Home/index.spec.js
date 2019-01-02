@@ -39,9 +39,7 @@ function setup() {
 
 describe('Home component test', () => {
   const { homeWrapper, noQuestionsHome, connectedHome } = setup();
- 
-
-
+  
   test('snapshot test', () => {
     expect(homeWrapper).toMatchSnapshot();
     expect(noQuestionsHome).toMatchSnapshot();
