@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`New Question snapshot test snapshot 1`] = `
+<NewQuestion
+  history={
+    Object {
+      "goBack": [MockFunction],
+      "push": [MockFunction],
+    }
+  }
+  postQuestion={[Function]}
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+/>
+`;
+
+exports[`New Question snapshot test snapshot 2`] = `
+<div
+  className="main-content"
+>
+  <div
+    className="content-header"
+  >
+    <h2>
+      New Question
+    </h2>
+  </div>
+  <form
+    className="new-question-form"
+    onSubmit={[Function]}
+  >
+    <label
+      htmlFor="title"
+    >
+      <span>
+        Title
+      </span>
+      <input
+        autoComplete="off"
+        id="title"
+        name="title"
+        onChange={[Function]}
+        placeholder="add title here"
+        required={true}
+        value=""
+      />
+    </label>
+    <label
+      htmlFor="body"
+    >
+      <span>
+        Body
+      </span>
+      <textarea
+        autoComplete="off"
+        id="body"
+        name="body"
+        onChange={[Function]}
+        placeholder="add body here"
+        required={true}
+        value=""
+      />
+    </label>
+    <div
+      className="save-options"
+    >
+      <button
+        className="btn-cancel"
+        onClick={[Function]}
+        type="button"
+      >
+        Back
+      </button>
+      <button
+        className="btn-post"
+        type="submit"
+      >
+        Post
+      </button>
+    </div>
+  </form>
+</div>
+`;

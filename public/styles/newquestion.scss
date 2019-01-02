@@ -1,0 +1,35 @@
+.new-question-form {
+  margin: 1em;
+
+  label {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      font-family: 'vollkorn', sans-serif;
+      font-size: 1.3em;
+      font-weight: 500;
+      margin: 1em 0.3em 0.2em;
+    }
+
+    input,
+    textarea {
+      @include placeholder($text-secondary, 0.9em);
+      border: 1px solid $color-border;
+      border-radius: 0.2em;
+      font-size: 1em;
+      outline: 0;
+      padding: 0.5em 0.6em;
+    }
+
+    #body {
+      height: 20em;
+      resize: none;
+     }
+  }
+
+  .save-options {
+    float: right;
+    margin: 0.5em;
+  }
+}

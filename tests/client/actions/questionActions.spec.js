@@ -3,9 +3,19 @@ import AxiosMockAdapter from 'axios-mock-adapter';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
+<<<<<<< HEAD
 import { FETCH_QUESTIONS_SUCCESS, SET_LOADING, FETCH_SINGLE_SUCCESS } from "../../../client/actions/actionTypes";
 import { fetchQuestions, fetchSingleQuestion, postComment, postAnswer, deletePost, modifyPost } from '../../../client/actions/questionActions';
 import { mockQuestionsResponse, mockSingleQuestionResponse } from '../../support/mockData';
+||||||| merged common ancestors
+import { FETCH_QUESTIONS_SUCCESS, SET_LOADING } from "../../../client/actions/actionTypes";
+import { fetchQuestions } from '../../../client/actions/questionActions';
+import { mockQuestionResponse } from '../../support/mockData';
+=======
+import { FETCH_QUESTIONS_SUCCESS, SET_LOADING, FETCH_SINGLE_SUCCESS } from "../../../client/actions/actionTypes";
+import { fetchQuestions, fetchSingleQuestion, postComment, postAnswer, deletePost, modifyPost, postQuestion } from '../../../client/actions/questionActions';
+import { mockQuestionsResponse, mockSingleQuestionResponse } from '../../support/mockData';
+>>>>>>> ft-build-ask-question-page-162838474
 
 const axiosMock = new AxiosMockAdapter(axios);
 const middlewares = [thunk];
@@ -98,6 +108,7 @@ describe('question actions test', () => {
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
+<<<<<<< HEAD
 
   it('creates FETCH_SINGLE_SUCCESS when fetching a single question', () => {
     const axiosMock = new AxiosMockAdapter(axios);
@@ -586,4 +597,547 @@ describe('question actions test', () => {
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
+||||||| merged common ancestors
+=======
+
+  it('creates FETCH_SINGLE_SUCCESS when fetching a single question', () => {
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onGet(`${process.env.API_BASE_URL}/questions/1`)
+        .reply(200, mockSingleQuestionResponse);
+  
+      const expectedActions = [
+        { type: SET_LOADING, isLoading: true },
+        { 
+          type: FETCH_SINGLE_SUCCESS, 
+          payload: { question:mockSingleQuestionResponse }
+        },
+        { type: SET_LOADING, isLoading: false },
+      ];
+  
+      const store = mockStore({
+        global: {
+          isLoading: false,
+          isLoggedIn: false
+        },
+        questions: [],
+      });
+      
+      return store.dispatch(fetchSingleQuestion(1))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+  });
+
+  it('does not creates FETCH_SINGLE_SUCCESS on error', () => {
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onGet(`${process.env.API_BASE_URL}/questions/1`)
+        .reply(404, {error: {}});
+  
+      const expectedActions = [
+        { type: SET_LOADING, isLoading: true },
+        { type: SET_LOADING, isLoading: false },
+      ];
+  
+      const store = mockStore({
+        global: {
+          isLoading: false,
+          isLoggedIn: false
+        },
+        questions: [],
+      });
+      
+      return store.dispatch(fetchSingleQuestion(1))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+  });
+
+
+  /* POSTING A COMMENT */
+  it('should load when posting a comment', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPost(`${process.env.API_BASE_URL}/questions/1/comments`)
+        .reply(201, {});
+  
+      const expectedActions = [
+        { type: SET_LOADING, isLoading: true },
+        { type: SET_LOADING, isLoading: false },
+      ];
+  
+      const store = mockStore({});
+
+      return store.dispatch(postComment('questions', 1, {body: 'test comment'}, history))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+  });
+
+  it('should handle when posting a comment with no token', () => {
+    const store = mockStore({});
+
+    return store.dispatch(postComment('questions', 1, {body: 'test comment'}, history));
+  });
+
+  it('should load when posting a comment and error occurs', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPost(`${process.env.API_BASE_URL}/questions/1/comments`)
+        .reply(400, {});
+  
+      const expectedActions = [
+        { type: SET_LOADING, isLoading: true },
+        { type: SET_LOADING, isLoading: false },
+      ];
+  
+      const store = mockStore({});
+
+      return store.dispatch(postComment('questions', 1, {booody: 'test comment'}, history))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+  });
+
+
+
+  /* POSTING AN ANSWER */
+  it('should load when posting an ANSWER- success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPost(`${process.env.API_BASE_URL}/questions/1/answers`)
+        .reply(201, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(postAnswer(1, {body: 'test comment'}, history))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should handle when posting an ANSWER with no token', () => {
+    const store = mockStore({
+      global: {
+        isLoading: false,
+        isLoggedIn: false
+      },
+      questions: [],
+    });
+
+    return store.dispatch(postAnswer(1, {body: 'test comment'}, history));
+  });
+
+  it('should load when posting an ANSWER and error occurs', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPost(`${process.env.API_BASE_URL}/questions/1/answers`)
+        .reply(422, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(postAnswer(1, {booody: 'test comment'}, history))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  /* DELETING A POST */
+  it('should load when deleting a post- question success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onDelete(`${process.env.API_BASE_URL}/questions/1`)
+        .reply(200, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(deletePost('questions', { questionId: 1, answerId: null }, history))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should load when deleting a post- answer success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onDelete(`${process.env.API_BASE_URL}/questions/1/answers/1`)
+        .reply(200, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(deletePost('answers', { questionId: 1, answerId: 1 }, history))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should handle when deleting a post with no token', () => {
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+    const store = mockStore({});
+
+    store.dispatch(deletePost('questions', { questionId: 1, answerId: null }, history));
+    return expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it('should load when deleting a post and error occurs', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onDelete(`${process.env.API_BASE_URL}/questions/1`)
+        .reply(422, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(deletePost('questions', { questionId: 1, answerId: null }, history))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+
+
+  /** MODIFY POST  */
+  it('should load when modifying a post- answer accept success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPatch(`${process.env.API_BASE_URL}/questions/1/answers/1`)
+        .reply(200, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(
+      modifyPost('accept', 'answers', { questionId: 1, answerId: 1 }, history, null, false)
+      )
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should load when modifying a post- question upvote success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPatch(`${process.env.API_BASE_URL}/questions/1`)
+        .reply(200, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(
+      modifyPost('upvote', 'questions', { questionId: 1, answerId: null }, history, null, false)
+      )
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should load when modifying a post- question upvote undo success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPatch(`${process.env.API_BASE_URL}/questions/1`)
+        .reply(200, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(
+      modifyPost('upvote', 'questions', { questionId: 1, answerId: null }, history, null, true)
+      )
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should load when modifying a post- question downvote success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPatch(`${process.env.API_BASE_URL}/questions/1`)
+        .reply(200, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(
+      modifyPost('downvote', 'questions', { questionId: 1, answerId: null }, history, null, false)
+      )
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should load when modifying a post- question downvote undo success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPatch(`${process.env.API_BASE_URL}/questions/1`)
+        .reply(200, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(
+      modifyPost('downvote', 'questions', { questionId: 1, answerId: null }, history, null, true)
+      )
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should load when modifying a post- answer upvote success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPatch(`${process.env.API_BASE_URL}/questions/1/answers/1`)
+        .reply(200, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(
+      modifyPost('upvote', 'answers', { questionId: 1, answerId: 1 }, history, null, false)
+      )
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should load when modifying a post- answer upvote undo success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPatch(`${process.env.API_BASE_URL}/questions/1/answers/1`)
+        .reply(200, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(
+      modifyPost('upvote', 'answers', { questionId: 1, answerId: 1 }, history, null, true)
+      )
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should load when modifying a post- answer downvote success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPatch(`${process.env.API_BASE_URL}/questions/1/answers/1`)
+        .reply(200, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(
+      modifyPost('downvote', 'answers', { questionId: 1, answerId: 1 }, history, null, false)
+      )
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should load when modifying a post- answer downvote undo success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPatch(`${process.env.API_BASE_URL}/questions/1/answers/1`)
+        .reply(200, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(
+      modifyPost('downvote', 'answers', { questionId: 1, answerId: 1 }, history, null, true)
+      )
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should load when modifying a post- answer upvote success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPatch(`${process.env.API_BASE_URL}/questions/1/answers/1`)
+        .reply(200, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(
+      modifyPost('upvote', 'answers', { questionId: 1, answerId: 1 }, history, null, false)
+      )
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should load when modifying a post and error occurs', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPatch(`${process.env.API_BASE_URL}/questions/1`)
+        .reply(422, {});
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(
+      modifyPost('upvote', 'questions', { questionId: 1, answerId: null }, history, null, false)
+      )
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should load when modifying a post with no user', () => {
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    store.dispatch(
+      modifyPost('upvote', 'questions', { questionId: 1, answerId: null }, history, null, false)
+      );
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  // NETWORK ERROR WHEN DELETING
+  it('should handle a network error', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onDelete(`${process.env.API_BASE_URL}/questions/1/answers/1`)
+        .networkError();
+  
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(deletePost('answers', { questionId: 1, answerId: 1 }, history))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+
+  /* POSTING A NEW QUESTION */
+  it('should load when posting a NEW QUESTION- success', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPost(`${process.env.API_BASE_URL}/questions`)
+        .reply(201, {});
+
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(postQuestion({title: 'test title', body: 'test body'}, history))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should handle when posting an NEW QUESTION with no token', () => {
+    const store = mockStore({
+      global: {
+        isLoading: false,
+        isLoggedIn: false
+      },
+      questions: [],
+    });
+
+    return store.dispatch(postQuestion({title: 'test title', body: 'test body'}, history));
+  });
+
+  it('should load when posting a NEW QUESTION and error occurs', () => {
+    setLocalStorageUser(tokenUser);
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onPost(`${process.env.API_BASE_URL}/questions`)
+        .reply(422, {});
+
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(postQuestion({title: 'test title', body: 'test body'}, history))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+>>>>>>> ft-build-ask-question-page-162838474
 });
