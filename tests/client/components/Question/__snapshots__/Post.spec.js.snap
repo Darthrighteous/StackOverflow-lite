@@ -62,7 +62,7 @@ exports[`Post component test snapshot test 1`] = `
         className="post-author-details"
       >
         <span>
-          4 days ago
+          7 days ago
         </span>
         by
         <Link
@@ -99,7 +99,7 @@ exports[`Post component test snapshot test 1`] = `
             Darthrighteous
           </Link>
            
-          2 days ago
+          5 days ago
         </span>
       </li>
       <li
@@ -116,7 +116,7 @@ exports[`Post component test snapshot test 1`] = `
             Darthrighteous
           </Link>
            
-          2 days ago
+          5 days ago
         </span>
       </li>
     </ul>
@@ -197,7 +197,7 @@ exports[`Post component test snapshot test 2`] = `
         className="post-author-details"
       >
         <span>
-          4 days ago
+          7 days ago
         </span>
         by
         <Link
@@ -234,7 +234,7 @@ exports[`Post component test snapshot test 2`] = `
             Darthrighteous
           </Link>
            
-          2 days ago
+          5 days ago
         </span>
       </li>
       <li
@@ -251,7 +251,7 @@ exports[`Post component test snapshot test 2`] = `
             Darthrighteous
           </Link>
            
-          2 days ago
+          5 days ago
         </span>
       </li>
     </ul>
@@ -331,7 +331,7 @@ exports[`Post component test snapshot test 3`] = `
         className="post-author-details"
       >
         <span>
-          a day ago
+          4 days ago
         </span>
         by
         <Link
@@ -437,7 +437,7 @@ exports[`Post component test snapshot test 4`] = `
         className="post-author-details"
       >
         <span>
-          a day ago
+          4 days ago
         </span>
         by
         <Link
@@ -528,7 +528,7 @@ exports[`Post component test snapshot test 5`] = `
         className="post-author-details"
       >
         <span>
-          4 days ago
+          7 days ago
         </span>
         by
         <Link
@@ -565,7 +565,7 @@ exports[`Post component test snapshot test 5`] = `
             Darthrighteous
           </Link>
            
-          2 days ago
+          5 days ago
         </span>
       </li>
       <li
@@ -582,7 +582,7 @@ exports[`Post component test snapshot test 5`] = `
             Darthrighteous
           </Link>
            
-          2 days ago
+          5 days ago
         </span>
       </li>
     </ul>

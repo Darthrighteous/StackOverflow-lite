@@ -213,3 +213,26 @@ export const modifyPost =
         dispatch(setLoading(false));
       });
   };
+
+export const postQuestion = (body, history) => (dispatch) => {
+  dispatch(setLoading(true));
+  const user = getUserDetails();
+  if (!user) {
+    Toaster.info('please login to post an answer', 'Unauthorized');
+    dispatch(setLoading(false));
+    return history.push('/login');
+  }
+  const path = `${process.env.API_BASE_URL}/questions`;
+  return axios(requestOptions('post', path, body, user.token))
+    .then(response => {
+      const { data } = response;
+      history.push(`/question/${data.id}`);
+      return Toaster.success(data.message, data.status);
+    })
+    .catch((error) => {
+      return displayError(error);
+    })
+    .then(() => {
+      dispatch(setLoading(false));
+    });
+};

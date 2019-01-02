@@ -7,6 +7,7 @@
 @import './signup';
 @import './question';
 @import './post';
+@import './newquestion';
 
 * {
   box-sizing: border-box;
@@ -78,6 +79,33 @@ body {
     font-family: 'vollkorn', sans-serif;
     font-weight: 500;
   }
+}
+
+.btn-cancel,
+.btn-post {
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 0 0 1px 0 $box-shadow;
+  cursor: pointer;
+  height: 2.5em;
+  margin-left: 12px;
+  outline: none;
+  padding: 0.5em 1.5em;
+  white-space: nowrap;
+
+  &:hover {
+    box-shadow: 0 1px 2px 1px $box-shadow;
+  }
+}
+
+.btn-cancel {
+  background-color: $color-white;
+  color: $color-accent;
+}
+
+.btn-post {
+  background-color: $color-accent;
+  color: $color-white;
 }
 
 header {
