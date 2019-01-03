@@ -22,7 +22,7 @@ export class Home extends Component {
 
   componentDidMount() {
     const { fetchQuestions } = this.props;
-    fetchQuestions();
+    fetchQuestions('date');
   }
 
   setSort(sort) {
@@ -33,6 +33,11 @@ export class Home extends Component {
         };
       }
     });
+    const { fetchQuestions } = this.props;
+    const sortArray = ['most recent', 'most answered', 'most rated'];
+    const sortQueries = ['date', 'answers', 'score'];
+    const index = sortArray.indexOf(sort);
+    fetchQuestions(sortQueries[index]);
   }
 
   render () {

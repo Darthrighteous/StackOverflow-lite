@@ -25,7 +25,7 @@ export class Profile extends Component {
   componentDidMount() {
     const { fetchUserQuestions, fetchSingleUser, match } = this.props;
     fetchSingleUser(match.params.username);
-    fetchUserQuestions(match.params.username);
+    fetchUserQuestions(match.params.username, 'date');
   }
   
   setSort(sort) {
@@ -36,6 +36,11 @@ export class Profile extends Component {
         };
       }
     });
+    const { fetchUserQuestions, match } = this.props;
+    const sortArray = ['most recent', 'most answered', 'most rated'];
+    const sortQueries = ['date', 'answers', 'score'];
+    const index = sortArray.indexOf(sort);
+    fetchUserQuestions(match.params.username, sortQueries[index]);
   }
 
   render() {

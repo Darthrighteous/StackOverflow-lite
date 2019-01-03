@@ -23,9 +23,9 @@ const fetchSingleSuccess = question => ({
   payload: { question },
 });
 
-export const fetchQuestions = () => (dispatch) => {
+export const fetchQuestions = (sort) => (dispatch) => {
   dispatch(setLoading(true));
-  const path = `${process.env.API_BASE_URL}/questions`;
+  const path = `${process.env.API_BASE_URL}/questions?sort=${sort}`;
   return axios(requestOptions('get', path))
     .then(response => {
       const { data } = response;
@@ -39,9 +39,9 @@ export const fetchQuestions = () => (dispatch) => {
     });
 };
 
-export const fetchUserQuestions = (username) => (dispatch) => {
+export const fetchUserQuestions = (username, sort) => (dispatch) => {
   dispatch(setLoading(true));
-  const path = `${process.env.API_BASE_URL}/questions?user=${username}`;
+  const path = `${process.env.API_BASE_URL}/questions?user=${username}&sort=${sort}`;
   return axios(requestOptions('get', path))
     .then(response => {
       const { data } = response;
@@ -55,15 +55,16 @@ export const fetchUserQuestions = (username) => (dispatch) => {
     });
 };
 
-export const fetchSingleQuestion = (id) => (dispatch) => {
+export const fetchSingleQuestion = (id, answerSort) => (dispatch) => {
   dispatch(setLoading(true));
-  const path = `${process.env.API_BASE_URL}/questions/${id}`;
+  const path = `${process.env.API_BASE_URL}/questions/${id}?sortAnswers=${answerSort}`;
   return axios(requestOptions('get', path))
     .then(response => {
       const { data } = response;
       return dispatch(fetchSingleSuccess(data));
     })
     .catch((error) => {
+      console.log(error);
       return displayError(error);
     })
     .then(() => {

@@ -33,7 +33,7 @@ class ContentOptions extends Component {
 
   render() {
     const {
-      title, sort, onSortClick, background
+      title, sort, onSortClick, background, isAnswerDropdown,
     } = this.props;
     const { isDropdownOpen } = this.state;
     return (
@@ -54,22 +54,28 @@ class ContentOptions extends Component {
             <div className="dropdown-content">
               <button
                 type="button"
-                className="dropdown-item active"
+                id="btn-most-recent"
+                className="dropdown-item"
                 onClick={onSortClick.bind(this, 'most recent')}
               >
                 Most Recent
               </button>
 
-              <button
-                type="button"
-                className="dropdown-item"
-                onClick={onSortClick.bind(this, 'most answered')}
-              >
-                Most Answered
-              </button>
+              {(isAnswerDropdown) ?
+                (null) : (
+                  <button
+                    type="button"
+                    id="btn-most-answered"
+                    className="dropdown-item"
+                    onClick={onSortClick.bind(this, 'most answered')}
+                  >
+                    Most Answered
+                  </button>
+                )}
 
               <button
                 type="button"
+                id="btn-most-rated"
                 className="dropdown-item"
                 onClick={onSortClick.bind(this, 'most rated')}
               >
@@ -88,12 +94,14 @@ ContentOptions.propTypes = {
   background: PropTypes.bool,
   title: PropTypes.string,
   sort: PropTypes.string.isRequired,
-  onSortClick: PropTypes.func.isRequired
+  onSortClick: PropTypes.func.isRequired,
+  isAnswerDropdown: PropTypes.bool,
 };
 
 ContentOptions.defaultProps = {
   title: '',
   background: false,
+  isAnswerDropdown: false,
 };
 
 export default ContentOptions;

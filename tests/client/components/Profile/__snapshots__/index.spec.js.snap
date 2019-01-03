@@ -63,6 +63,7 @@ exports[`Profile component test owner profile snapshot 1`] = `
     >
       <ContentOptions
         background={false}
+        isAnswerDropdown={false}
         onSortClick={[Function]}
         sort="most recent"
         title="Your Questions"
@@ -163,6 +164,7 @@ exports[`Profile component test with questions snapshot 1`] = `
     >
       <ContentOptions
         background={false}
+        isAnswerDropdown={false}
         onSortClick={[Function]}
         sort="most recent"
         title="Questions by tracy "

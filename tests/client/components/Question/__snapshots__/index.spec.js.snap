@@ -43,8 +43,7 @@ exports[`Question Component Test should match snapshot 1`] = `
     </div>
     <ContentOptions
       background={true}
-      dropdownOpenState={false}
-      onDropdownClick={[Function]}
+      isAnswerDropdown={true}
       onSortClick={[Function]}
       sort="most recent"
       title="Answers"
@@ -132,8 +131,7 @@ exports[`Question Component Test should match snapshot 2`] = `
     </div>
     <ContentOptions
       background={true}
-      dropdownOpenState={false}
-      onDropdownClick={[Function]}
+      isAnswerDropdown={true}
       onSortClick={[Function]}
       sort="most recent"
       title="Answers"
@@ -221,8 +219,7 @@ exports[`Question Component Test should match snapshot 3`] = `
     </div>
     <ContentOptions
       background={true}
-      dropdownOpenState={false}
-      onDropdownClick={[Function]}
+      isAnswerDropdown={true}
       onSortClick={[Function]}
       sort="most recent"
       title="Answers"

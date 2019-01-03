@@ -62,7 +62,8 @@ describe('question actions test', () => {
 
   it('creates FETCH_QUESTION_SUCCESS after fetching questions', () => {
     const axiosMock = new AxiosMockAdapter(axios);
-    axiosMock.onGet(`${process.env.API_BASE_URL}/questions`)
+    const sort = 'date';
+    axiosMock.onGet(`${process.env.API_BASE_URL}/questions?sort=${sort}`)
       .reply(200, mockQuestionsResponse);
 
     const expectedActions = [
@@ -82,7 +83,7 @@ describe('question actions test', () => {
       questions: [],
     });
   
-    return store.dispatch(fetchQuestions())
+    return store.dispatch(fetchQuestions(sort))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -90,7 +91,8 @@ describe('question actions test', () => {
 
   it('does not create FETCH_QUESTION_SUCCESS if no questions', () => {
     const axiosMock = new AxiosMockAdapter(axios);
-    axiosMock.onGet(`${process.env.API_BASE_URL}/questions`)
+    const sort = 'date';
+    axiosMock.onGet(`${process.env.API_BASE_URL}/questions?sort=${sort}`)
       .reply(400, { error: {} });
 
     const expectedActions = [
@@ -106,7 +108,7 @@ describe('question actions test', () => {
       questions: [],
     });
   
-    return store.dispatch(fetchQuestions())
+    return store.dispatch(fetchQuestions(sort))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -115,7 +117,8 @@ describe('question actions test', () => {
   it('creates FETCH_USER_QUESTIONS_SUCCESS after fetching a users questions', () => {
     const axiosMock = new AxiosMockAdapter(axios);
     const username = 'test';
-    axiosMock.onGet(`${process.env.API_BASE_URL}/questions?user=${username}`)
+    const sort = 'date';
+    axiosMock.onGet(`${process.env.API_BASE_URL}/questions?user=${username}&sort=${sort}`)
       .reply(200, mockQuestionsResponse);
 
     const expectedActions = [
@@ -135,7 +138,7 @@ describe('question actions test', () => {
       questions: [],
     });
   
-    return store.dispatch(fetchUserQuestions('test'))
+    return store.dispatch(fetchUserQuestions(username, sort))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -144,7 +147,8 @@ describe('question actions test', () => {
   it('does not create FETCH_USER_QUESTIONS_SUCCESS if no questions', () => {
     const axiosMock = new AxiosMockAdapter(axios);
     const username = 'tttt';
-    axiosMock.onGet(`${process.env.API_BASE_URL}/questions?user=${username}`)
+    const sort = 'date';
+    axiosMock.onGet(`${process.env.API_BASE_URL}/questions?user=${username}&sort=${sort}`)
       .reply(400, { error: {} });
 
     const expectedActions = [
@@ -160,7 +164,7 @@ describe('question actions test', () => {
       questions: [],
     });
   
-    return store.dispatch(fetchUserQuestions('tttt'))
+    return store.dispatch(fetchUserQuestions(username, sort))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -168,7 +172,8 @@ describe('question actions test', () => {
 
   it('creates FETCH_SINGLE_SUCCESS when fetching a single question', () => {
     const axiosMock = new AxiosMockAdapter(axios);
-    axiosMock.onGet(`${process.env.API_BASE_URL}/questions/1`)
+    const answerSort = 'date';
+    axiosMock.onGet(`${process.env.API_BASE_URL}/questions/1?sortAnswers=${answerSort}`)
         .reply(200, mockSingleQuestionResponse);
   
       const expectedActions = [
@@ -188,7 +193,7 @@ describe('question actions test', () => {
         questions: [],
       });
       
-      return store.dispatch(fetchSingleQuestion(1))
+      return store.dispatch(fetchSingleQuestion(1, answerSort))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         });
@@ -196,7 +201,8 @@ describe('question actions test', () => {
 
   it('does not creates FETCH_SINGLE_SUCCESS on error', () => {
     const axiosMock = new AxiosMockAdapter(axios);
-    axiosMock.onGet(`${process.env.API_BASE_URL}/questions/1`)
+    const answerSort = 'date';
+    axiosMock.onGet(`${process.env.API_BASE_URL}/questions/1?sortAnswers=${answerSort}`)
         .reply(404, {error: {}});
   
       const expectedActions = [
@@ -212,7 +218,7 @@ describe('question actions test', () => {
         questions: [],
       });
       
-      return store.dispatch(fetchSingleQuestion(1))
+      return store.dispatch(fetchSingleQuestion(1, answerSort))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         });
