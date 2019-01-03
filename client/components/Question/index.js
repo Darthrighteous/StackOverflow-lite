@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -24,7 +24,6 @@ export class Question extends Component {
 
     this.state = {
       sort: 'most recent',
-      isDropdownOpen: false,
       answerInput: '',
     };
 
@@ -34,14 +33,12 @@ export class Question extends Component {
     this.handleModifyPost = this.handleModifyPost.bind(this);
     this.handleDeletePost = this.handleDeletePost.bind(this);
 
-    this.openDropdown = this.openDropdown.bind(this);
-    this.closeDropdown = this.closeDropdown.bind(this);
     this.setSort = this.setSort.bind(this);
   }
 
   componentDidMount() {
     const { fetchSingle, match } = this.props;
-    fetchSingle(match.params.id);
+    fetchSingle(match.params.id, 'date');
   }
 
 
@@ -53,22 +50,11 @@ export class Question extends Component {
         };
       }
     });
-  }
-
-  openDropdown() {
-    this.setState({
-      isDropdownOpen: true
-    }, () => {
-      document.addEventListener('click', this.closeDropdown);
-    });
-  }
-
-  closeDropdown() {
-    this.setState({
-      isDropdownOpen: false
-    }, () => {
-      document.removeEventListener('click', this.closeDropdown);
-    });
+    const { fetchSingle, match } = this.props;
+    const sortArray = ['most recent', 'most rated'];
+    const sortQueries = ['date', 'score'];
+    const index = sortArray.indexOf(sort);
+    fetchSingle(match.params.id, sortQueries[index]);
   }
 
   handleCommentPost(type, id, e) {
@@ -116,7 +102,7 @@ export class Question extends Component {
   }
   
   render() {
-    const { sort, isDropdownOpen, answerInput } = this.state;
+    const { sort, answerInput } = this.state;
     const { question, comments, answers, isLoggedIn } = this.props;
     const username = getUserDetails() ? getUserDetails().username : '';
     const isQuestionOwner = username === question.username ? true : false;
@@ -146,9 +132,8 @@ export class Question extends Component {
             title="Answers"
             background
             sort={sort}
-            dropdownOpenState={isDropdownOpen}
-            onDropdownClick={this.openDropdown}
             onSortClick={this.setSort}
+            isAnswerDropdown
           />
 
           <div className="answers">

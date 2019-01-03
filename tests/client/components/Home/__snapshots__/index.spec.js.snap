@@ -14,6 +14,7 @@ exports[`Home component test snapshot test 1`] = `
   </div>
   <ContentOptions
     background={false}
+    isAnswerDropdown={false}
     onSortClick={[Function]}
     sort="most recent"
     title=""
@@ -135,6 +136,7 @@ exports[`Home component test snapshot test 2`] = `
   </div>
   <ContentOptions
     background={false}
+    isAnswerDropdown={false}
     onSortClick={[Function]}
     sort="most recent"
     title=""

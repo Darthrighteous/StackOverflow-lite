@@ -82,18 +82,6 @@ describe('Question Component Test', () => {
     expect(instance.state.sort).toBe('test sort');
   });
 
-  test('open dropdown handler', () => {
-    const instance = questionWrapper.instance();
-    instance.openDropdown();
-    expect(instance.state.isDropdownOpen).toBe(true);
-  });
-
-  test('close dropdown handler', () => {
-    const instance = questionWrapper.instance();
-    instance.closeDropdown();
-    expect(instance.state.isDropdownOpen).toBe(false);
-  });
-
   test('answer input handler', () => {
     const event = {
       target: { value: 'testanswer' },
