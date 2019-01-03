@@ -60,8 +60,8 @@ exports[`Header snapshot tests  - logged in 1`] = `
           colorBtn="#ebf4ff"
           colorTxt="#3275c3"
           label="Log Out"
-          link=""
-          onClick={null}
+          link={null}
+          onClick={[Function]}
         />
       </div>
     </div>

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import ButtonPrimary from '../Common/ButtonPrimary';
 import verifyToken from '../../utils/verifyToken';
+import Toaster from '../../utils/Toaster';
 
 /**
  * Header component
@@ -11,6 +12,8 @@ import verifyToken from '../../utils/verifyToken';
 class Header extends Component {
   constructor(props) {
     super(props);
+
+    this.handleLogOut = this.handleLogOut.bind(this);
   }
 
   componentDidMount() {
@@ -18,6 +21,14 @@ class Header extends Component {
     if(verifyToken()) {
       setLoggedIn(true);
     }
+  }
+
+  handleLogOut() {
+    const { setLoggedIn } = this.props;
+    localStorage.removeItem('user');
+
+    setLoggedIn(false);
+    Toaster.success('successfully logged out', 'Goodbye');
   }
 
   render() {
@@ -54,10 +65,10 @@ class Header extends Component {
                   <i className="fas fa-user-circle" />
                 </Link>
                 <ButtonPrimary
-                  link=""
                   label="Log Out"
                   colorTxt="#3275c3"
                   colorBtn="#ebf4ff"
+                  onClick={this.handleLogOut}
                 />
               </div>
               ) : (

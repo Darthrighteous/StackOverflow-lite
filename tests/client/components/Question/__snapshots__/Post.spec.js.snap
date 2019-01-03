@@ -67,7 +67,7 @@ exports[`Post component test snapshot test 1`] = `
         by
         <Link
           replace={false}
-          to="/users/Darthrighteous"
+          to="/profile/Darthrighteous"
         >
           Darthrighteous
         </Link>
@@ -94,7 +94,7 @@ exports[`Post component test snapshot test 1`] = `
            — by 
           <Link
             replace={false}
-            to="/users/Darthrighteous"
+            to="/profile/Darthrighteous"
           >
             Darthrighteous
           </Link>
@@ -111,7 +111,7 @@ exports[`Post component test snapshot test 1`] = `
            — by 
           <Link
             replace={false}
-            to="/users/Darthrighteous"
+            to="/profile/Darthrighteous"
           >
             Darthrighteous
           </Link>
@@ -202,7 +202,7 @@ exports[`Post component test snapshot test 2`] = `
         by
         <Link
           replace={false}
-          to="/users/Darthrighteous"
+          to="/profile/Darthrighteous"
         >
           Darthrighteous
         </Link>
@@ -229,7 +229,7 @@ exports[`Post component test snapshot test 2`] = `
            — by 
           <Link
             replace={false}
-            to="/users/Darthrighteous"
+            to="/profile/Darthrighteous"
           >
             Darthrighteous
           </Link>
@@ -246,7 +246,7 @@ exports[`Post component test snapshot test 2`] = `
            — by 
           <Link
             replace={false}
-            to="/users/Darthrighteous"
+            to="/profile/Darthrighteous"
           >
             Darthrighteous
           </Link>
@@ -336,7 +336,7 @@ exports[`Post component test snapshot test 3`] = `
         by
         <Link
           replace={false}
-          to="/users/Darthrighteous"
+          to="/profile/Darthrighteous"
         >
           Darthrighteous
         </Link>
@@ -442,7 +442,7 @@ exports[`Post component test snapshot test 4`] = `
         by
         <Link
           replace={false}
-          to="/users/Darthrighteous"
+          to="/profile/Darthrighteous"
         >
           Darthrighteous
         </Link>
@@ -533,7 +533,7 @@ exports[`Post component test snapshot test 5`] = `
         by
         <Link
           replace={false}
-          to="/users/Darthrighteous"
+          to="/profile/Darthrighteous"
         >
           Darthrighteous
         </Link>
@@ -560,7 +560,7 @@ exports[`Post component test snapshot test 5`] = `
            — by 
           <Link
             replace={false}
-            to="/users/Darthrighteous"
+            to="/profile/Darthrighteous"
           >
             Darthrighteous
           </Link>
@@ -577,7 +577,7 @@ exports[`Post component test snapshot test 5`] = `
            — by 
           <Link
             replace={false}
-            to="/users/Darthrighteous"
+            to="/profile/Darthrighteous"
           >
             Darthrighteous
           </Link>
