@@ -47,14 +47,14 @@ exports[`Question summary snapshot tests for non owner 1`] = `
         replace={false}
         to="/question/4"
       >
-        7 days ago
+        8 days ago
       </Link>
       by
       <Link
         className="details-user"
         onClick={[Function]}
         replace={false}
-        to="/user/Darthrighteous"
+        to="/profile/Darthrighteous"
       >
         Darthrighteous
       </Link>
@@ -125,14 +125,14 @@ exports[`Question summary snapshot tests for owner 1`] = `
         replace={false}
         to="/question/4"
       >
-        7 days ago
+        8 days ago
       </Link>
       by
       <Link
         className="details-user"
         onClick={[Function]}
         replace={false}
-        to="/user/Darthrighteous"
+        to="/profile/Darthrighteous"
       >
         Darthrighteous
       </Link>
@@ -151,16 +151,7 @@ exports[`Question summary snapshot tests for owner 1`] = `
         className="fas fa-comment-alt"
       />
     </Link>
-    <Link
-      id="delete-icon"
-      onClick={[Function]}
-      replace={false}
-      to="/question/4"
-    >
-      <i
-        className="fas fa-trash"
-      />
-    </Link>
+    <div />
   </div>
 </div>
 `;

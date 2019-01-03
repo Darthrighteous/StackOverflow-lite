@@ -53,16 +53,4 @@ describe('Home component test', () => {
     instance.setSort('test sort');
     expect(instance.state.sort).toBe('test sort');
   });
-
-  test('open dropdown handler', () => {
-    const instance = homeWrapper.instance();
-    instance.openDropdown();
-    expect(instance.state.isDropdownOpen).toBe(true);
-  });
-
-  test('close dropdown handler', () => {
-    const instance = homeWrapper.instance();
-    instance.closeDropdown();
-    expect(instance.state.isDropdownOpen).toBe(false);
-  });
 });

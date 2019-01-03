@@ -1,20 +1,4 @@
 .question-answers-container {
-  .no-answers-message {
-    border-top: 1px solid $color-border;
-    line-height: 8em;
-    text-align: center;
-
-    span {
-      color: $text-secondary;
-      font-family: 'vollkorn', sans-serif;
-      font-size: 1em;
-
-      a {
-        text-decoration: none;
-      }
-    }
-  }
-
   .new-answer {
     padding: 0.5em 2em;
 

@@ -14,15 +14,12 @@ exports[`Home component test snapshot test 1`] = `
   </div>
   <ContentOptions
     background={false}
-    dropdownOpenState={false}
-    onDropdownClick={[Function]}
     onSortClick={[Function]}
     sort="most recent"
     title=""
   />
   <QuestionSummary
     history={Object {}}
-    isOwner={true}
     key="4"
     question={
       Object {
@@ -46,7 +43,6 @@ exports[`Home component test snapshot test 1`] = `
   />
   <QuestionSummary
     history={Object {}}
-    isOwner={true}
     key="2"
     question={
       Object {
@@ -70,7 +66,6 @@ exports[`Home component test snapshot test 1`] = `
   />
   <QuestionSummary
     history={Object {}}
-    isOwner={true}
     key="3"
     question={
       Object {
@@ -94,7 +89,6 @@ exports[`Home component test snapshot test 1`] = `
   />
   <QuestionSummary
     history={Object {}}
-    isOwner={true}
     key="1"
     question={
       Object {
@@ -141,8 +135,6 @@ exports[`Home component test snapshot test 2`] = `
   </div>
   <ContentOptions
     background={false}
-    dropdownOpenState={false}
-    onDropdownClick={[Function]}
     onSortClick={[Function]}
     sort="most recent"
     title=""

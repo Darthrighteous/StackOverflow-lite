@@ -1,0 +1,76 @@
+.profile-content {
+  display: flex;
+  padding: 1.5em 1em;
+
+  .profile-primary {
+    width: 100%;
+  }
+
+  .profile-side {
+    margin: 0 0 0 1.5em;
+    width: 25em;
+
+    .user-details {
+      display: flex;
+      padding: 0.3em;
+
+      i {
+        color: $color-accent;
+        font-size: 4em;
+      }
+
+      .user-name-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 0.4em;
+
+        #fullname {
+          font-family: 'vollkorn', sans-serif;
+          font-size: 1.3em;
+          font-weight: 500;
+          white-space: nowrap;
+        }
+
+        #username {
+          color: $text-secondary;
+          font-family: 'vollkorn', sans-serif;
+          font-size: 0.9em;
+          font-weight: 400;
+        }
+      }
+    }
+
+    .btn-new-question-cont {
+      margin: 1em 0;
+
+      .btn-new-question {
+        line-height: 1.5em;
+        width: 100%;
+      }
+    }
+
+    .user-stats {
+      border-top: 2px solid $color-border-light;
+      display: flex;
+      padding: 0.8em 0;
+
+      h5 {
+        color: $text-secondary;
+        font-weight: 400;
+      }
+
+      .stats-asked {
+        flex: 1 1 0;
+      }
+
+      .stats-answered {
+        flex: 1 1 0;
+      }
+
+      .stats-comments {
+        flex: 1 1 0;
+      }
+    }
+  }
+}

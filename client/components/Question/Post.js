@@ -128,7 +128,7 @@ class Post extends Component {
             <div className="post-author-details">
               <span>{moment(post.created_at).fromNow()}</span>
               by
-              <Link to={`/users/${post.username}`}>{post.username}</Link>
+              <Link to={`/profile/${post.username}`}>{post.username}</Link>
             </div>
           </div>
         </div>
@@ -160,7 +160,7 @@ class Post extends Component {
                     {comment.body}
                     <span>
                       &nbsp;— by&nbsp;
-                      <Link to={`/users/${comment.username}`}>{comment.username}</Link>
+                      <Link to={`/profile/${comment.username}`}>{comment.username}</Link>
                       &nbsp;
                       {moment(comment.created_at).fromNow()}
                     </span>

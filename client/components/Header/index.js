@@ -22,6 +22,7 @@ class Header extends Component {
 
   render() {
     const { loginStatus } = this.props;
+    const user = JSON.parse(localStorage.getItem('user'));
     return (
       <header>
         <div className="header-content">
@@ -49,7 +50,7 @@ class Header extends Component {
           <div className="user-options-cont">
             {(loginStatus) ? (
               <div className="user-options">
-                <Link to="/profile">
+                <Link to={`/profile/${user.username}`}>
                   <i className="fas fa-user-circle" />
                 </Link>
                 <ButtonPrimary

@@ -10,6 +10,8 @@ const initialState = {
     comments: [],
     answers: [],
   },
+  user: {},
+  userQuestions: [],
 };
 
 export default initialState;

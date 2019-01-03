@@ -1,0 +1,244 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Profile component test connected componenet snapshot test 1`] = `
+<Profile
+  fetchSingleUser={[Function]}
+  fetchUserQuestions={[Function]}
+  match={
+    Object {
+      "params": Object {
+        "username": "Darthrighteous",
+      },
+    }
+  }
+  profileOwner={
+    Object {
+      "username": "Darthrighteous",
+    }
+  }
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+  storeSubscription={
+    Subscription {
+      "listeners": Object {
+        "clear": [Function],
+        "get": [Function],
+        "notify": [Function],
+        "subscribe": [Function],
+      },
+      "onStateChange": [Function],
+      "parentSub": undefined,
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "unsubscribe": [Function],
+    }
+  }
+  userQuestions={Array []}
+/>
+`;
+
+exports[`Profile component test owner profile snapshot 1`] = `
+<div
+  className="main-content"
+>
+  <div
+    className="profile-content"
+  >
+    <div
+      className="profile-primary"
+    >
+      <ContentOptions
+        background={false}
+        onSortClick={[Function]}
+        sort="most recent"
+        title="Your Questions"
+      />
+      <div
+        className="no-resource-message"
+      >
+        <span>
+          No questions here yet
+        </span>
+      </div>
+    </div>
+    <div
+      className="profile-side"
+    >
+      <div
+        className="user-details"
+      >
+        <i
+          className="fas fa-user-circle"
+        />
+        <div
+          className="user-name-container"
+        >
+          <span
+            id="fullname"
+          >
+            undefined undefined
+          </span>
+          <span
+            id="username"
+          >
+            Darthrighteous
+          </span>
+        </div>
+      </div>
+      <div
+        className="btn-new-question-cont"
+      >
+        <ButtonNewQuestion />
+      </div>
+      <div
+        className="user-stats"
+      >
+        <div
+          className="stats-asked"
+        >
+          <h5>
+            Asked
+          </h5>
+          <span
+            id="question-count"
+          />
+        </div>
+        <div
+          className="stats-answered"
+        >
+          <h5>
+            Answered
+          </h5>
+          <span
+            id="answer-count"
+          />
+        </div>
+        <div
+          className="stats-comments"
+        >
+          <h5>
+            Comments
+          </h5>
+          <span
+            id="comment-count"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Profile component test snapshot test 1`] = `
+<div
+  className="main-content"
+>
+  <div />
+</div>
+`;
+
+exports[`Profile component test with questions snapshot 1`] = `
+<div
+  className="main-content"
+>
+  <div
+    className="profile-content"
+  >
+    <div
+      className="profile-primary"
+    >
+      <ContentOptions
+        background={false}
+        onSortClick={[Function]}
+        sort="most recent"
+        title="Questions by tracy "
+      />
+      <div
+        className="no-resource-message"
+      >
+        <span>
+          No questions here yet
+        </span>
+      </div>
+    </div>
+    <div
+      className="profile-side"
+    >
+      <div
+        className="user-details"
+      >
+        <i
+          className="fas fa-user-circle"
+        />
+        <div
+          className="user-name-container"
+        >
+          <span
+            id="fullname"
+          >
+            undefined undefined
+          </span>
+          <span
+            id="username"
+          >
+            tracy
+          </span>
+        </div>
+      </div>
+      <div
+        className="btn-new-question-cont"
+      >
+        <ButtonNewQuestion />
+      </div>
+      <div
+        className="user-stats"
+      >
+        <div
+          className="stats-asked"
+        >
+          <h5>
+            Asked
+          </h5>
+          <span
+            id="question-count"
+          />
+        </div>
+        <div
+          className="stats-answered"
+        >
+          <h5>
+            Answered
+          </h5>
+          <span
+            id="answer-count"
+          />
+        </div>
+        <div
+          className="stats-comments"
+        >
+          <h5>
+            Comments
+          </h5>
+          <span
+            id="comment-count"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

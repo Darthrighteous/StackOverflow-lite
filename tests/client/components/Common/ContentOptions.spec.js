@@ -10,23 +10,29 @@ const props = {
   onSortClick: jest.fn(),
 };
 
-const closeProps = {
+const bgProps = {
   ...props,
   background: true,
-  dropdownOpenState: false,
 };
-
 
 describe ('content options test', () => {
   const contentOptionsWrapper = shallow(
     <ContentOptions {...props} />
   );
-  const closeContentOptionsWrapper = shallow(
-    <ContentOptions {...closeProps} />
-  );
+
+  const withBackground = shallow(<ContentOptions {...bgProps} />);
 
   test('snapshot tests', () => {
     expect(contentOptionsWrapper).toMatchSnapshot();
-    expect(closeContentOptionsWrapper).toMatchSnapshot();
+    expect(withBackground).toMatchSnapshot();
+  });
+
+  test('event simulations', () => {
+    contentOptionsWrapper.find('.dropdown').simulate('click');
+    expect(contentOptionsWrapper.state().isDropdownOpen).toBe(true);
+
+    const instance = contentOptionsWrapper.instance();
+    instance.closeDropdown();
+    expect(contentOptionsWrapper.state().isDropdownOpen).toBe(false);
   });
 });

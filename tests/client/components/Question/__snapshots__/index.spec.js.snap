@@ -56,7 +56,7 @@ exports[`Question Component Test should match snapshot 1`] = `
         className="answers-list"
       >
         <div
-          className="no-answers-message"
+          className="no-resource-message"
         >
           <span>
             No answers yet, be the first one to post an answer
@@ -145,7 +145,7 @@ exports[`Question Component Test should match snapshot 2`] = `
         className="answers-list"
       >
         <div
-          className="no-answers-message"
+          className="no-resource-message"
         >
           <span>
             No answers yet, be the first one to post an answer

@@ -14,12 +14,9 @@ export class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDropdownOpen: false,
       sort: 'most recent',
     };
 
-    this.openDropdown = this.openDropdown.bind(this);
-    this.closeDropdown = this.closeDropdown.bind(this);
     this.setSort = this.setSort.bind(this);
   }
 
@@ -38,25 +35,8 @@ export class Home extends Component {
     });
   }
 
-  openDropdown() {
-    this.setState({
-      isDropdownOpen: true
-    }, () => {
-      document.addEventListener('click', this.closeDropdown);
-    });
-  }
-
-  closeDropdown() {
-    this.setState({
-      isDropdownOpen: false
-    }, () => {
-      document.removeEventListener('click', this.closeDropdown);
-    });
-  }
-
-
   render () {
-    const { sort, isDropdownOpen } = this.state;
+    const { sort } = this.state;
     const { questions, history } = this.props;
     return (
       <div className="main-content">
@@ -66,10 +46,8 @@ export class Home extends Component {
         </div>
 
         <ContentOptions
-          sort={sort}
-          dropdownOpenState={isDropdownOpen}
-          onDropdownClick={this.openDropdown}
           onSortClick={this.setSort}
+          sort={sort}
         />
         
         {
@@ -80,7 +58,6 @@ export class Home extends Component {
                   key={question.id}
                   question={question}
                   history={history}
-                  isOwner
                 />))
               )
           }

@@ -15,28 +15,30 @@ function setup() {
   };
 
   const questionSummary = shallow(
-    <QuestionSummary {...props} isOwner={false} />
-  );
-  const ownQuestionSummary = shallow(
-    <QuestionSummary {...props} isOwner />
+    <QuestionSummary {...props} />
   );
 
   return {
     props,
     questionSummary,
-    ownQuestionSummary,
   };
 }
 
+afterEach(() => {
+  localStorage.clear();
+});
+
 describe('Question summary snapshot tests', () => {
-  const { questionSummary, ownQuestionSummary } = setup();
+  const { questionSummary } = setup();
 
   test('for non owner', () => {
     expect(questionSummary).toMatchSnapshot();
   });
 
+  localStorage.setItem('user', JSON.stringify({username: 'Darthrighteous'}));
+
   test('for owner', () => {
-    expect(ownQuestionSummary).toMatchSnapshot();
+    expect(questionSummary).toMatchSnapshot();
   });
 });
 
