@@ -50,7 +50,7 @@ exports[`Header snapshot tests  - logged in 1`] = `
       >
         <Link
           replace={false}
-          to="/profile"
+          to="/profile/Darthrighteous"
         >
           <i
             className="fas fa-user-circle"

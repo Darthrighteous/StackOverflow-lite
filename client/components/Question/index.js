@@ -154,7 +154,7 @@ export class Question extends Component {
           <div className="answers">
             <div className="answers-list">
               {(answers.length < 1) ? (
-                <div className="no-answers-message">
+                <div className="no-resource-message">
                   <span>
                     No answers yet, be the first one to post an answer
                   </span>

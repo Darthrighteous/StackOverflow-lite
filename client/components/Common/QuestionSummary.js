@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import getUserDetails from '../../utils/getUserDetails';
 
 /**
  * Question summary component
@@ -23,8 +24,14 @@ class QuestionSummary extends Component {
   }
 
   render() {
-    const { question, isOwner } = this.props;
+    const { question } = this.props;
     const { answer_count, score, title, username, id, created_at } = question;
+
+    let isOwner = false;
+    const loggedInUser = getUserDetails();
+    if(loggedInUser) {
+      isOwner = loggedInUser.username === question.username;
+    }
     const questionPath = `/question/${id}`;
     return (
       <div className="question-summary" role="button" tabIndex="0" onKeyDown={null} onClick={this.navigateToQuestion}>
@@ -51,7 +58,7 @@ class QuestionSummary extends Component {
             </Link>
             by
             <Link
-              to={`/user/${username}`}
+              to={`/profile/${username}`}
               onClick={this.stopPropagation}
               className="details-user"
             >
@@ -80,7 +87,6 @@ class QuestionSummary extends Component {
 QuestionSummary.propTypes = {
   question: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  isOwner: PropTypes.bool.isRequired,
 };
 
 export default QuestionSummary;

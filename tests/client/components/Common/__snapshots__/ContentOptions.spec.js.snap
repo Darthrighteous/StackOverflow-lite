@@ -8,7 +8,7 @@ exports[`content options test snapshot tests 1`] = `
   <h4 />
   <div
     className="dropdown"
-    onClick={[MockFunction]}
+    onClick={[Function]}
     onKeyDown={null}
     role="button"
     tabIndex="0"
@@ -40,31 +40,7 @@ exports[`content options test snapshot tests 1`] = `
         </g>
       </svg>
     </div>
-    <div
-      className="dropdown-content"
-    >
-      <button
-        className="dropdown-item active"
-        onClick={[Function]}
-        type="button"
-      >
-        Most Recent
-      </button>
-      <button
-        className="dropdown-item"
-        onClick={[Function]}
-        type="button"
-      >
-        Most Answered
-      </button>
-      <button
-        className="dropdown-item"
-        onClick={[Function]}
-        type="button"
-      >
-        Most Rated
-      </button>
-    </div>
+    <div />
   </div>
 </div>
 `;
@@ -81,7 +57,7 @@ exports[`content options test snapshot tests 2`] = `
   <h4 />
   <div
     className="dropdown"
-    onClick={[MockFunction]}
+    onClick={[Function]}
     onKeyDown={null}
     role="button"
     tabIndex="0"

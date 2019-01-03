@@ -11,6 +11,7 @@ import LoginPage from './components/Login';
 import NotFound from './components/NotFound';
 import QuestionPage from './components/Question';
 import NewQuestionPage from './components/NewQuestion';
+import ProfilePage from './components/Profile';
 import Reloading from './components/Common/Reloading';
 
 const App = () => (
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/login" component={LoginPage} />
           <Route path="/question/:id" component={QuestionPage} />
           <Route path="/new-question" component={NewQuestionPage} />
+          <Route path="/profile/:username" component={ProfilePage} />
           <Route path="/reload" component={Reloading} />
           <Route component={NotFound} />
         </Switch>

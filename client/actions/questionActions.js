@@ -1,13 +1,20 @@
 import axios from 'axios';
 import Toaster from '../utils/Toaster';
 
-import { FETCH_QUESTIONS_SUCCESS, FETCH_SINGLE_SUCCESS } from './actionTypes';
+import { FETCH_QUESTIONS_SUCCESS, FETCH_SINGLE_SUCCESS, FETCH_USER_QUESTIONS_SUCCESS } from './actionTypes';
 import { setLoading } from './globalActions';
 import getUserDetails from '../utils/getUserDetails';
 import requestOptions from '../utils/requestOptions';
+import { displayError, reloadRoute } from './utils';
+
 
 const fetchQuestionsSuccess = questions => ({
   type: FETCH_QUESTIONS_SUCCESS,
+  payload: { questions },
+});
+
+const fetchUserQuestionsSuccess = questions => ({
+  type: FETCH_USER_QUESTIONS_SUCCESS,
   payload: { questions },
 });
 
@@ -16,20 +23,6 @@ const fetchSingleSuccess = question => ({
   payload: { question },
 });
 
-const displayError = (error) => {
-  if (error.response) {
-    const { data } = error.response;
-    Toaster.options.timeOut = 0;
-    return Toaster.error(data.message, data.status);
-  }
-  Toaster.error('Oops! something went wrong, please try again!', 'Failed');
-};
-
-const reloadRoute = (history) => {
-  history.push('/reload');
-  history.goBack();
-};
-
 export const fetchQuestions = () => (dispatch) => {
   dispatch(setLoading(true));
   const path = `${process.env.API_BASE_URL}/questions`;
@@ -37,6 +30,22 @@ export const fetchQuestions = () => (dispatch) => {
     .then(response => {
       const { data } = response;
       return dispatch(fetchQuestionsSuccess(data.questions));
+    })
+    .catch((error) => {
+      return displayError(error);
+    })
+    .then(() => {
+      dispatch(setLoading(false));
+    });
+};
+
+export const fetchUserQuestions = (username) => (dispatch) => {
+  dispatch(setLoading(true));
+  const path = `${process.env.API_BASE_URL}/questions?user=${username}`;
+  return axios(requestOptions('get', path))
+    .then(response => {
+      const { data } = response;
+      return dispatch(fetchUserQuestionsSuccess(data.questions));
     })
     .catch((error) => {
       return displayError(error);

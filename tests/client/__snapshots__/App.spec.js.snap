@@ -39,6 +39,10 @@ exports[`App snapshot test 1`] = `
       />
       <Route
         component={[Function]}
+        path="/profile/:username"
+      />
+      <Route
+        component={[Function]}
         path="/reload"
       />
       <Route

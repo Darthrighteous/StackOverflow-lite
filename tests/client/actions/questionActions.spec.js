@@ -3,8 +3,21 @@ import AxiosMockAdapter from 'axios-mock-adapter';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { FETCH_QUESTIONS_SUCCESS, SET_LOADING, FETCH_SINGLE_SUCCESS } from "../../../client/actions/actionTypes";
-import { fetchQuestions, fetchSingleQuestion, postComment, postAnswer, deletePost, modifyPost, postQuestion } from '../../../client/actions/questionActions';
+import {
+  FETCH_QUESTIONS_SUCCESS,
+  FETCH_USER_QUESTIONS_SUCCESS,
+  SET_LOADING,
+  FETCH_SINGLE_SUCCESS } from "../../../client/actions/actionTypes";
+import {
+  fetchQuestions,
+  fetchUserQuestions,
+  fetchSingleQuestion,
+  postComment,
+  postAnswer,
+  deletePost,
+  modifyPost,
+  postQuestion
+} from '../../../client/actions/questionActions';
 import { mockQuestionsResponse, mockSingleQuestionResponse } from '../../support/mockData';
 
 const axiosMock = new AxiosMockAdapter(axios);
@@ -94,6 +107,60 @@ describe('question actions test', () => {
     });
   
     return store.dispatch(fetchQuestions())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('creates FETCH_USER_QUESTIONS_SUCCESS after fetching a users questions', () => {
+    const axiosMock = new AxiosMockAdapter(axios);
+    const username = 'test';
+    axiosMock.onGet(`${process.env.API_BASE_URL}/questions?user=${username}`)
+      .reply(200, mockQuestionsResponse);
+
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      {
+        type: FETCH_USER_QUESTIONS_SUCCESS,
+        payload: { questions }
+      },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({
+      global: {
+        isLoading: false,
+        isLoggedIn: false
+      },
+      questions: [],
+    });
+  
+    return store.dispatch(fetchUserQuestions('test'))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('does not create FETCH_USER_QUESTIONS_SUCCESS if no questions', () => {
+    const axiosMock = new AxiosMockAdapter(axios);
+    const username = 'tttt';
+    axiosMock.onGet(`${process.env.API_BASE_URL}/questions?user=${username}`)
+      .reply(400, { error: {} });
+
+    const expectedActions = [
+      { type: SET_LOADING, isLoading: true },
+      { type: SET_LOADING, isLoading: false },
+    ];
+
+    const store = mockStore({
+      global: {
+        isLoading: false,
+        isLoggedIn: false
+      },
+      questions: [],
+    });
+  
+    return store.dispatch(fetchUserQuestions('tttt'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
