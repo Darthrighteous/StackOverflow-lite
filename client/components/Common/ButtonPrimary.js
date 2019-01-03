@@ -8,17 +8,22 @@ const ButtonPrimary = (props) => {
     backgroundColor: colorBtn,
     color: colorTxt,
   };
-  return(
+  return((link) ? (
     <NavLink activeStyle={{ display: 'none' }} to={link}>
       <button type="button" onClick={onClick} style={btnStyle}>
         {label}
       </button>
     </NavLink>
+    ) : (
+      <button type="button" onClick={onClick} style={btnStyle}>
+        {label}
+      </button>
+    )
   );
 };
 
 ButtonPrimary.propTypes = {
-  link: PropTypes.string.isRequired,
+  link: PropTypes.string,
   label: PropTypes.string.isRequired,
   colorBtn: PropTypes.string.isRequired,
   colorTxt: PropTypes.string.isRequired,
@@ -26,6 +31,7 @@ ButtonPrimary.propTypes = {
 };
 
 ButtonPrimary.defaultProps = {
+  link: null,
   onClick: null,
 };
 

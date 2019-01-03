@@ -38,6 +38,8 @@ describe('Header snapshot tests', () => {
     localStorage.setItem('user', JSON.stringify(user));
     const headerWrapper = shallow(<Header {...props} />);
     expect(headerWrapper).toMatchSnapshot();
+
+    headerWrapper.find('ButtonPrimary').simulate('click');
   });
 
   const loggedOutProps = {
@@ -52,7 +54,6 @@ describe('Header snapshot tests', () => {
   });
 
   test('no user - logged out', () => {
-    // localStorage.removeItem('user');
     const headerWrapper = shallow(<Header {...loggedOutProps} />);
     expect(headerWrapper).toMatchSnapshot();
   });
