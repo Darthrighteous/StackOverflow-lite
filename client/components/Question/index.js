@@ -173,7 +173,7 @@ export class Question extends Component {
                 </button>
               </div>
             ) : (
-              <div className="no-answers-message">
+              <div className="no-resource-message">
                 <span>
                   Please&nbsp;
                   <Link to="/login">login</Link>

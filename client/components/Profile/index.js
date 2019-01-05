@@ -45,7 +45,7 @@ export class Profile extends Component {
 
   render() {
     const { sort } = this.state;
-    const { userQuestions, profileOwner } = this.props;
+    const { userQuestions, profileOwner, history } = this.props;
 
     const signedInUser = JSON.parse(localStorage.getItem('user'));
     let isOwnProfile = false;
@@ -120,6 +120,7 @@ Profile.propTypes = {
   userQuestions: PropTypes.array.isRequired,
   profileOwner: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   fetchSingleUser: PropTypes.func.isRequired,
   fetchUserQuestions: PropTypes.func.isRequired,
 };
